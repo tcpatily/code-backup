@@ -1,0 +1,930 @@
+<!------Header Strip------->
+
+<div class="header_strip">
+    <div class="container">
+        <div class="row gx-0 justify-content-center">
+            <div class="col-xxxl-9 col-xxl-12">
+                <div class="strip_wrapper">
+                    <div class="left_block">
+                        <a href=""><img src="/images/tcHolidays/common-img/phone-call.svg" alt="">1800-2099-100</a>
+                    </div>
+                    <div class="right_block">
+                        <a href=""><img src="/images/tcHolidays/common-img/headphones.svg" alt="">Contact Us</a>
+                        <span class="brdr"></span>
+                        <a href=""><img src="/images/tcHolidays/common-img/marker-pin.svg" alt="">Stores</a>
+                        <span class="brdr"></span>
+                        <div class="language_switcher">
+                            <a href="javascript:void(0)" class="language_toggle vitra-lang-select-btn" id="">
+                                <img src="/images/tcHolidays/common-img/globe.svg" alt="">
+                                <span>EN</span>
+                                <img src="/images/tcHolidays/common-img/chevron-down.svg" class="arrow" alt="">
+                            </a>
+                            <ul class="language_dropdown">
+                                <li data-lang="english" onclick="changeLanguage(this)">
+                                    <a href="javascript:void(0)"><img src="/images/tcHolidays/common-img/en-flag.png" alt="">English</a>
+                                </li>
+                                <li data-lang="hindi" onclick="changeLanguage(this)">
+                                    <a href="javascript:void(0)"><img src="/images/tcHolidays/common-img/in-flag.png" alt="">हिन्दी</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!------Header------->
+<header class="header">
+    <nav class="navbar navbar-expand-md">
+        <div class="container d-block">
+            <div class="row gx-0 justify-content-center">
+                <div class="col-xxxl-9 col-xxl-12">
+                    <div class="nav-wrapper">
+                        <div class="nav-top">
+                            <div class="nav_left">
+                                <div class="menu_btn">
+                                    <img src="/images/tcHolidays/common-img/menu-btn.svg" alt="">
+                                </div>
+                                <a class="navbar-brand" href="index.html">
+                                    <img src="/images/tcHolidays/common-img/logo.png" alt="logo">
+                                </a>
+                            </div>
+                            <div class="nav-right">
+                                <ul class="navbar-nav d-flex d-md-none">
+                                    <li class="language_switcher">
+                                        <a href="javascript:void(0)" class="language_toggle vitra-lang-select-btn" id="">
+                                            <img src="/images/tcHolidays/common-img/globe.svg" alt="">
+                                            <span>EN</span>
+                                            <img src="/images/tcHolidays/common-img/chevron-down.svg" class="arrow" alt="">
+                                        </a>
+                                        <ul class="language_dropdown">
+                                            <li data-lang="english" onclick="changeLanguage(this)">
+                                                <a href="javascript:void(0)"><img src="/images/tcHolidays/common-img/en-flag.png" alt="">English</a>
+                                            </li>
+                                            <li data-lang="hindi" onclick="changeLanguage(this)">
+                                                <a href="javascript:void(0)"><img src="/images/tcHolidays/common-img/in-flag.png" alt="">हिन्दी</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link btn_login" v-if="!isUserLoggedIn">Login <img
+                                                src="/images/tcHolidays/common-img/log-in.svg" alt=""></a>
+                                        <ul class="profile_dropdown">
+                                            <li>
+                                                <a id="customerlogin" data-bs-toggle="modal"
+                                                    data-bs-target="#loginModal"><img
+                                                        src="/images/tcHolidays/common-img/customer.svg" alt="">Customer
+                                                    Login</a>
+                                            </li>
+                                            <li><a href=""><img src="/images/tcHolidays/common-img/agent.svg"
+                                                        alt="">Agent Login</a>
+                                            </li>
+                                        </ul>
+                                        <ul class="navbar-nav after_login" v-if="isUserLoggedIn">
+                                            <li>
+                                                <span class="logOutTimer"></span>
+                                                <a class="btn user_btn">
+                                                    <span class="first_letter">{{loggedInUserFirstName.charAt(0)
+                                                        }}</span>
+                                                    <div class="user_info">
+                                                        <span class="full_name">{{loggedInUserFirstName}}</span>
+                                                        <div class="agent_logoutTime" v-if="loginMode == 'agent'">
+                                                            <img src="/images/tcHolidays/common-img/clock.svg" alt="">
+                                                            <span
+                                                                class="logOutTimer timer_logout">{{logOutTimer}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <img src="/images/tcHolidays/common-img/chevron-down.svg" alt="">
+                                                </a>
+                                                <ul class="profile_dropdown">
+                                                    <li>
+                                                        <a href="">
+                                                            <div class="icon">
+                                                                <img src="/images/tcHolidays/common-img/user-02.svg">
+                                                            </div>
+                                                            Profile
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <div class="icon">
+                                                                <img src="/images/tcHolidays/common-img/edit-01.svg">
+                                                            </div>
+                                                            <div class="text">
+                                                                My Bookings
+                                                                <span>View and manage bookings</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <div class="icon">
+                                                                <img src="/images/tcHolidays/common-img/heart.svg">
+                                                            </div>
+                                                            Wishlist
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <div class="icon">
+                                                                <img src="/images/tcHolidays/common-img/bell-01.svg">
+                                                            </div>
+                                                            Notifications
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <button @click="logout" class="btn btn_logout">
+                                                            <div class="icon">
+                                                                <img src="/images/tcHolidays/common-img/log-out.svg">
+                                                            </div>
+                                                            Log Out
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="nav-center">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="search-result-page.html"><span><img
+                                                src="/images/tcHolidays/common-img/holidays-01.svg"
+                                                alt=""></span>
+                                                Holidays <em v-show="onBehalf === 'true'"> <img src="assets/images/common-img/chevron-down-primary.svg" alt=""></em>
+                                    </a>
+                                    <div class="holiday_megaMenu" v-show="onBehalf === 'true'">
+                                        <div class="left_block">
+                                            <div class="nav nav-pills" id="v-pills-tab" role="tablist"
+                                                aria-orientation="vertical">
+                                                <button class="nav-link active" id="v-pills-international-menu-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#v-pills-international-menu"
+                                                    type="button" role="tab" aria-controls="v-pills-international-menu"
+                                                    aria-selected="true">
+                                                    International
+                                                    <img src="/images/tcHolidays/common-img/chevron-right.svg" alt="">
+                                                </button>
+                                                <button class="nav-link" id="v-pills-india-around-menu-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#v-pills-india-around-menu"
+                                                    type="button" role="tab" aria-controls="v-pills-india-around-menu"
+                                                    aria-selected="false">
+                                                    India &amp; Around
+                                                    <img src="/images/tcHolidays/common-img/chevron-right.svg" alt="">
+                                                </button>
+                                            </div>
+
+                                            <button class="btn btn_pathFinder">
+                                                Pathfinder
+                                                <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                            </button>
+                                        </div>
+                                        <div class="center_block">
+                                            <div class="tabsBlck_wrpr">
+                                                <div class="tab-content" id="v-pills-tabContent">
+                                                    <div class="tab-pane fade show active"
+                                                        id="v-pills-international-menu" role="tabpanel"
+                                                        aria-labelledby="v-pills-international-menu-tab">
+                                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                            <button class="nav-link active" id="nav-i-destinations-tab"
+                                                                data-bs-toggle="tab"
+                                                                data-bs-target="#nav-i-destinations" type="button"
+                                                                role="tab" aria-controls="nav-i-destinations"
+                                                                aria-selected="true">Destinations</button>
+                                                            <button class="nav-link" id="nav-i-tourism-tab"
+                                                                data-bs-toggle="tab" data-bs-target="#nav-i-tourism"
+                                                                type="button" role="tab" aria-controls="nav-i-tourism"
+                                                                aria-selected="false">Tourism
+                                                                Info</button>
+                                                        </div>
+                                                        <div class="center_tabsContent">
+                                                            <div class="tab-content" id="nav-tabContent">
+                                                                <div class="tab-pane fade show active"
+                                                                    id="nav-i-destinations" role="tabpanel"
+                                                                    aria-labelledby="nav-i-destinations-tab">
+                                                                    <div class="tabsContent_inr">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Dubai <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Thailand <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Bali <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Singapore <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Malaysia <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Vietnam <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Australia <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Japan <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Mauritius <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Maldives <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Turkey <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    CIS Silk Route Series <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Europe <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade" id="nav-i-tourism"
+                                                                    role="tabpanel" aria-labelledby="nav-i-tourism-tab">
+                                                                    <div class="tabsContent_inr">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Dubai <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Thailand <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Bali <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Singapore <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Malaysia <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Vietnam <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Australia <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Japan <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Mauritius <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Maldives <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Turkey <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    CIS Silk Route Series <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Europe <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-india-around-menu"
+                                                        role="tabpanel" aria-labelledby="v-pills-india-around-menu-tab">
+                                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                            <button class="nav-link active" id="nav-in-destinations-tab"
+                                                                data-bs-toggle="tab"
+                                                                data-bs-target="#nav-in-destinations" type="button"
+                                                                role="tab" aria-controls="nav-in-destinations"
+                                                                aria-selected="true">Destinations</button>
+                                                            <button class="nav-link" id="nav-in-tourism-tab"
+                                                                data-bs-toggle="tab" data-bs-target="#nav-in-tourism"
+                                                                type="button" role="tab" aria-controls="nav-in-tourism"
+                                                                aria-selected="false">Tourism
+                                                                Info</button>
+                                                        </div>
+                                                        <div class="center_tabsContent">
+                                                            <div class="tab-content" id="nav-tabContent">
+                                                                <div class="tab-pane fade show active"
+                                                                    id="nav-in-destinations" role="tabpanel"
+                                                                    aria-labelledby="nav-in-destinations-tab">
+                                                                    <div class="tabsContent_inr">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Himachal <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Bhutan <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Char Dham <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Ladakh <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Sikkim <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Uttarakhand <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Assam and Meghalaya <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Kerala <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Nepal <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Sri Lanka <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Andaman <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Cordelia Cruise <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade" id="nav-in-tourism"
+                                                                    role="tabpanel"
+                                                                    aria-labelledby="nav-in-tourism-tab">
+                                                                    <div class="tabsContent_inr">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Himachal <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Bhutan <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Char Dham <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Ladakh <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Sikkim <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Uttarakhand <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Assam and Meghalaya <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Kerala <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Nepal <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Sri Lanka <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Andaman <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="">
+                                                                                    Cordelia Cruise <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right_block">
+                                            <p>Thomas Cook Specials</p>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="">Char Dham Yatra by Helicopter
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">Do Dham Yatra
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">Escorted Tours By Partners
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">India Honeymoon Packages
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">International Honeymoon Packages
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">India Long Weekend Getaways
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">Private Journeys
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">Wildlife Tour Packages
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="">International Cruise Packages
+                                                        <img src="/images/tcHolidays/common-img/arrow-up-right-p.svg" alt="">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>         
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"><span><img src="/images/tcHolidays/common-img/forex-01.svg" alt=""></span>Forex</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../Flight/index.html"><span><img src="/images/tcHolidays/common-img/flight-01.svg" alt=""></span>Flights</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"><span><img src="/images/tcHolidays/common-img/hotel-01.svg" alt=""></span>Hotels</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"><span><img src="/images/tcHolidays/common-img/cruise-01.svg" alt=""></span>Cruise</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"><span><img src="/images/tcHolidays/common-img/eurail-01.svg" alt=""></span>Eurail</a>
+                                </li>
+                                <li class="nav-item has-dropdown">
+                                    <a class="nav-link"><span><img src="/images/tcHolidays/common-img/more-01.svg" alt=""></span>More</a>
+                                    <ul class="sub-menu submenu-list">
+                                        <li><a class="dropdown-item"><span>Gift cards</span></a></li>
+                                        <li>
+                                            <a class="dropdown-item">
+                                                <span>Offers</span>
+                                                <img src="/images/tcHolidays/common-img/chevron-right-primary.svg" alt="">
+                                            </a>
+                                            <ul class="submenu-list nested-dropdown">
+                                                <li><a href="" class="dropdown-item">Holidays Offers</a></li>
+                                                <li><a href="" class="dropdown-item">Forex Offers</a></li>
+                                                <li><a href="" class="dropdown-item">Flights & Hotels Offers</a>
+                                                </li>
+                                                <li><a href="" class="dropdown-item">Bank Offers</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="dropdown-item"><span>Loyalty Points <span>New</span></span></a></li>
+                                        <li><a class="dropdown-item"><span>MICE</span></a></li>
+                                        <li><a class="dropdown-item"><span>Insurance</span></a></li>
+                                        <li><a class="dropdown-item"><span>Careers</span></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="nav-right d-none d-md-block">
+                            <ul class="navbar-nav">
+                                <li>
+                                    <a class="nav-link btn_login" v-if="!isUserLoggedIn">Login <img
+                                            src="/images/tcHolidays/common-img/log-in.svg" alt=""></a>
+                                    <ul class="profile_dropdown">
+                                        <li><a data-bs-toggle="modal" data-bs-target="#loginModal"><img
+                                                    src="/images/tcHolidays/common-img/customer.svg" alt="">Customer
+                                                Login</a></li>
+                                        <li><a data-bs-toggle="modal" data-bs-target="#agentLoginModal">
+                                                <img src="/images/tcHolidays/common-img/agent.svg" alt="">Agent
+                                                Login</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav after_login" v-if="isUserLoggedIn">
+                                <li>
+                                    <span class="logOutTimer"></span>
+                                    <a class="btn user_btn"><span class="first_letter">{{
+                                            loggedInUserFirstName.charAt(0) }}</span>
+                                        <div class="user_info">
+                                            <span class="full_name">{{loggedInUserFirstName}}</span>
+                                            <div class="agent_logoutTime" v-if="loginMode == 'agent'">
+                                                <img src="/images/tcHolidays/common-img/clock.svg" alt="">
+                                                <span id="agent-logout-timer" class="logOutTimer timer_logout">{{logOutTimer}}</span>
+                                            </div>
+                                        </div>
+                                        <img src="/images/tcHolidays/common-img/chevron-down.svg" alt="">
+                                    </a>
+                                    <ul class="profile_dropdown">
+                                        <li>
+                                            <a href="">
+                                                <div class="icon"><img src="/images/tcHolidays/common-img/user-02.svg"
+                                                        alt=""></div>
+                                                Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="">
+                                                <div class="icon"><img src="/images/tcHolidays/common-img/edit-01.svg"
+                                                        alt=""></div>
+                                                <div class="text">
+                                                    My Bookings
+                                                    <span>View and manage bookings</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="">
+                                                <div class="icon"><img src="/images/tcHolidays/common-img/heart.svg"
+                                                        alt=""></div>
+                                                Wishlist
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="">
+                                                <div class="icon"><img src="/images/tcHolidays/common-img/bell-01.svg"
+                                                        alt=""></div>
+                                                Notifications
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <button @click="logout" class="btn btn_logout">
+                                                <div class="icon">
+                                                    <img src="/images/tcHolidays/common-img/log-out.svg" alt="">
+                                                </div>
+                                                Log Out
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!------Mobile Menu------->
+<div class="mobile_menu d-md-none">
+    <div class="menu_container">
+        <div class="top_block">
+            <div class="user_block">
+                <div class="user_icon">
+                    <img src="/images/tcHolidays/common-img/user.svg" alt="">
+                </div>
+                <div class="user_info">
+                    <p><a href="">Login/Register<img src="/images/tcHolidays/common-img/chevron-right-w.svg" alt=""></a>
+                    </p>
+                    <span>Login and get extra discount</span>
+                </div>
+            </div>
+            <ul class="menu_list">
+                <li v-if="isUserLoggedIn">
+                    <a href="">
+                        <div class="icon">
+                            <img src="/images/tcHolidays/common-img/edit-01.svg" alt="">
+                        </div>
+                        <div class="text">
+                            <p>My Bookings</p>
+                            <span>View and manage bookings</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <img src="/images/tcHolidays/common-img/globe-02.svg" alt="">
+                        </div>
+                        <p>EN</p>
+                    </a>
+                </li>
+                <li v-if="isUserLoggedIn">
+                    <a href="">
+                        <div class="icon">
+                            <img src="/images/tcHolidays/common-img/heart.svg" alt="">
+                        </div>
+                        <p>Wishlist</p>
+                    </a>
+                </li>
+                <li v-if="isUserLoggedIn">
+                    <a href="">
+                        <div class="icon">
+                            <img src="/images/tcHolidays/common-img/bell-01.svg" alt="">
+                        </div>
+                        <p>Notification</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <img src="/images/tcHolidays/common-img/headphones-01.svg" alt="">
+                        </div>
+                        <p>Contact Us</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <img src="/images/tcHolidays/common-img/shield-tick.svg" alt="">
+                        </div>
+                        <p>Privacy Policy</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <img src="/images/tcHolidays/common-img/file-shield-02.svg" alt="">
+                        </div>
+                        <p>Terms of Service</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom_block">
+            <ul>
+                <li>
+                    <div class="left_blk">
+                        <img src="/images/tcHolidays/common-img/customer-care-m.svg" alt="">
+                        <p>Agent Login</p>
+                    </div>
+                    <div class="arrow">
+                        <img src="/images/tcHolidays/common-img/chevron-right-m.svg" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div class="left_blk">
+                        <img src="/images/tcHolidays/common-img/location-m.svg" alt="">
+                        <p>Find Nearest Stores</p>
+                    </div>
+                    <div class="arrow">
+                        <img src="/images/tcHolidays/common-img/chevron-right-m.svg" alt="">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav after_login" v-if="isUserLoggedIn">
+                <li>
+                    <a class="btn user_btn"><span class="first_letter">{{ loggedInUserFirstName.charAt(0) }}</span>
+                        <span class="full_name">{{loggedInUserFirstName}}</span>
+                        <img src="/images/tcHolidays/common-img/chevron-down.svg" alt="">
+                    </a>
+                    <ul class="profile_dropdown">
+                        <li>
+                            <a href="">
+                                <div class="icon"><img src="/images/tcHolidays/common-img/user-02.svg" alt=""></div>
+                                Profile
+                            </a>
+                        </li>
+                        <li v-if="isUserLoggedIn">
+                            <a href="">
+                                <div class="icon"><img src="/images/tcHolidays/common-img/edit-01.svg" alt=""></div>
+                                <div class="text">
+                                    My Bookings
+                                    <span>View and manage bookings</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li v-if="isUserLoggedIn">
+                            <a href="">
+                                <div class="icon"><img src="/images/tcHolidays/common-img/heart.svg" alt=""></div>
+                                Wishlist
+                            </a>
+                        </li>
+                        <li v-if="isUserLoggedIn">
+                            <a href="">
+                                <div class="icon"><img src="/images/tcHolidays/common-img/bell-01.svg" alt=""></div>
+                                Notifications
+                            </a>
+                        </li>
+                        <li>
+                            <button @click="logout" class="btn btn_logout">
+                                <div class="icon">
+                                    <img src="/images/tcHolidays/common-img/log-out.svg" alt="">
+                                </div>
+                                Log Out
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <div class="need_help">
+                <button class="btn">
+                    <div class="icon">
+                        <img src="/images/tcHolidays/common-img/audio-call.svg" alt="">
+                    </div>
+                    <div class="end_blk">
+                        <span>Need Help?</span>
+                        <h5>1800-2099-100</h5>
+                    </div>
+                </button>
+            </div>
+
+            <div class="download_app">
+                <a href="">
+                    <img src="/images/tcHolidays/common-img/app-store.png" alt="">
+                </a>
+                <a href="">
+                    <img src="/images/tcHolidays/common-img/play-store.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn_close">
+        <img src="/images/tcHolidays/common-img/x-close.svg" alt="">
+    </button>
+</div>
+
+<script type="text/javascript" 
+    src="https://d1wrgmw2jqph3l.cloudfront.net/web-translate/on-the-fly.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        new VitraOnTheFly({
+            api_key: "vitra.eqaX0mxlGEPP5EIXQV96aYZbrh7bB1",
+            glossaryId: "7a73af82-6ab4-4bf8-9484-25af40bc2c0e",
+            position: "center-right",
+            theme: "dark",
+        });
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        if ($(window).width() < 768) {
+            $(".language_cta .dropdown-menu").addClass("show")
+            setTimeout(function(){
+                $(".language_cta .dropdown-menu").removeClass("show")
+            },3000);
+        }
+    });
+        
+    // Call this after jQuery and your HTML!
+    window.changeLanguage = function(el) {
+        var selectedLang = $(el).data('lang');
+        var url = window.location.origin + window.location.pathname;
+        var searchParams = new URLSearchParams(window.location.search);
+
+        if (selectedLang === 'hindi') {
+            searchParams.set('lang', 'hindi');
+            window.location.href = url + '?' + searchParams.toString();
+        } else if (selectedLang === 'english') {
+            searchParams.set('lang', 'english');
+            window.location.href = url + '?' + searchParams.toString();
+        }
+    };
+
+    function getQueryParam(name) {
+        var regex = new RegExp('[?&]' + name + '=([^&#]*)');
+        var results = regex.exec(window.location.search);
+        return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
+    }
+
+    // On page load: set button text based on URL parameter
+    function setLanguage(){
+        var lang = getQueryParam('lang');
+        if (lang === 'hindi') {
+            $(".vitra-lang-select-btn span").text('हिन्दी');
+        } else {
+            $(".vitra-lang-select-btn span").text('English');
+        }
+    }
+
+    setLanguage();
+
+    $(window).on("load", function(){
+        setTimeout(function(){
+            setLanguage();
+        }, 2000);
+    })
+</script>

@@ -1,0 +1,219 @@
+
+
+
+
+
+var rooms = ref([]);
+
+const tourType = ref();
+const hubCollection = ref([]);
+const hubCollectionHp = ref([]);
+const holidayPlusSubType = ref('');
+const selectedPackageClassId = ref(0);
+const ltHubCode = ref('');
+const hubCity = ref('');
+const subType = ref('');
+const productId = ref('');
+
+createApp({
+    setup() {
+        // Access the global packageDetailsResponse from holidayPdp.js
+        const packageDetailsResponse = window.packageDetailsResponse || ref([]);
+        
+        // Sync with global variables from holidayPdp.js
+        const syncGlobalData = () => {
+            console.log('Calculate Price: Syncing global data...');
+            console.log('Global productId:', window.productId?.value);
+            console.log('Global holidayPlusSubType:', window.holidayPlusSubType?.value);
+            console.log('Global hubCollectionHp length:', window.hubCollectionHp?.value?.length);
+            console.log('Global hubCollection length:', window.hubCollection?.value?.length);
+            
+            if (window.holidayPlusSubType?.value !== undefined) {
+                holidayPlusSubType.value = window.holidayPlusSubType.value;
+            }
+            if (window.productId?.value !== undefined) {
+                productId.value = window.productId.value;
+            }
+            if (window.hubCollection?.value !== undefined) {
+                hubCollection.value = window.hubCollection.value;
+                console.log("Calculate Price: hubCollection synced:", hubCollection.value);
+            }
+            if (window.hubCollectionHp?.value !== undefined) {
+                hubCollectionHp.value = window.hubCollectionHp.value;
+                console.log("Calculate Price: hubCollectionHp synced:", hubCollectionHp.value);
+            }
+            if (window.packageDetailsResponse?.value) {
+                // Update local reactive references
+                const pkgData = window.packageDetailsResponse.value[0]?.packageDetail;
+                if (pkgData) {
+                    holidayPlusSubType.value = pkgData.holidayPlusSubType;
+                    console.log("Calculate Price: Data synced - holidayPlusSubType:", holidayPlusSubType.value);
+                }
+            }
+            
+            console.log('Calculate Price: Local values after sync:');
+            console.log('- productId:', productId.value);
+            console.log('- holidayPlusSubType:', holidayPlusSubType.value);
+            console.log('- hubCollectionHp length:', hubCollectionHp.value?.length);
+            console.log('- hubCollection length:', hubCollection.value?.length);
+        };
+
+        // Initial sync
+        syncGlobalData();
+
+        // Watch for changes in the global packageDetailsResponse
+        const checkForGlobalData = setInterval(() => {
+            if (window.packageDetailsResponse?.value) {
+                syncGlobalData();
+                clearInterval(checkForGlobalData);
+            }
+        }, 100);
+
+        // Additional check for hub collections since they load via API calls
+        const checkForHubData = setInterval(() => {
+            if (window.hubCollectionHp?.value?.length > 0 || window.hubCollection?.value?.length > 0) {
+                syncGlobalData();
+                console.log('Calculate Price: Hub data detected, syncing...');
+                clearInterval(checkForHubData);
+            }
+        }, 200);
+
+        // Also watch for direct changes
+        watch(
+            () => window.packageDetailsResponse?.value,
+            (newVal) => {
+                if (newVal && newVal[0]?.packageDetail) {
+                    syncGlobalData();
+                }
+            },
+            { immediate: true, deep: true }
+        );
+
+        // Watch for hub collection changes
+        watch(
+            () => window.hubCollection?.value,
+            (newVal) => {
+                if (newVal) {
+                    hubCollection.value = newVal;
+                    console.log('Calculate Price: hubCollection updated from global:', newVal);
+                }
+            },
+            { immediate: true, deep: true }
+        );
+
+        watch(
+            () => window.hubCollectionHp?.value,
+            (newVal) => {
+                if (newVal) {
+                    hubCollectionHp.value = newVal;
+                    console.log('Calculate Price: hubCollectionHp updated from global:', newVal);
+                }
+            },
+            { immediate: true, deep: true }
+        );
+
+        watch(
+            () => window.productId?.value,
+            (newVal) => {
+                if (newVal !== undefined) {
+                    productId.value = newVal;
+                    console.log('Calculate Price: productId updated from global:', newVal);
+                }
+            },
+            { immediate: true }
+        );
+        
+        // Code Migration Start
+        const isCustomized = packageDetailsResponse?.value?.[0]?.packageDetail?.isCustomizedHolidaysPkg;
+        if ((isCustomized === true && subType.value === 'GIT') || subType.value !== 'GIT') {
+            tourType.value = 'Customized Tour';
+        } else {
+            tourType.value = 'Group Tour';
+        }
+
+
+        const sighSeeingDetailCollection = () => {
+            const list = packageDetailsResponse.value?.[0]?.packageDetail?.tcilHolidaySightseeingDetailsCollection;
+            if (!Array.isArray(list)) return null;
+
+            const filteredItems = list.filter(item => item.packageClassId === selectedPackageClassId.value);
+            return filteredItems.length > 0 ? filteredItems : null;
+        };
+
+        const filteredAccommodations = computed(() => {
+            if (!packageDetailsResponse.value?.[0]?.packageDetail?.tcilHolidayAccomodationDetailsCollection) {
+                return [];
+            }
+
+            return packageDetailsResponse.value[0]?.packageDetail?.tcilHolidayAccomodationDetailsCollection
+                .filter(acc => acc.packageClassId === parseInt(selectedPackageClassId.value))
+                .sort((a, b) => a.day - b.day); // Sort by day
+        });
+
+        // Code Migration End
+        rooms.value.push({ noOfAdults: 2, noOfCwb: 0, noOfCnb: 0, noOfInfant: 0 });
+        console.log("Rooms ---- ", rooms.value);
+        function addRoom() {
+            rooms.value.push({ noOfAdults: 2, noOfCwb: 0, noOfCnb: 0, noOfInfant: 0 });
+        }
+
+        function increment(roomIndex, key) {
+            rooms.value[roomIndex][key]++;
+        }
+
+        function decrement(roomIndex, key) {
+            if (rooms.value[roomIndex][key] > 0) {
+                rooms.value[roomIndex][key]--;
+            }
+        }
+
+        function getTotalPaxCounts() {
+            let totalAdults = 0;
+            let totalChildWithBed = 0;
+            let totalChildWithoutBed = 0;
+            let totalInfants = 0;
+
+            rooms.value.forEach(room => {
+                totalAdults += Number(room.noOfAdults) || 0;
+                totalChildWithBed += Number(room.noOfCwb) || 0;
+                totalChildWithoutBed += Number(room.noOfCnb) || 0;
+                totalInfants += Number(room.noOfInfant) || 0;
+            });
+
+            return {
+                totalAdults,
+                totalChildWithBed,
+                totalChildWithoutBed,
+                totalInfants
+            };
+        }
+
+        // Hub city change handler
+        const modifyLtHubCity = () => {
+            console.log('Hub city changed to:', ltHubCode.value);
+            // You can add hub city change logic here
+        };
+
+        return {
+            rooms,
+            addRoom,
+            increment,
+            decrement,
+            getTotalPaxCounts,
+            tourType,
+            hubCollection,
+            hubCollectionHp,
+            holidayPlusSubType,
+            selectedPackageClassId,
+            ltHubCode,
+            hubCity,
+            productId,
+            modifyLtHubCity,
+            packageDetailsResponse,
+            sighSeeingDetailCollection,
+            filteredAccommodations
+        };
+    }
+}).mount(".calculate_price");
+
+

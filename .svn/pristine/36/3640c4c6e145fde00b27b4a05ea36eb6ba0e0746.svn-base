@@ -1,0 +1,5778 @@
+/*#tcHomeMainBanner .carousel-image-wrapper {
+    height: 900px !important;
+}*/
+/*#tcHomeMainBanner .carousel-wrapper{
+    margin-bottom: 500px;
+}*/
+/*#tcHomeMainBanner .owl-stage{
+    transform: translate3d(-2027px, 0px, 0px) !important;
+    transition: all;
+    width: 8106px;
+}
+#tcHomeMainBanner .carousel-image-wrapper {
+    height: 100px !important; 
+    overflow: hidden;
+}*/
+
+/*=========Hero Section CSS Start=========*/
+.hero_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 81.848vh;
+    margin-top: 12px;
+	flex-direction: column;
+	overflow: hidden;
+}
+#tchomeTrendingCities .carousel-caption-overlay{
+    z-index: 1;
+}
+
+.hero_section:has(.hero_slider) {
+    padding: 16px;
+    height: 435px;
+    flex-direction: column;
+    margin: 0;
+}
+
+.hero_section .hero_slider {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.hero_section .hero_slider .slide_item {
+    background: var(--color-white);
+}
+
+.hero_section .hero_slider .slide_item img {
+    width: 100%;
+    height: 535px;
+    object-fit: cover;
+}
+
+.hero_section .owl-carousel .owl-nav button.owl-prev,
+.hero_section .owl-carousel .owl-nav button.owl-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0 !important;
+}
+
+.hero_section .owl-carousel .owl-nav button.owl-prev {
+    left: 12px;
+}
+
+.hero_section .owl-carousel .owl-nav button.owl-next {
+    right: 12px;
+}
+
+.hero_section .owl-carousel .owl-nav button.owl-prev img,
+.hero_section .owl-carousel .owl-nav button.owl-next img {
+    width: 42px;
+    height: auto;
+}
+
+.hero_section .search_tcLanding {
+    margin-top: -32px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero_section .search_tcLanding .search_box {
+    width: 825px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    border-radius: 16px;
+    background: var(--Blue-blue-2);
+    box-shadow: 0 -8px 15px -3px rgba(0, 0, 0, 0.10), 0 2px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.hero_section .search_tcLanding .search_box .form-control {
+    padding: 18px 24px;
+    border-radius: 14px 0 0 14px;
+    height: 64px;
+}
+
+.hero_section .search_tcLanding .search_box .btn_search {
+    position: unset;
+    width: 64px;
+    height: 64px;
+    border-radius: 0 14px 14px 0;
+}
+
+.hero_section .search_tcLanding .search_box .btn_voiceAsst {
+    padding: 18px 24px;
+    position: absolute;
+    right: 64px;
+}
+
+.hero_section .search_tcLanding .search_box .btn_voiceAsst img {
+    width: 24px;
+    height: auto;
+}
+
+.hero_section .hero_wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    clip-path: inset(0px 24px 0px 24px round 24px);
+    animation-name: welcomeFadeIn, welcomeMoveIn;
+    animation-duration: calc(0.9 * 1s), calc(0.7 * 1s);
+    animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    animation-fill-mode: both;
+    position: relative;
+}
+
+.hero_section .hero_wrapper.with_overlay::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.28) 100%);
+}
+
+.hero_section .bnr_video,
+.hero_section .bnr_video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero_section:has(.bnr_img) {
+    padding: 0;
+    margin-top: 8px;
+    height: 350px;
+    position: relative;
+}
+
+.hero_section:has(.bnr_img)::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.hero_section .bnr_img {
+    width: 100%;
+    height: 100%;
+}
+
+.hero_section .bnr_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero_section:has(.bnr_img) .bnr_text {
+    padding: 72px 232px 56px 232px;
+}
+
+.hero_section:has(.bnr_img) .bnr_text h1 {
+    font: normal normal 600 56px / 100% var(--font-heading);
+}
+
+.hero_section .bnr_text {
+    position: absolute;
+    z-index: 0;
+    transition: 0.3s all ease-out;
+}
+
+.hero_section .bnr_text h1 {
+    color: var(--color-white);
+    text-align: center;
+}
+
+.hero_section .bnr_text h4 {
+    font: normal normal 300 28px/100% var(--font-primary);
+    color: var(--color-white);
+    text-align: center;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.12);
+    letter-spacing: 0.28px;
+    margin: 23px 0 48px;
+}
+
+.hero_section .search_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    gap: 12px;
+}
+
+.hero_section .search_box {
+    position: relative;
+    width: 599px;
+    border-radius: 100px;
+    background: var(--color-white);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+}
+
+.hero_section .search_box .search_form {
+    position: relative;
+    border-bottom: 1px solid var(--Gray-Mode-100);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.hero_section .search_form span {
+    position: absolute;
+    left: 0;
+    line-height: 1;
+}
+
+.hero_section .search_form span img {
+    width: 24px;
+    height: auto;
+}
+
+.hero_section .search_box .form-control {
+    font: normal normal 400 18px/144.44% var(--font-primary);
+    color: var(--Gray-Mode-950);
+    letter-spacing: 0.027px;
+    width: 100%;
+    border: none;
+    padding: 20px 24px;
+    border-radius: 60px;
+}
+
+.hero_section .search_box .form-control::placeholder {
+    color: #8a94a6;
+}
+
+.hero_section .search_box .btn_search {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 6px;
+    margin: auto;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    border-radius: 100px;
+    backdrop-filter: blur(3px);
+}
+
+.hero_section .search_box .btn_search img,
+.hero_section .search_box .btn_cross img,
+.hero_section .search_popup .btn_cross img {
+    width: 24px;
+    height: auto;
+}
+
+.hero_section .search_box .btn_cross,
+.hero_section .search_popup .btn_cross {
+    position: absolute;
+    right: 78px;
+    top: 0;
+    bottom: 0;
+    padding: 0;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    display: none;
+    animation: scaleZoom 0.3s ease-out;
+}
+
+@keyframes scaleZoom {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.hero_section .search_popup {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 148px;
+    width: 100%;
+    display: block;
+    max-width: 816px;
+    height: 483px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 24px;
+    background: var(--color-white);
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 999;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.hero_section .search_popup.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.hero_section .search_popup:has([data-type="domestic"]),
+.hero_section .search_popup:has([data-type="international"]) {
+    height: auto;
+}
+
+.hero_section .search_popup .search_card {
+    height: 100%;
+    overflow: hidden;
+}
+
+.hero_section .search_popup .search_form {
+    position: relative;
+    border-bottom: 1px solid var(--Gray-Mode-100);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.hero_section .search_popup .search_form .form-control {
+    font: normal normal 400 18px/26px var(--font-primary);
+    color: var(--Gray-Mode-950);
+    letter-spacing: 0.027px;
+    width: 100%;
+    border: none;
+    padding: 0 0 0 36px;
+}
+
+.hero_section .search_popup .btn_cross {
+    right: 0;
+    bottom: unset;
+}
+
+.hero_section .search_popup .result_box {
+    height: calc(100% - 67px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.hero_section .search_popup .result_box::-webkit-scrollbar-track,
+.hero_section .search_popup .top_item::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+.hero_section .search_popup .result_box::-webkit-scrollbar,
+.hero_section .search_popup .top_item::-webkit-scrollbar {
+    width: 6px;
+    background-color: #fff;
+}
+
+.hero_section .search_popup .result_box::-webkit-scrollbar-thumb,
+.hero_section .search_popup .top_item::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+}
+
+
+.hero_section .search_popup .search_result:not(:last-child) {
+    border-bottom: 1px solid var(--Gray-Mode-100);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.hero_section .search_popup .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.hero_section .search_popup .top span,
+.hero_section .search_popup .no-results {
+    letter-spacing: 0.035px;
+    font: normal normal 500 14px/142.857% var(--font-primary);
+    color: var(--Gray-Mode-950);
+    display: block;
+}
+
+.hero_section .search_popup .top span a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.hero_section .search_popup .top_item {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: calc(100% - 67px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.hero_section .search_item .thd_section .row {
+    row-gap: 16px;
+    --bs-gutter-x: 16px;
+}
+
+.hero_section .search_item .thd_section .card_box {
+    padding: 7px;
+    border-radius: 16px;
+    border: 1px solid var(--Gray-Mode-100);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hero_section .search_item .thd_section .img_box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 1px solid #f2f0f1;
+    overflow: hidden;
+}
+
+.hero_section .search_item .thd_section .img_box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero_section .search_item .thd_section .text_box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hero_section .search_item .thd_section .text_box span {
+    font: normal normal 400 14px/142.857% var(--font-primary);
+    letter-spacing: 0.035px;
+    color: var(--Gray-Mode-950);
+    display: block;
+}
+
+.hero_section .search_item .thd_section .text_box a {
+    font: normal normal 500 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.hero_section .search_result ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.hero_section .search_result ul li a {
+    font: normal normal 400 14px/142.857% var(--font-primary);
+    letter-spacing: 0.035px;
+    color: var(--Gray-Mode-700);
+    padding: 0px 6px 0px 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    letter-spacing: 0.14px;
+    text-decoration: none;
+}
+
+.hero_section .search_result ul li img {
+    width: 32px;
+    height: auto;
+}
+
+.hero_section .voice_assistance .btn {
+    width: 68px;
+    height: 68px;
+    border-radius: 100px;
+    padding: 22px;
+    background: var(--color-white);
+    backdrop-filter: blur(3px);
+}
+
+.hero_section .voice_assistance .btn img {
+    width: 100%;
+    height: auto;
+}
+
+/*=========Hero Section CSS End=========*/
+
+/*=========Recent CSS Start==========*/
+.recents_searches .owl-nav {
+    display: flex;
+    gap: 16px;
+}
+
+.recents_searches .owl-nav button {
+    width: 44px;
+    height: 44px;
+    padding: 12px;
+    border-radius: 50px;
+    background: var(--color-primary);
+    box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.15);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s all ease-out;
+}
+
+.recents_searches .owl-nav button img {
+    width: 100%;
+    height: auto;
+    filter: brightness(0) invert(1);
+    transition: 0.5s all ease-out;
+}
+
+.recents_searches .owl-nav button.disabled {
+    background-color: var(--color-white);
+    opacity: 1;
+}
+
+.recents_searches .owl-nav button.disabled img {
+    filter: unset;
+}
+
+.recents_searches .item_card {
+    padding: 2px;
+    border-radius: 20px;
+    background: linear-gradient(225deg, #2e90fa 0%, #175cd3 100%);
+    transition: 0.5s all ease-out;
+}
+
+.recents_searches .item_card:hover {
+    transform: scale(0.97);
+}
+
+.recents_searches .item_card .top_box {
+    padding: 16px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.recents_searches .item_card .top_box:has(.tpb_top) {
+    height: 113px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.recents_searches .item_card .top_box .tpb_top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recents_searches .item_card .top_box .tpb_top p {
+    font-weight: 600;
+    color: var(--Gray-Mode-950);
+}
+
+.recents_searches .item_card .top_box .tpb_cntr {
+    width: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+}
+
+.recents_searches .item_card .top_box .tpb_cntr::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    content: "";
+    width: 100%;
+    height: 0.5px;
+    background-color: var(--Gray-Mode-300);
+    margin: auto;
+    z-index: -1;
+}
+
+.recents_searches .item_card .top_box .tpb_cntr span {
+    padding: 0 4px;
+    background-color: var(--color-white);
+}
+
+.recents_searches .item_card .top_box .tpb_cntr span img {
+    width: 20px;
+    height: auto;
+}
+
+.recents_searches .item_card .tpb_btm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recents_searches .item_card .tpb_btm .days {
+    font: normal normal 600 12px/133.33% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--color-primary);
+    text-align: center;
+    border-radius: 100px;
+    background: var(--Blue-blue-2);
+    backdrop-filter: blur(2px);
+    padding: 4px 8px;
+    display: block;
+}
+
+.recents_searches .item_card .tpb_btm .top_blck {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.recents_searches .item_card .tpb_btm .top_blck span {
+    font: normal normal 400 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--Gray-Mode-700);
+    display: block;
+}
+
+.recents_searches .item_card .tp_lft {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recents_searches .item_card .tp_lft .days {
+    font: normal normal 600 12px/133.33% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--color-primary);
+    text-align: center;
+    border-radius: 100px;
+    background: #eff8ff;
+    backdrop-filter: blur(2px);
+    padding: 4px 8px;
+    display: block;
+}
+
+.recents_searches .item_card .tp_lft .top_blck {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.recents_searches .item_card .tp_lft .top_blck .icon {
+    line-height: 1;
+}
+
+.recents_searches .item_card .tp_lft .top_blck span {
+    font: normal normal 500 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--Gray-Mode-500);
+    display: block;
+}
+
+.recents_searches .item_card .tp_lft .icon img {
+    width: 16px;
+    height: auto;
+}
+
+.recents_searches .item_card .top_box h6 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    color: var(--Gray-Mode-950);
+    margin: 8px 0;
+}
+
+.recents_searches .item_card .top_box .btm_blck {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.recents_searches .item_card .top_box .btm_blck span {
+    font: normal normal 500 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--Gray-Mode-700);
+    display: block;
+}
+
+.recents_searches .item_card .top_box .btm_blck .dot {
+    width: 6px;
+    height: 6px;
+    background-color: #d4d4d4;
+    border-radius: 50%;
+}
+
+.recents_searches .item_card .top_box .btm_blck .btn {
+    font: normal normal 500 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--Gray-Mode-950);
+    padding: 0;
+}
+
+.recents_searches .item_card .bottom_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px 14px;
+}
+
+.recents_searches .item_card .bottom_box h6 {
+    color: var(--color-white);
+}
+
+.recents_searches .item_card .bottom_box span {
+    font: normal normal 500 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--Gray-Mode-100);
+    display: block;
+}
+
+.recents_searches .item_card .bottom_box .btn_withIcon img {
+    width: 16px !important;
+    height: auto;
+}
+
+/*=========Recent CSS End==========*/
+
+/*=========Trending Destination CSS Start==========*/
+.trending_section .nav {
+    border-radius: 100px;
+    background: var(--Gray-Mode-50);
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    gap: 2px;
+}
+
+.trending_section .nav-pills .nav-link {
+    font: normal normal 400 16px/150% var(--font-primary);
+    color: var(--Gray-Mode-500);
+    letter-spacing: 0.024px;
+    background-color: transparent;
+    border-radius: 100px;
+    width: 152px;
+    padding: 8px 16px;
+    transition: 0.5s all ease-in-out;
+}
+
+.trending_section .nav-pills .nav-link.active {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+}
+
+.trending_section .tab-pane {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+    opacity: 0;
+}
+
+.trending_section .tab-pane.active.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.trending_section .td_slide {
+    display: flex;
+}
+
+.trending_section .card_animation {
+    width: 100%;
+    height: 295px;
+    border-radius: 144.118px;
+    padding-top: 38px;
+    border: 2px solid #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+    transition: 0.5s all ease-out;
+}
+
+.trending_section .card_animation:hover {
+    padding-top: 24px;
+    box-shadow: 0px 12px 44px -18px rgba(35, 31, 26, 0.36);
+}
+
+.trending_section .card_animation.europe {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, #fff 100.08%), #ca9339;
+}
+
+.trending_section .card_animation::before,
+.trending_section .card_animation::after {
+    position: absolute;
+    content: "";
+    background-repeat: no-repeat;
+    transition: 0.5s all ease-out;
+    z-index: 1;
+}
+
+.trending_section .card_animation.europe::before {
+    left: -9px;
+    bottom: -59px;
+    width: 156.097px;
+    height: 225px;
+    background-image: url(../../images/thomasCookLP/TrendingDestinations/europe-bg-before.png);
+    background-size: 112px;
+}
+
+.trending_section .card_animation.europe:hover::before {
+    left: 0;
+    bottom: -30px;
+    background-size: 126px;
+}
+
+.trending_section .card_animation.europe::after {
+    right: -33px;
+    bottom: -41px;
+    width: 83.438px;
+    height: 125px;
+    background-image: url(../../images/thomasCookLP/TrendingDestinations/europe-bg-after.png);
+    background-size: 51.438px;
+    z-index: -1;
+}
+
+.trending_section .card_animation.europe:hover::after {
+    right: -20px;
+    bottom: -10px;
+    background-size: 64.438px;
+}
+
+.trending_section .card_animation .text img {
+    width: 142px;
+    height: auto;
+    margin: auto;
+    display: block;
+    transition: 0.5s all ease-out;
+}
+
+.trending_section .card_animation:hover .text img {
+    width: 110px;
+}
+
+.trending_section .card_animation .bg_img {
+    position: absolute;
+    left: auto;
+    right: auto;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    transition: 0.5s all ease-out;
+}
+
+.trending_section .card_animation.europe:hover .bg_img {
+    width: 216px;
+}
+
+/**********Australia CSS**********/
+.trending_section .card_animation.australia {
+    background: linear-gradient(180deg, #014ab3 0%, #93bde3 100.08%);
+}
+
+.trending_section .card_animation.australia:hover .bg_img {
+    width: 240px;
+}
+
+/**********singapore CSS**********/
+.trending_section .card_animation.singapore {
+    background: linear-gradient(175deg, rgba(132, 202, 255, 0.6) -15.73%, rgba(245, 250, 255, 0.6) 95.97%);
+}
+
+.trending_section .card_animation.singapore .bg_img {
+    width: 102px;
+}
+
+.trending_section .card_animation.singapore:hover .bg_img {
+    width: 112px;
+}
+
+.trending_section .card_animation.singapore::before {
+    left: auto;
+    right: auto;
+    bottom: 0;
+    width: 100%;
+    height: 117px;
+    background-image: url(../../images/thomasCookLP/TrendingDestinations/singapore-bg-before.png);
+    background-size: 100%;
+    z-index: -1;
+}
+
+.trending_section .card_animation.singapore:hover::before {
+    width: 230px;
+    height: 140px;
+}
+
+.trending_section .card_animation.singapore::after {
+    display: none;
+}
+
+/**********Vietnam CSS**********/
+.trending_section .card_animation.vietnam {
+    background: linear-gradient(180deg, #ffdcba 0%, #fff9f3 100%);
+}
+
+.trending_section .card_animation.vietnam:hover .bg_img {
+    width: 232px;
+}
+
+.trending_section .card_animation.vietnam::before,
+.trending_section .card_animation.vietnam::after {
+    display: none;
+}
+
+/**********Mauritius CSS**********/
+.trending_section .card_animation.mauritius {
+    background: linear-gradient(0deg, #fffef0 0%, #d1e9ff 100%);
+}
+
+.trending_section .card_animation.mauritius .bg_img {
+    width: 160px;
+    left: 0;
+    bottom: 8px;
+}
+
+.trending_section .card_animation.mauritius:hover .bg_img {
+    width: 183px;
+}
+
+.trending_section .card_animation.mauritius::before {
+    left: auto;
+    right: 0;
+    bottom: 0;
+    width: 70px;
+    height: 90px;
+    background-image: url(../../images/thomasCookLP/TrendingDestinations/mauritius-bg-before.png);
+    background-size: 70px;
+    z-index: -1;
+}
+
+.trending_section .card_animation.mauritius:hover::before {
+    bottom: 10px;
+    width: 80px;
+    background-size: 80px;
+}
+
+.trending_section .card_animation.bali::after {
+    display: none;
+}
+
+/**********South Africa CSS**********/
+.trending_section .card_animation.south-africa {
+    background: linear-gradient(180deg, #fede17 0%, #ea3d0e 100%);
+}
+
+.trending_section .card_animation.south-africa .bg_img {
+    width: 165px;
+    left: 0;
+}
+
+.trending_section .card_animation.south-africa:hover .bg_img {
+    width: 190px;
+    left: -12px;
+}
+
+.trending_section .card_animation.south-africa::before {
+    left: auto;
+    right: 0;
+    bottom: 0;
+    width: 105px;
+    height: 90px;
+    background-image: url(../../images/thomasCookLP/TrendingDestinations/south-africa-bg-before.png);
+    background-size: 105px;
+}
+
+.trending_section .card_animation.south-africa:hover::before {
+    bottom: 6px;
+    right: -15px;
+    background-size: 105px;
+}
+
+.trending_section .card_animation.south-africa::after {
+    display: none;
+}
+
+/*********Package CSS*********/
+.trending_section .card_animation .bg_img img {
+    width: 100%;
+    height: auto;
+}
+
+.trending_section .card_animation .package,
+.trending_section .card_india .package {
+    background: linear-gradient(180deg, rgba(151, 151, 151, 0) 0%, rgba(0, 0, 0, 0.5) 50.36%, rgba(0, 0, 0, 0.8) 100%);
+    padding: 32px 16px 16px 16px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    transform: translateY(150px);
+    transition: 0.5s all ease-out;
+    z-index: 2;
+}
+
+.trending_section .card_animation:hover .package,
+.trending_section .card_india:hover .package {
+    transform: translateY(0);
+}
+
+.trending_section .card_animation .package h6,
+.trending_section .card_india .package h6 {
+    color: var(--color-white);
+    text-align: center;
+    letter-spacing: 0.027px;
+    margin-top: -4px;
+    margin-bottom: 12px;
+}
+
+.trending_section .card_animation .package p,
+.trending_section .card_india .package p {
+    font-weight: 400;
+    color: #f8f9fa;
+    letter-spacing: 0.024px;
+    text-align: center;
+}
+
+.trending_section .card_animation .package .btn,
+.trending_section .card_india .package .btn {
+    width: fit-content;
+    margin: auto;
+    padding: 6px 12px;
+}
+
+/*********India Tab CSS********/
+.trending_section .card_india {
+    width: 100%;
+    height: 295px;
+    padding-top: 38px;
+    border-radius: 144.118px;
+    border: 2px solid #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+    transition: 0.5s all ease-out;
+}
+
+.trending_section .card_india:hover {
+    padding-top: 24px;
+    box-shadow: 0px 12px 44px -18px rgba(35, 31, 26, 0.36);
+}
+
+.trending_section .card_india .text img {
+    width: 142px;
+    height: auto;
+    display: block;
+    margin: auto;
+    transition: 0.5s all ease-out;
+}
+
+.trending_section .card_india:hover .text img {
+    width: 110px;
+}
+
+.trending_section .card_india .bg_img {
+    position: absolute;
+    left: auto;
+    right: auto;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    transition: 0.5s all ease-out;
+    z-index: -1;
+}
+
+.trending_section .card_india .bg_img img {
+    width: 100%;
+    height: auto;
+}
+
+.trending_section .card_india.kerala {
+    background: #fff;
+}
+
+.trending_section .card_india.kerala:hover .bg_img {
+    width: 210px;
+}
+
+.trending_section .card_india.bhutan {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, #fff 100%), linear-gradient(0deg, #264a58 0%, #264a58 100%);
+}
+
+.trending_section .card_india.bhutan:hover .bg_img {
+    width: 225px;
+}
+
+.trending_section .card_india.sri-lanka {
+    background: linear-gradient(180deg, #fad7ad 0%, #fffaf3 100%);
+}
+
+.trending_section .card_india.sri-lanka:hover .bg_img {
+    width: 230px;
+}
+
+.trending_section .card_india.uttrakhand {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 66.39%), #b9c9d0;
+}
+
+.trending_section .card_india.uttrakhand:hover .bg_img {
+    width: 226px;
+}
+
+.trending_section .card_india.kashmir {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 66.39%), #bbdfdf;
+}
+
+.trending_section .card_india.kashmir:hover .bg_img {
+    width: 235px;
+}
+
+.trending_section .card_india.north-east {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 66.39%), #b9c9d0;
+}
+
+.trending_section .card_india.north-east:hover .bg_img {
+    width: 230px;
+}
+
+.trending_section .owl-nav button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.trending_section .owl-nav .owl-prev {
+    left: -22px;
+}
+
+.trending_section .owl-nav .owl-next {
+    right: -22px;
+}
+
+/*=========trending Destination CSS End==========*/
+
+/*=========Forex Services CSS Start==========*/
+.forex_services {
+    background: #FFF7F2;
+    position: relative;
+    z-index: 0;
+    height: 625px;
+}
+
+.forex_services::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: ' ';
+    width: 100%;
+    height: 100%;
+    background-image: url(/images/tcHolidays/tcHome/forex-bg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.forex_services .forex_grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+.forex_services .forex_grid .card_box {
+    padding: 16px;
+    border-radius: 16px;
+    height: 340px;
+    position: relative;
+    z-index: 0;
+    transition: .4s all ease-out;
+}
+
+.forex_services .forex_grid .card_box:hover {
+    transform: translateY(-6px);
+}
+
+.forex_services .forex_grid .card_box .bg_img {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.forex_services .forex_grid .card_box .bg_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+.forex_services .forex_grid .card_box h6 {
+    color: var(--color-white);
+    letter-spacing: 0.027px;
+    margin-bottom: 8px;
+}
+
+.forex_services .forex_grid .card_box .btn {
+    padding: 0;
+}
+
+.forex_services .forex_grid .card_box .btn img {
+    width: 24px;
+    height: auto;
+    filter: brightness(0) invert(1);
+}
+
+.forex_services .forex_grid .card_one {
+    background: linear-gradient(345deg, #2E90FA -12.79%, #2260CC 93.76%);
+}
+
+.forex_services .forex_grid .card_two {
+    background: linear-gradient(232deg, #DB9125 -53.99%, #DC9327 -53.5%, #E8B744 -45.25%, #F2D35B -36.94%, #F9E76B -28.61%, #FEF375 -20.28%, #FFF778 -11.91%, #EAC34A 4.88%, #D99A26 17.2%, #CB8E24 21.71%, #B77E21 29.83%, #AB741F 38.01%, #A7711E 46.28%, #AB7622 54.36%, #B8852E 64.26%, #CD9E42 75.11%, #EBC15E 86.58%, #F6CE69 90.46%, #F3C962 99.13%, #EBBA4F 111.53%, #DEA231 126.13%, #D99A26 130.46%, #F6CE69 157.99%), linear-gradient(225deg, #2E90FA 0%, #175CD3 100%);
+}
+
+.forex_services .forex_grid .card_three {
+    background: linear-gradient(340deg, #77909E -14.61%, #101E27 84.92%);
+}
+
+.forex_services .forex_grid .card_four {
+    background: radial-gradient(177.81% 100.59% at 0% -7.33%, #032A5E 0%, #000 100%);
+}
+
+.forex_services .forex_grid .card_five {
+    background: linear-gradient(358deg, #FD853A 1.57%, #EC4A0A 100.01%);
+}
+
+.forex_services .forex_strip {
+    padding: 8px;
+    border-radius: 12px;
+    background: var(--color-white);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: 168px auto 248px;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.forex_services .forex_strip .select_wrapper .custom_select,
+.forex_services .forex_strip .select_wrapper .form-select {
+    padding: 9px 11px;
+}
+
+.forex_services .forex_strip .select_wrapper .select_options {
+    padding: 0;
+}
+
+.forex_services .forex_strip .select_wrapper .select_options li {
+    padding: 10px 12px;
+    border: none;
+}
+
+.forex_services .forex_strip .select_wrapper:after {
+    width: 32px;
+    height: 32px;
+}
+
+.forex_services .forex_strip .center_forex {
+    border-radius: 4px;
+    background: #FFF691;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    overflow: hidden;
+}
+
+.forex_services .forex_strip .center_forex .forex_wrapper {
+    overflow: hidden;
+}
+
+.forex_services .forex_strip .center_forex .forex_group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.forex_services .forex_strip .center_forex span {
+    font: normal normal 500 14px/20px var(--font-primary);
+    color: var(--Gray-Mode-950);
+    letter-spacing: 0.035px;
+    display: block;
+    white-space: nowrap;
+}
+
+.forex_services .forex_strip .center_forex .divider {
+    width: 1px;
+    min-width: 1px;
+    height: 16px;
+    background-color: var(--Gray-Mode-400);
+}
+
+.forex_services .buttons_grp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.forex_services .buttons_grp .btn {
+    font: normal normal 400 14px/20px var(--font-primary);
+    padding: 10px 16px;
+    letter-spacing: 0.035px;
+    border: none;
+}
+
+.forex_services .buttons_grp .btn_secondary {
+    background-color: var(--color-secondary);
+    color: var(--Gray-Mode-950);
+}
+
+/*=========Forex Services CSS End==========*/
+
+/*=========Thomas Cook Specials CSS Start==========*/
+.tc_specials {
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+}
+
+.tc_specials.tcSpecial_bg {
+    background: var(--Blue-blue-1);
+}
+
+.tc_specials::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/tc-specials/tc-special.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: -1;
+}
+
+.tc_specials .inner__gapTop {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.tc_specials .top_section {
+    display: grid;
+    grid-template-columns: 416px 856px;
+    gap: 24px;
+}
+
+.tc_specials .festival_blck {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+    transition: 0.5s all ease-out;
+}
+
+.tc_specials .festival_blck:hover {
+    transform: translateY(-6px);
+}
+
+.tc_specials .festival_blck .bg_img {
+    width: 100%;
+    height: 100%;
+}
+
+.tc_specials .festival_blck .bg_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tc_specials .festival_blck .text_box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 24px;
+}
+
+.tc_specials .top_section h4,
+.tc_specials .festival_blck h4 {
+    color: var(--color-white);
+}
+
+.tc_specials .top_section h6,
+.tc_specials .festival_blck h6 {
+    font-weight: 400;
+    line-height: 142.857%;
+    letter-spacing: 0.035px;
+    color: var(--color-white);
+    margin: 4px 0;
+}
+
+.tc_specials .festival_blck .text_box span,
+.tc_specials .top_section .item_slide .content_blk .price,
+.tc_specials .bottom_section .card_box span {
+    font: normal normal 400 14px / 142.857% var(--font-primary);
+    color: var(--color-white);
+    letter-spacing: 0.035px;
+    display: block;
+}
+
+.tc_specials .top_section h6 span,
+.tc_specials .top_section .price b,
+.tc_specials .festival_blck .text_box span b,
+.tc_specials .bottom_section .card_box span b {
+    font-weight: 600;
+}
+
+.tc_specials .top_section .btn,
+.tc_specials .festival_blck .btn {
+    font: normal normal 500 12px / 133.333% var(--font-primary);
+    color: var(--color-black);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 100px;
+    background: var(--color-white);
+    width: fit-content;
+    margin-top: 16px;
+    transition: 0.5s all ease-out;
+}
+
+.tc_specials .top_section .btn:hover,
+.tc_specials .festival_blck .btn:hover {
+    background-color: var(--color-secondary);
+}
+
+.tc_specials .top_section .btn img,
+.tc_specials .festival_blck .btn img {
+    width: 16px;
+    height: auto;
+}
+
+.tc_specials .top_section .wildlife_slide {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.tc_specials .top_section .item_slide {
+    position: relative;
+}
+
+.tc_specials .top_section .item_slide .img_box img {
+    width: 100%;
+    height: 348px;
+    object-fit: cover;
+}
+
+.tc_specials .top_section .item_slide .content_blk {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 24px;
+}
+
+.tc_specials .top_section .owl-dots {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tc_specials .top_section .owl-dots .owl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 100px;
+    background: var(--Gray-Mode-200);
+    transition: 0.5s all ease-in-out;
+}
+
+.tc_specials .top_section .owl-dots .owl-dot.active {
+    width: 20px;
+    background: var(--color-secondary);
+}
+
+.tc_specials .bottom_section {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 24px;
+}
+
+.tc_specials .bottom_section .video_container {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+}
+
+.tc_specials .bottom_section .video_container iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.tc_specials .bottom_section .card_box {
+    border-radius: 20px;
+    background: linear-gradient(180deg, #a5d8ff 0%, #fff 100%), #fff;
+    overflow: hidden;
+    position: relative;
+    transition: 0.5s all ease-out;
+}
+
+.tc_specials .bottom_section .card_box:hover {
+    transform: translateY(-6px);
+}
+
+.tc_specials .bottom_section .card_box .bg_img img {
+    width: 100%;
+    height: auto;
+    max-height: 351px;
+}
+
+.tc_specials .bottom_section .card_box .text_box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 16px;
+}
+
+.tc_specials .bottom_section .card_box h6 {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    line-height: 25px;
+    color: var(--color-black);
+    margin-bottom: 4px;
+}
+
+.tc_specials .bottom_section .card_box span {
+    color: var(--color-black);
+}
+
+.tc_specials .bottom_section .btn_withIcon {
+    background-color: var(--color-primary);
+    padding: 6px 12px;
+    width: fit-content;
+    margin-top: 12px;
+    overflow: hidden;
+    gap: 0;
+}
+
+.tc_specials .bottom_section .btn_withIcon img {
+    width: 20px !important;
+    filter: brightness(0) invert(1);
+}
+
+.tc_specials .bottom_section .card_box .btn_withIcon span {
+    font: normal normal 500 12px / 133.333% var(--font-primary);
+    letter-spacing: 0.035px;
+    color: var(--color-white);
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    padding: 0;
+    transition: max-width 0.6s ease, opacity 0.6s ease, padding 0.6s ease;
+}
+
+.tc_specials .bottom_section .card_box:hover .btn_withIcon span {
+    max-width: 100px;
+    opacity: 1;
+    padding-right: 4px;
+}
+
+.tc_specials .section_tcEnd {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.tc_specials .section_tcEnd .dark_text .text_box h4 {
+    color: var(--Gray-Mode-950);
+}
+
+.tc_specials .section_tcEnd .dark_text .text_box h6 {
+    color: var(--Gray-Mode-700);
+}
+
+/*=========Thomas Cook Specials CSS End==========*/
+
+/*=========Top Flight Routes CSS Start==========*/
+.topFlight_routes {
+    background: var(--Blue-blue-1);
+    position: relative;
+    z-index: 0;
+}
+
+.topFlight_routes::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: url(../../images/thomasCookLP/TopFlightRoutes/flight-routes-bg.svg);
+    background-size: 892px;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+}
+
+.topFlight_routes .card_box {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    transition: .5s all ease-out;
+}
+
+.topFlight_routes .card_box:hover {
+    border: 1px solid #2E90FA;
+    background: var(--Blue-blue-3);
+}
+
+.topFlight_routes .row {
+    row-gap: 32px;
+}
+
+.topFlight_routes .card_box .img_blck {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.topFlight_routes .card_box .img_blck img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.topFlight_routes .card_box .places_name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.topFlight_routes .card_box .places_name h6 {
+    color: var(--color-primary);
+    letter-spacing: 0.027px;
+}
+
+.topFlight_routes .card_box .places_name span {
+    font: normal normal 400 14px/20px var(--font-primary);
+    letter-spacing: 0.035px;
+    display: block;
+}
+
+.topFlight_routes .card_box .places_name span a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+/*=========Top Flight Routes CSS End==========*/
+
+/*===========Trending Cities CSS Start==========*/
+.trending_cities {
+    background: #194185;
+    height: 616px;
+    position: relative;
+    z-index: 0;
+}
+
+.trending_cities::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: ' ';
+    width: 805px;
+    height: 617px;
+    background-image: url(../../images/thomasCookLP/TrendingCities/map-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+}
+
+.trending_cities .main_heading h4 {
+    color: var(--color-white);
+}
+
+.trending_cities .card_item {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+}
+
+.trending_cities .card_item::before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 53.12%, rgba(0, 0, 0, 0.65) 76.74%, rgba(0, 0, 0, 0.90) 99.96%);
+    z-index: 1;
+}
+
+.trending_cities .card_item .img_box {
+    width: 100%;
+    height: 388px;
+    overflow: hidden;
+}
+
+.trending_cities .card_item .img_box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .4s all ease-out;
+}
+
+.trending_cities .card_item:hover .img_box img {
+    transform: scale(1.1);
+}
+
+.trending_cities .card_item .text_block {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    padding: 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.trending_cities .card_item .text_block .left_blc h6 {
+    color: var(--color-white);
+    letter-spacing: 0.027px;
+}
+
+.trending_cities .card_item .text_block .left_blc span {
+    font: normal normal 400 14px/20px var(--font-primary);
+    color: var(--color-white);
+    letter-spacing: 0.035px;
+    display: block;
+    margin-top: 4px;
+}
+
+.trending_cities .card_item .text_block .btn_withIcon {
+    gap: 0;
+    overflow: hidden;
+}
+
+.trending_cities .card_item .text_block .btn_withIcon {
+    padding: 6px 12px;
+}
+
+.trending_cities .card_item .text_block .btn_withIcon span {
+    font: normal normal 600 14px / 142.857% var(--font-primary);
+    letter-spacing: 0.035px;
+    color: var(--Gray-Mode-950);
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    padding: 0;
+    transition: max-width 0.6s ease, opacity 0.6s ease, transform 0.6s ease, padding 0.6s ease;
+    transform: translateX(-10px);
+}
+
+.trending_cities .card_item:hover .text_block .btn_withIcon span {
+    max-width: 100px;
+    opacity: 1;
+    transform: translateX(0);
+    padding-right: 4px;
+}
+
+.trending_cities .owl-carousel .owl-nav button.owl-prev,
+.trending_cities .owl-carousel .owl-nav button.owl-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.trending_cities .owl-carousel .owl-nav button.owl-prev {
+    left: -22px;
+}
+
+.trending_cities .owl-carousel .owl-nav button.owl-next {
+    right: -22px;
+}
+
+/*===========Trending Cities CSS END==========*/
+
+/*===========Travel Legacy CSS Start==========*/
+.travel_legacy .card_legacy {
+    border-radius: 32px;
+    background-image: url(../../images/thomasCookLP/OurLegacyofExcellenceinTravel/travel-legacy-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.travel_legacy .card_legacy::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 76, 164, 0.80);
+    backdrop-filter: blur(3px);
+    z-index: -1;
+}
+
+.travel_legacy .card_legacy .main_heading {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+    gap: 24px;
+}
+
+.travel_legacy .card_legacy .main_heading h4 {
+    color: var(--color-white);
+}
+
+.travel_legacy .card_legacy .main_heading .btn_secondary {
+    border: none;
+    outline: 2px solid var(--color-secondary);
+}
+
+.travel_legacy .card_legacy .legacy_grids {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.travel_legacy .card_legacy .legacy_grids .card_box {
+    padding: 24px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--color-white);
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.travel_legacy .card_legacy .legacy_grids .card_box span {
+    font: normal normal 600 48px/100% var(--font-primary);
+    color: var(--color-primary);
+    display: block;
+}
+
+.travel_legacy .card_legacy .legacy_grids .card_box h5 {
+    color: var(--Gray-Mode-950);
+    font-weight: 400;
+    line-height: 28px;
+}
+
+/*===========Travel Legacy CSS END==========*/
+
+/*==========Offers For You CSS Start ==========*/
+.offers_section {
+    overflow: hidden;
+}
+
+.offers_section .comn_filterTab .btn {
+    color: var(--Gray-Mode-300);
+}
+
+.offers_section .comn_filterTab .btn.active {
+    color: var(--color-primary);
+}
+
+.offers_section .owl-carousel .owl-stage-outer {
+    overflow: visible;
+}
+
+.offers_section .owl-item {
+    opacity: 0.4;
+}
+
+.offers_section .owl-item.active {
+    opacity: 1;
+}
+
+.offers_section .item_card {
+    border-radius: 18px;
+    border: 1px solid var(--Gray-Mode-100);
+    background: var(--color-white);
+    padding: 8px 8px 0;
+    transition: 0.5s all ease-out;
+}
+
+.offers_section .item_card:hover {
+    transform: scale(0.97);
+}
+
+.offers_section .item_card .img_block {
+    position: relative;
+}
+
+.offers_section .item_card .img_block img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.offers_section .item_card .img_block .coupon {
+    padding: 6px 12px;
+    border-radius: 100px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    cursor: pointer;
+}
+
+.offers_section .item_card .img_block .coupon img {
+    width: 18px;
+    height: 18px;
+}
+
+.offers_section .item_card .img_block .coupon span {
+    font: normal normal 400 10px / 140% var(--font-primary);
+    letter-spacing: 0.05px;
+    color: var(--Gray-Mode-950);
+}
+
+.offers_section .item_card .img_block .coupon .copy-feedback {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-secondary);
+    color: var(--Gray-Mode-950);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font: normal normal 500 10px / 14px var(--font-primary);
+    letter-spacing: 0.05px;
+    animation: fadein 0.4s ease;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.offers_section .item_card .text_box {
+    padding: 20px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.offers_section .item_card .text_box .top_blk {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.offers_section .item_card .text_box .top_blk .lft {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.offers_section .item_card .text_box .top_blk .lft .brdr {
+    width: 1px;
+    height: 12px;
+    background: #b3b9c6;
+}
+
+.offers_section .item_card .text_box span {
+    font: normal normal 500 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--color-primary);
+    display: block;
+}
+
+.offers_section .item_card .text_box span span {
+    color: var(--Gray-Mode-700);
+}
+
+.offers_section .item_card .text_box .right span span {
+    font-weight: 400;
+}
+
+.offers_section .item_card .text_box p {
+    min-height: 48px;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.offers_section .item_card .text_box p a {
+    color: var(--Gray-Mode-950);
+    text-decoration: none;
+}
+
+.offers_section .owl-nav button {
+  /*  position: absolute;*/
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.offers_section .owl-nav button.owl-prev,
+.offers_section .owl-nav button.owl-next {
+    background-color: var(--color-primary);
+}
+
+.offers_section .owl-nav button.owl-prev img,
+.offers_section .owl-nav button.owl-next img {
+    filter: brightness(0) invert(1);
+}
+
+.offers_section .owl-nav .owl-prev {
+    left: -22px;
+}
+
+.offers_section .owl-nav .owl-next {
+    right: -22px;
+}
+
+/*==========Holiday Offers For You CSS End ==========*/
+
+/*=========Why Thomas Cook CSS Start==========*/
+.why_thomascook .card_bg {
+    background-image: url(../../images/thomasCookLP/WhyThomasCook/why-thomas-ccok-bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 69.255vh;
+    padding: 54px 24px 24px 24px;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.why_thomascook .card_bg .card_grids {
+    display: grid;
+    grid-template-columns: 216px auto auto auto 216px;
+    align-items: end;
+    gap: 24px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box {
+    border-radius: 20px;
+    padding: 16px;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.5s all ease-out;
+    z-index: 0;
+}
+
+.why_thomascook .card_bg .card_grids .card_box:hover {
+    transform: translateY(-6px);
+}
+
+.why_thomascook .card_bg .card_grids .card_box::before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: -1;
+}
+
+.why_thomascook .card_bg .card_grids .card_box h5 {
+    color: var(--color-white);
+    font-weight: 600;
+    line-height: 140%;
+    letter-spacing: 0.02px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box p {
+    font-weight: 300;
+    color: var(--color-white);
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01 {
+    background: #fff6ed;
+    height: 340px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01::before {
+    background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-01.png);
+    background-size: 216px 239px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01 h4 {
+    color: #f70;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01 p {
+    color: #914400;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_02 {
+    background: linear-gradient(225deg, #fd853a 0%, #ec4a0a 100%);
+    backdrop-filter: blur(39px);
+    height: 240px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_02::before {
+    background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-02.png);
+    background-size: 240px 239px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_02 h5 {
+    white-space: nowrap;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_03 {
+    background: linear-gradient(225deg, #2e90fa 0%, #175cd3 100%);
+    height: 192px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04 {
+    background: #eff8ff;
+    height: 240px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04 h5 {
+    color: var(--color-primary);
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04 p {
+    color: #07224a;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04::before {
+    background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-03.png);
+    background-size: 100%;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05 {
+    background: #fffcd9;
+    height: 340px;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05 h4 {
+    color: #e3b100;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05 p {
+    color: #af8b0c;
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05::before {
+    background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-04.png);
+    background-size: 100%;
+}
+
+/*=========Why Thomas Cook CSS End==========*/
+
+/*==========Tourism Board Partners CSS Start==========*/
+.tourism_boards .tourism_slide .owl-item .item_slide::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: .6s all ease-out;
+}
+
+.tourism_boards .tourism_slide .owl-item.active .item_slide::before {
+    background-color: transparent;
+}
+
+.tourism_slide .item_slide img {
+    width: 100%;
+    height: auto;
+}
+
+.tourism_slide.owl-carousel .owl-nav button.owl-prev,
+.tourism_slide.owl-carousel .owl-nav button.owl-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 58px;
+    height: 58px;
+    background-color: #fff;
+    font-size: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 26px;
+}
+
+.tourism_slide.owl-carousel .owl-nav button.owl-prev {
+    left: 120px;
+    background-image: url(../../images/thomasCookLP/TourismBoardPartners/chevron-left-p.svg);
+}
+
+.tourism_slide.owl-carousel .owl-nav button.owl-next {
+    right: 120px;
+    background-image: url(../../images/thomasCookLP/TourismBoardPartners/chevron-right-p.svg);
+}
+
+/*==========Tourism Board Partners CSS End==========*/
+
+/*=========Travel Blogs CSS Start==========*/
+.our_blogs {
+    overflow: hidden;
+}
+
+.our_blogs.blogs_bg {
+    background: linear-gradient(180deg, #f5faff 50.04%, #fff 100%);
+}
+
+.our_blogs .comn_filterTab .btn {
+    color: var(--Gray-Mode-300);
+}
+
+.our_blogs .comn_filterTab .btn.active {
+    color: var(--color-primary);
+}
+
+.our_blogs .owl-carousel .owl-stage-outer {
+    overflow: visible;
+}
+
+.our_blogs .owl-item {
+    opacity: 0.4;
+    transition: 0.3s all ease-in-out;
+}
+
+.our_blogs .owl-item.active {
+    opacity: 1;
+}
+
+.our_blogs .item_card {
+    border-radius: 18px;
+    border: 1px solid var(--Gray-Mode-100);
+    background: var(--color-white);
+    padding: 8px 8px 0;
+    transition: 0.5s all ease-out;
+}
+
+.our_blogs .item_card:hover {
+    background: #eff8ff;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.our_blogs .item_card .img_box {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.our_blogs .item_card .img_box img {
+    width: 100%;
+    height: auto;
+    transition: 0.5s all;
+}
+
+.our_blogs .item_card:hover .img_box img {
+    transform: scale(1.05);
+}
+
+.our_blogs .item_card .text_box {
+    padding: 20px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.our_blogs .item_card .text_box .top_blk {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.our_blogs .item_card .text_box span {
+    font: normal normal 600 12px/133.333% var(--font-primary);
+    color: var(--color-primary);
+    display: block;
+}
+
+.our_blogs .item_card .text_box span span {
+    color: var(--Gray-Mode-700);
+}
+
+.our_blogs .item_card .text_box p {
+    font-weight: 600;
+}
+
+.our_blogs .item_card .text_box p a {
+    color: var(--Gray-Mode-950);
+    text-decoration: none;
+}
+
+.our_blogs .item_card .text_box .btm_blk {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.our_blogs .item_card .text_box .btm_blk span {
+    color: var(--Gray-Mode-700);
+}
+
+.our_blogs .item_card .text_box .btm_blk .btn_withIcon {
+    gap: 0;
+    overflow: hidden;
+}
+
+.our_blogs .item_card .text_box .btm_blk .btn_withIcon {
+    padding: 6px 12px;
+}
+
+.our_blogs .item_card .text_box .btm_blk .btn_withIcon span {
+    font: normal normal 600 14px / 142.857% var(--font-primary);
+    letter-spacing: 0.035px;
+    color: var(--Gray-Mode-950);
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    padding: 0;
+    transition: max-width 0.6s ease, opacity 0.6s ease, transform 0.6s ease, padding 0.6s ease;
+    transform: translateX(-10px);
+}
+
+.our_blogs .item_card:hover .text_box .btm_blk .btn_withIcon span {
+    max-width: 100px;
+    opacity: 1;
+    transform: translateX(0);
+    padding-right: 4px;
+}
+
+.our_blogs .owl-nav button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.our_blogs .owl-nav button.owl-prev,
+.our_blogs .owl-nav button.owl-next {
+    background-color: var(--color-primary);
+}
+
+.our_blogs .owl-nav button.owl-prev img,
+.our_blogs .owl-nav button.owl-next img {
+    filter: brightness(0) invert(1);
+}
+
+.our_blogs .owl-nav .owl-prev {
+    left: -22px;
+}
+
+.our_blogs .owl-nav .owl-next {
+    right: -22px;
+}
+
+/*=========Travel Blogs CSS End==========*/
+
+/*=========Why Customers Love Thomas Cook CSS Start==========*/
+.customer_love {
+    background: #fff7f2;
+}
+
+.customer_love .heading h2 {
+    font-weight: 400;
+    line-height: 137.5%;
+    text-align: center;
+    color: #733600;
+}
+
+.customer_love .statistics_blk {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 48px;
+}
+
+.customer_love .statistics_blk h3 {
+    font: normal normal 500 48px/100% var(--font-primary);
+    color: var(--Orange-orange-10, #733600);
+    text-align: center;
+    letter-spacing: -0.24px;
+}
+
+.customer_love .statistics_blk h6 {
+    text-align: center;
+    font-weight: 500;
+    line-height: 144.444%;
+    letter-spacing: 0.027px;
+    margin-top: 8px;
+}
+
+.customer_love .statistics_blk .brdr {
+    width: 2px;
+    height: 72px;
+    background-color: #733600;
+}
+
+.customer_love .customer_slide {
+    margin-top: 56px;
+}
+
+.customer_love .customer_slide .owl-stage-outer {
+    padding-bottom: 20px;
+}
+
+.customer_love .item_slide {
+    padding: 24px;
+    border-radius: 14px;
+    background: #fff;
+    transition: 0.5s all ease-in-out;
+}
+
+.customer_love .center .item_slide {
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.customer_love .item_slide .quotes {
+    margin-bottom: 20px;
+}
+
+.customer_love .item_slide .quotes img {
+    width: auto;
+    height: 24px;
+}
+
+.customer_love .content_blk {
+    min-height: 168px;
+    max-height: 168px;
+    overflow: auto;
+}
+
+.customer_love .content_blk::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.customer_love .content_blk::-webkit-scrollbar:vertical {
+    width: 4px;
+}
+
+.customer_love .content_blk::-webkit-scrollbar:horizontal {
+    height: 4px;
+}
+
+.customer_love .content_blk::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: var(--Gray-Mode-200);
+}
+
+.customer_love .item_slide .content_blk p {
+    font-weight: 400;
+    margin-bottom: 24px;
+    color: var(--Gray-Mode-800);
+}
+
+.customer_love .item_slide .content_blk p:last-child {
+    margin-bottom: 0;
+}
+
+.customer_love .cust_profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.customer_love .cust_profile .pro_img {
+    width: 51px;
+    height: 51px;
+    border-radius: 50%;
+    border: 3px solid var(--Gray-Mode-50);
+    overflow: hidden;
+}
+
+.customer_love .cust_profile .pro_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.customer_love .cust_profile .info p {
+    font-weight: 600;
+    color: var(--Gray-Mode-950);
+}
+
+.customer_love .cust_profile .info span {
+    font: normal normal 500 12px/133.333% var(--font-primary);
+    letter-spacing: 0.06px;
+    color: var(--Gray-Mode-700);
+    margin-top: 2px;
+    display: block;
+}
+
+.customer_love .customer_slide .owl-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.customer_love .customer_slide .owl-nav button.owl-prev,
+.customer_love .customer_slide .owl-nav button.owl-next {
+    background-color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    font-size: 0;
+}
+
+.customer_love .customer_slide .owl-nav button.owl-prev {
+    background-image: url(../../images/common-img/chevron-left-02.svg);
+}
+
+.customer_love .customer_slide .owl-nav button.owl-next {
+    background-image: url(../../images/common-img/chevron-right-02.svg);
+}
+
+/*=========Why Customers Love Thomas Cook CSS End==========*/
+
+/*=========Your Daily Dose of Wanderlust CSS Start==========*/
+
+.insta_section .heading .btn_ig {
+    font: normal normal 600 16px/150% var(--font-primary);
+    letter-spacing: 0.024px;
+    color: #0f4ca4;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 64px;
+    border: 2px solid #0f4ca4;
+    width: fit-content;
+}
+
+.insta_section .ig_inner {
+    display: grid;
+    grid-template-columns: 344px 1fr;
+    gap: 48px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.insta_section .heading .btn_ig img {
+    width: auto;
+    height: 32px;
+}
+
+.insta_section .heading h3 {
+    font: normal normal 500 48px/120% var(--font-heading);
+    color: var(--color-primary);
+    margin-top: 40px;
+}
+
+.insta_section .item_card {
+    width: 100%;
+    height: 428px;
+}
+
+.insta_section .item_card .video-container {
+    position: relative;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.insta_section .item_card .video-container .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: 0.5s all;
+}
+
+.insta_section .item_card:hover .video-container .overlay,
+.insta_section .item_card:hover .play-pause-btn {
+    opacity: 1;
+}
+
+.insta_section .item_card .video-container .overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.insta_section .item_card video {
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+.insta_section .item_card .play-pause-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.5s all;
+}
+
+.insta_section .item_card .play-pause-btn img {
+    width: 20px;
+    height: auto;
+}
+
+.insta_section .item_card .control-hide .play-pause-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.insta_section .item_card .overlay {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.insta_section .owl-nav-custom {
+    display: flex;
+    gap: 16px;
+    margin-top: 56px;
+}
+
+.insta_section .owl-nav-custom button {
+    width: 44px;
+    height: 44px;
+    padding: 12px;
+    border-radius: 50px;
+    background: var(--color-primary);
+    box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.15);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s all ease-in-out;
+}
+
+.insta_section .owl-nav-custom button img {
+    width: 100%;
+    height: auto;
+    filter: brightness(0) invert(1);
+    transition: 0.4s all ease-in-out;
+}
+
+.insta_section .owl-nav-custom button.disabled {
+    background-color: var(--color-white);
+    opacity: 1;
+}
+
+.insta_section .owl-nav-custom button.disabled img {
+    filter: unset;
+}
+
+/*=========Your Daily Dose of Wanderlust CSS End==========*/
+
+/*=========Download App CSS Start==========*/
+.download_app {
+    background: var(--Blue-blue-2);
+}
+
+.download_app .card_box {
+    position: relative;
+    padding: 0 56px;
+    border-radius: 20px;
+    background: linear-gradient(0deg, #fff 0%, #fff 100%), linear-gradient(225deg, #2e90fa 0%, #175cd3 100%);
+    z-index: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.download_app .card_box::before {
+    position: absolute;
+    right: 0;
+    top: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-image: url(../../images/thomasCookLP/DownloadApp/download-tc-bg.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    z-index: -1;
+}
+
+.download_app .card_box h3 {
+    font: normal normal 600 32px / 120% var(--font-primary);
+    letter-spacing: -1px;
+    color: var(--Gray-Mode-950);
+}
+
+.download_app .card_box h3 span {
+    color: var(--color-primary);
+}
+
+.download_app .card_box p {
+    color: var(--Gray-Mode-600);
+    margin: 12px 0 42px;
+    max-width: 450px;
+}
+
+.download_app .card_box .right_block img {
+    width: 520px;
+    height: auto;
+}
+
+.download_app .card_box .app_store {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.download_app .card_box .app_store .btn {
+    padding: 0;
+    display: block;
+}
+
+.download_app .card_box .app_store .btn img {
+    width: 145px;
+    height: auto;
+}
+
+.download_app .card_box .app_store .qr img {
+    width: 48px;
+    height: auto;
+}
+
+/*=========Download App CSS End==========*/
+
+/*=========Faq CSS Start==========*/
+.faq_section .main_heading {
+    justify-content: center;
+}
+
+.faq_section .btn_loadFaq {
+    font: normal normal 400 16px / 150% var(--font-primary);
+    letter-spacing: 0.024px;
+    padding: 11px 20px;
+}
+
+.faq_section .btn_loadFaq.less img {
+    transform: rotate(180deg);
+}
+
+.faq_section .accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 38px;
+}
+
+.faq_section .accordion-item {
+    background-color: var(--color-white);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 16px;
+    transition: 0.5s all ease-out;
+}
+
+.faq_section .accordion-item:hover {
+    border: 1px solid #2e90fa;
+    background: var(--Blue-blue-1);
+}
+
+.faq_section .accordion-item.active {
+    background: linear-gradient(225deg, #2e90fa 0%, #175cd3 100%);
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.faq_section .accordion-button {
+    font: normal normal 500 18px/26px var(--font-primary);
+    letter-spacing: 0.027px;
+    color: var(--Gray-Mode-950);
+    background-color: transparent;
+    border-radius: 8px;
+    box-shadow: unset;
+    padding: 0;
+}
+
+.faq_section .accordion-item.active .accordion-button {
+    color: var(--color-white);
+    transition: unset;
+}
+
+.faq_section .accordion-item.active .accordion-body p {
+    font-weight: 400;
+    color: var(--color-white);
+}
+
+.faq_section .accordion-body {
+    padding: 10px 0 0;
+}
+
+.faq_section .accordion-button::after {
+    width: 24px;
+    height: 24px;
+    background-image: url(../../images/common-img/chevron-down.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.faq_section .accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1);
+}
+
+/*=========Faq CSS End==========*/
+
+/*=========Travel Highlights CSS Start==========*/
+
+.tour_agency {
+    background: var(--Blue-blue-1);
+}
+
+.tour_agency .agency_content {
+    margin-top: 16px;
+}
+
+.tour_agency .agency_content p {
+    font-weight: 300;
+    color: var(--Gray-Mode-900);
+    margin-bottom: 16px;
+}
+
+.tour_agency .agency_content .read-more {
+    font: normal normal 600 14px/142.857% var(--font-primary);
+    letter-spacing: 0.035px;
+    padding: 0;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tour_agency .agency_content .read-more img {
+    width: 16px;
+    height: auto;
+    transition: 0.5s all ease-out;
+}
+
+.tour_agency .agency_tabs {
+    margin-top: 40px;
+    display: flex;
+    align-items: stretch;
+    gap: 32px;
+}
+
+.tour_agency .agency_tabs .brdr_line {
+    width: 1px;
+    min-width: 1px;
+    background: #d7dae0;
+}
+
+.tour_agency .agency_tabs .nav-pills {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 8px;
+    min-width: 305px;
+    max-width: 305px;
+    max-height: 338px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.tour_agency .agency_tabs .nav-pills::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.tour_agency .agency_tabs .nav-pills:hover {
+    scrollbar-width: thin;
+}
+
+/* Chrome, Edge, Safari */
+.tour_agency .agency_tabs .nav-pills:hover::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tour_agency .agency_tabs .nav-pills:hover::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 4px;
+}
+
+.tour_agency .agency_tabs .nav-pills .nav-link {
+    font: normal normal 400 18px/144.444% var(--font-primary);
+    color: var(--Gray-Mode-600);
+    letter-spacing: 0.027px;
+    text-align: left;
+    padding: 4px 4px 4px 16px;
+    border: none;
+    border-left: 2px solid transparent;
+    border-radius: 0;
+    transition: 0.4s all ease-in-out;
+}
+
+.tour_agency .agency_tabs .nav-pills .nav-link.active {
+    color: var(--color-primary);
+    background-color: transparent;
+    border-left: 2px solid var(--color-primary);
+}
+
+.tour_agency .agency_tabs .nav-pills .nav-link.active:hover {
+    border-radius: 0;
+}
+
+.tour_agency .tags_btns {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.tour_agency .tags_btns .btn {
+    font: normal normal 400 14px/142.857% var(--font-primary);
+    color: var(--color-primary);
+    letter-spacing: 0.035px;
+    border-radius: 8px;
+    border: 1px solid var(--color-primary);
+    padding: 12px 16px;
+}
+
+.tour_agency .tags_btns .btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/*=========Travel Highlights CSS End==========*/
+
+/*=========Responsive CSS Start==============*/
+@media only screen and (min-width: 1440px) and (max-width: 1799px) {
+    .insta_section .heading h3 {
+        font: normal normal 400 44px / 120% var(--font-heading);
+    }
+
+    .insta_section .heading .btn_ig {
+        font: normal normal 700 14px / 150% var(--font-primary);
+        padding: 8px 16px;
+        gap: 8px;
+    }
+
+    .insta_section .heading .btn_ig img {
+        width: 28px;
+        height: auto;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1439px) {
+    .hero_section:has(.bnr_img) {
+        height: 270px;
+    }
+
+    .hero_section:has(.bnr_img) .bnr_text {
+        padding: 62px 200px 46px 200px;
+    }
+
+    .hero_section:has(.bnr_img) .bnr_text h1 {
+        font: normal normal 600 42px / 100% var(--font-heading);
+    }
+
+    .hero_section .bnr_text h4 {
+        font: normal normal 300 20px / 100% var(--font-primary);
+        margin: 16px 0 32px;
+    }
+
+    .hero_section .search_box {
+        width: 499px;
+    }
+
+    .hero_section .search_container {
+        gap: 8px;
+    }
+
+    .hero_section .search_box .form-control {
+        font: normal normal 400 14px/144.44% var(--font-primary);
+        padding: 16px 20px;
+    }
+
+    .hero_section .search_box .btn_search {
+        right: 5px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .hero_section .search_box .btn_search img,
+    .hero_section .search_box .btn_cross img,
+    .hero_section .search_popup .btn_cross img {
+        width: 20px;
+    }
+
+    .hero_section .voice_assistance .btn {
+        width: 52px;
+        height: 52px;
+        padding: 0;
+    }
+
+    .hero_section .voice_assistance .btn img {
+        width: 20px;
+    }
+
+    .hero_section .search_popup {
+        top: 100px;
+        max-width: 680px;
+        height: 383px;
+        padding: 16px;
+        border-radius: 18px;
+    }
+
+    .hero_section .search_popup .search_form {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+    }
+
+    .hero_section .search_form span img {
+        width: 20px;
+    }
+
+    .hero_section .search_popup .top_item {
+        gap: 18px;
+        height: calc(100% - 45px);
+    }
+
+    .hero_section .search_popup .top span,
+    .hero_section .search_popup .no-results {
+        font: normal normal 500 12px/133.333% var(--font-primary);
+    }
+
+    .hero_section .search_popup .search_form .form-control {
+        font: normal normal 400 14px/20px var(--font-primary);
+        padding: 0 0 0 30px;
+    }
+
+    .hero_section .search_popup .top {
+        margin-bottom: 8px;
+    }
+
+    .hero_section .search_item .thd_section .card_box {
+        padding: 5px;
+        border-radius: 10px;
+        gap: 8px;
+    }
+
+    .hero_section .search_item .thd_section .img_box {
+        width: 42px;
+        height: 42px;
+        border-radius: 8px;
+    }
+
+    .hero_section .search_item .thd_section .text_box {
+        gap: 3px;
+    }
+
+    .hero_section .search_item .thd_section .text_box span {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+    }
+
+    .hero_section .search_item .thd_section .text_box a {
+        font: normal normal 500 11px / 133.333% var(--font-primary);
+    }
+
+    .hero_section .search_item .thd_section .row {
+        row-gap: 12px;
+        --bs-gutter-x: 12px;
+    }
+
+    .hero_section .search_result ul li a {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        padding: 0px 4px 0px 12px;
+        gap: 12px;
+    }
+
+    .hero_section .search_result ul li img {
+        width: 28px;
+    }
+
+    .hero_section .search_popup .search_result:not(:last-child) {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+    }
+
+    .recents_searches .owl-nav button {
+        width: 36px;
+        height: 36px;
+        padding: 10px;
+    }
+
+    .recents_searches .item_card {
+        padding: 2px;
+        border-radius: 14px;
+    }
+
+    .recents_searches .item_card .top_box {
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .recents_searches .item_card .tp_lft .top_blck {
+        gap: 4px;
+    }
+
+    .recents_searches .item_card .tp_lft .top_blck span,
+    .recents_searches .item_card .top_box .btm_blck span,
+    .recents_searches .item_card .bottom_box span {
+        font: normal normal 500 11px / 133.333% var(--font-primary);
+    }
+
+    .recents_searches .item_card .tp_lft .icon img {
+        width: 14px;
+    }
+
+    .recents_searches .item_card .top_box h6 {
+        margin: 6px 0;
+    }
+
+    .recents_searches .item_card .bottom_box {
+        padding: 8px 12px 10px;
+    }
+
+    .recents_searches .item_card .top_box .btm_blck {
+        gap: 4px;
+    }
+
+    .recents_searches .item_card .bottom_box .btn_withIcon img {
+        width: 13px !important;
+    }
+
+    .trending_section .nav-pills .nav-link {
+        font: normal normal 400 14px / 150% var(--font-primary);
+        width: 136px;
+        padding: 6px 12px;
+    }
+
+    .trending_section .card_animation,
+    .trending_section .card_india {
+        height: 260px;
+        padding-top: 28px;
+    }
+
+    .trending_section .card_animation:hover,
+    .trending_section .card_india:hover {
+        padding-top: 20px;
+    }
+
+    .trending_section .card_animation .text img,
+    .trending_section .card_india .text img {
+        width: 110px;
+    }
+
+    .trending_section .card_animation:hover .text img,
+    .trending_section .card_india .text:hover img {
+        width: 90px;
+    }
+
+    .trending_section .card_animation.australia:hover .bg_img {
+        width: 200px;
+    }
+
+    .trending_section .card_animation.europe:hover .bg_img {
+        width: 192px;
+    }
+
+    .trending_section .card_animation.europe:hover::before {
+        bottom: -50px;
+        background-size: 100px;
+    }
+
+    .trending_section .card_animation.europe:hover::after {
+        right: -32px;
+        background-size: 52.438px;
+    }
+
+    .trending_section .card_animation.mauritius .bg_img {
+        width: 150px;
+        bottom: 4px;
+    }
+
+    .trending_section .card_animation.mauritius:hover .bg_img {
+        width: 164px;
+    }
+
+    .trending_section .card_animation.mauritius::before {
+        width: 60px;
+        height: 80px;
+        background-size: 60px;
+    }
+
+    .trending_section .card_animation.mauritius:hover::before {
+        bottom: 0;
+        width: 74px;
+        background-size: 74px;
+    }
+
+    .trending_section .card_animation.singapore .bg_img {
+        width: 90px;
+    }
+
+    .trending_section .card_animation.singapore:hover .bg_img {
+        width: 100px;
+    }
+
+    .trending_section .card_animation.singapore::before {
+        height: 103px;
+    }
+
+    .trending_section .card_animation.singapore:hover::before {
+        width: 205px;
+        height: 125px;
+    }
+
+    .trending_section .card_animation.south-africa .bg_img {
+        width: 145px;
+    }
+
+    .trending_section .card_animation.south-africa::before {
+        width: 86px;
+        height: 76px;
+        background-size: 86px;
+    }
+
+    .trending_section .card_animation.south-africa:hover .bg_img {
+        width: 164px;
+        left: -10px;
+    }
+
+    .trending_section .card_animation.south-africa:hover::before {
+        bottom: 8px;
+        right: -10px;
+        background-size: 90px;
+    }
+
+    .trending_section .card_animation.vietnam:hover .bg_img {
+        width: 185px;
+    }
+
+    .trending_section .card_animation .package,
+    .trending_section .card_india .package {
+        padding: 26px 12px 12px 12px;
+    }
+
+    .trending_section .card_animation .package h6,
+    .trending_section .card_india .package h6 {
+        margin-top: -2px;
+        margin-bottom: 8px;
+    }
+
+    .trending_section .card_animation .package .btn,
+    .trending_section .card_india .package .btn {
+        padding: 4px 10px;
+    }
+
+    .trending_section .card_india.kerala:hover .bg_img {
+        width: 180px;
+    }
+
+    .trending_section .card_india.bhutan:hover .bg_img,
+    .trending_section .card_india.sri-lanka:hover .bg_img {
+        width: 185px;
+    }
+
+    .trending_section .card_india.uttrakhand:hover .bg_img,
+    .trending_section .card_india.kashmir:hover .bg_img,
+    .trending_section .card_india.north-east:hover .bg_img {
+        width: 195px;
+    }
+
+    .tc_specials .top_section {
+        grid-template-columns: 357px 735px;
+    }
+
+    .tc_specials .festival_blck {
+        border-radius: 16px;
+    }
+
+    .tc_specials .festival_blck .text_box {
+        padding: 18px;
+    }
+
+    .tc_specials .top_section h6,
+    .tc_specials .festival_blck h6 {
+        line-height: 133.333%;
+        margin: 3px 0;
+    }
+
+    .tc_specials .festival_blck .text_box span,
+    .tc_specials .top_section .item_slide .content_blk .price,
+    .tc_specials .bottom_section .card_box span {
+        font: normal normal 400 12px / 142.857% var(--font-primary);
+    }
+
+    .tc_specials .top_section .btn,
+    .tc_specials .festival_blck .btn {
+        font: normal normal 500 11px / 133.333% var(--font-primary);
+        padding: 6px 12px;
+        gap: 3px;
+        margin-top: 12px;
+    }
+
+    .tc_specials .top_section .btn img,
+    .tc_specials .festival_blck .btn img {
+        width: 14px;
+    }
+
+    .tc_specials .top_section .item_slide .content_blk {
+        padding: 18px;
+    }
+
+    .tc_specials .top_section .item_slide .img_box img {
+        height: 299px;
+    }
+
+    .tc_specials .top_section .owl-dots {
+        bottom: 18px;
+        left: 18px;
+        gap: 3px;
+    }
+
+    .tc_specials .bottom_section .card_box h6 {
+        line-height: 20px;
+        margin-bottom: 3px;
+    }
+
+    .tc_specials .bottom_section .card_box .text_box {
+        padding: 14px;
+    }
+
+    .tc_specials .bottom_section .btn_withIcon {
+        padding: 5px 10px;
+        margin-top: 8px;
+    }
+
+    .tc_specials .bottom_section .card_box .btn_withIcon span {
+        font: normal normal 500 11px / 133.333% var(--font-primary);
+    }
+
+    .tc_specials .bottom_section .card_box:hover .btn_withIcon span {
+        padding-right: 3px;
+    }
+
+    .tc_specials .bottom_section .btn_withIcon img {
+        width: 16px !important;
+    }
+
+    .selling_packages .item_card .img_block img {
+        height: 226px;
+        border-radius: 12px;
+    }
+
+    .selling_packages .item_card .content_blk {
+        padding: 12px;
+    }
+
+    .selling_packages .item_card .content_blk h5 {
+        font-weight: 500;
+        line-height: 130%;
+    }
+
+    .selling_packages .item_card .content_blk span {
+        font: normal normal 400 12px / 123.857% var(--font-primary);
+    }
+
+    .selling_packages .item_card .content_blk .rating img {
+        width: 14px;
+    }
+
+    .selling_packages .owl-nav .owl-prev {
+        left: -18px;
+    }
+
+    .selling_packages .owl-nav .owl-next {
+        right: -18px;
+    }
+
+    .travel_consultation {
+        padding: 52px 0;
+    }
+
+    .travel_consultation .card_box .left_block h6 {
+        margin-top: 12px;
+    }
+
+    .travel_consultation .card_box .card_form {
+        width: 450px;
+        padding: 32px 25px;
+        border-radius: 16px;
+    }
+
+    .travel_consultation .card_box .card_form .row {
+        row-gap: 16px;
+    }
+
+    .travel_consultation .card_box .card_form .btn {
+        font: normal normal 400 16px / 24px var(--font-primary);
+        padding: 10px 18px;
+        margin-top: 2px;
+    }
+
+    .travel_consultation .card_box .card_form .btn img {
+        width: 18px;
+    }
+
+    .holiday_theme .image_grid .card_block {
+        height: 426px;
+        border-radius: 20px;
+    }
+
+    .holiday_theme .image_grid .card_block .text_block {
+        min-width: 333px;
+    }
+
+    .holiday_theme .image_grid .card_block .top_blk {
+        padding: 14px;
+    }
+
+    .holiday_theme .image_grid .card_block .left span {
+        font: normal normal 500 10px / 133.333% var(--font-primary);
+        padding: 4px 8px;
+    }
+
+    .holiday_theme .image_grid .card_block .right .btn_withIcon {
+        width: 36px;
+        height: 36px;
+        padding: 10px;
+    }
+
+    .holiday_theme .image_grid .card_block .text_block .btm_blk {
+        padding: 24px 16px;
+        min-width: 333px;
+    }
+
+    .holiday_theme .image_grid .card_block .text_block h3 {
+        font: normal normal 600 28px / 111.111% var(--font-primary);
+    }
+
+    .holiday_theme .image_grid .card_block .btm_blk span {
+        font: normal normal 400 12px / 142.857% var(--font-primary);
+        margin-top: 6px;
+        max-width: 85%;
+    }
+
+    .holiday_theme .image_grid .card_block .without_hover {
+        left: 64px;
+        padding: 16px 24px;
+    }
+
+    .holiday_theme .image_grid .card_block .without_hover h3 {
+        font: normal normal 500 24px / 132% var(--font-primary);
+    }
+
+    .offers_section .item_card {
+        border-radius: 14px;
+        padding: 6px 6px 0;
+    }
+
+    .offers_section .item_card .img_block .coupon {
+        padding: 5px 10px;
+        gap: 3px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .offers_section .item_card .img_block .coupon span {
+        font: normal normal 400 9px / 140% var(--font-primary);
+    }
+
+    .offers_section .item_card .img_block .coupon img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .offers_section .item_card .text_box {
+        padding: 16px 6px;
+        gap: 6px;
+    }
+
+    .offers_section .item_card .text_box .top_blk .lft {
+        gap: 6px;
+    }
+
+    .offers_section .item_card .text_box span {
+        font: normal normal 500 11px / 133.333% var(--font-primary);
+    }
+
+    .offers_section .item_card .text_box .top_blk .lft .brdr {
+        height: 10px;
+    }
+
+    .offers_section .item_card .text_box p {
+        min-height: 36px;
+    }
+
+    .offers_section .owl-nav .owl-prev {
+        left: -18px;
+    }
+
+    .offers_section .owl-nav .owl-next {
+        right: -18px;
+    }
+
+    .international_package .owl-nav .owl-prev {
+        left: -18px;
+    }
+
+    .international_package .owl-nav .owl-next {
+        right: -18px;
+    }
+
+    .international_package .filters_tab .btn {
+        font: normal normal 500 16px / 140% var(--font-primary);
+    }
+
+    .international_package .filters_tab {
+        gap: 14px;
+        padding-bottom: 3px;
+    }
+
+    .international_package .item_card .text_box {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .international_package .item_card .text_box h5 {
+        line-height: 128%;
+    }
+
+    .international_package .item_card .text_box span {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        margin-top: 3px;
+    }
+
+    .comn_package .item_card {
+        border-radius: 12px;
+    }
+
+    .comn_package .item_card img {
+        border-radius: 12px;
+    }
+
+    .comn_package .item_card .text_box>div {
+        padding: 12px;
+    }
+
+    .comn_package .item_card .text_box h5 {
+        line-height: 123%;
+    }
+
+    .comn_package .item_card .text_box span {
+        font: normal normal 400 12px / 123.857% var(--font-primary);
+        margin-top: 3px;
+    }
+
+    .comn_package .item_card .text_box .btn_withIcon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .comn_package .owl-nav .owl-prev {
+        left: -18px;
+    }
+
+    .comn_package .owl-nav .owl-next {
+        right: -18px;
+    }
+
+    .honeymoon_package {
+        min-height: 520px;
+        padding-bottom: 120px;
+    }
+
+    .honeymoon_package .bnr_text {
+        max-width: 60%;
+        margin: auto;
+    }
+
+    .honeymoon_package h2 {
+        margin-bottom: 28px;
+    }
+
+    .why_thomascook .card_bg {
+        min-height: 66.255vh;
+        padding: 46px 20px 20px 20px;
+        border-radius: 24px;
+    }
+
+    .why_thomascook .card_bg .card_grids {
+        grid-template-columns: 186px auto auto auto 186px;
+        gap: 16px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box {
+        border-radius: 16px;
+        padding: 14px;
+        gap: 6px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_01,
+    .why_thomascook .card_bg .card_grids .card_box.card_05 {
+        height: 290px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_02,
+    .why_thomascook .card_bg .card_grids .card_box.card_04 {
+        height: 200px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_03 {
+        height: 150px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_02::before,
+    .why_thomascook .card_bg .card_grids .card_box.card_01::before {
+        background-size: 100%;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_01 h4 {
+        max-width: 90%;
+    }
+
+    .tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-prev,
+    .tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-next {
+        width: 42px;
+        height: 42px;
+        background-size: 20px;
+    }
+
+    .tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-prev {
+        left: 195px;
+    }
+
+    .tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-next {
+        right: 195px;
+    }
+
+    .our_blogs .item_card {
+        border-radius: 14px;
+        padding: 6px 6px 0;
+    }
+
+    .our_blogs .item_card .img_box {
+        border-radius: 10px;
+    }
+
+    .our_blogs .item_card .text_box {
+        padding: 16px 6px;
+        gap: 4px;
+    }
+
+    .our_blogs .item_card .text_box span {
+        font: normal normal 600 11px / 133.333% var(--font-primary);
+    }
+
+    .our_blogs .item_card .text_box .btm_blk .btn_withIcon span {
+        font: normal normal 600 12px / 142.857% var(--font-primary);
+    }
+
+    .our_blogs .item_card:hover .text_box .btm_blk .btn_withIcon span {
+        padding-right: 3px;
+    }
+
+    .our_blogs .owl-nav .owl-prev {
+        left: -18px;
+    }
+
+    .our_blogs .owl-nav .owl-next {
+        right: -18px;
+    }
+
+    .customer_love .statistics_blk {
+        gap: 36px;
+        margin-top: 36px;
+    }
+
+    .customer_love .statistics_blk h3 {
+        font: normal normal 500 36px / 100% var(--font-primary);
+    }
+
+    .customer_love .statistics_blk h6 {
+        margin-top: 6px;
+    }
+
+    .customer_love .statistics_blk .brdr {
+        height: 62px;
+    }
+
+    .customer_love .customer_slide {
+        margin-top: 36px;
+    }
+
+    .customer_love .item_slide {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .customer_love .item_slide .quotes {
+        margin-bottom: 16px;
+    }
+
+    .customer_love .item_slide .quotes img {
+        height: 20px;
+    }
+
+    .customer_love .item_slide .content_blk p {
+        margin-bottom: 16px;
+    }
+
+    .customer_love .content_blk {
+        min-height: 124px;
+        max-height: 124px;
+    }
+
+    .customer_love .cust_profile {
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .customer_love .cust_profile .pro_img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .customer_love .cust_profile .info span {
+        font: normal normal 500 11px / 133.333% var(--font-primary);
+        margin-top: 1px;
+    }
+
+    .customer_love .customer_slide .owl-stage-outer {
+        padding-bottom: 16px;
+    }
+
+    .customer_love .customer_slide .owl-nav {
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .customer_love .customer_slide .owl-nav button.owl-prev,
+    .customer_love .customer_slide .owl-nav button.owl-next {
+        background-size: 18px;
+    }
+
+    .insta_section .ig_inner {
+        grid-template-columns: 228px 1fr;
+        gap: 32px;
+    }
+
+    .insta_section .heading h3 {
+        font: normal normal 400 30px / 120% var(--font-heading);
+        margin-top: 28px;
+    }
+
+    .insta_section .owl-nav-custom {
+        gap: 12px;
+        margin-top: 36px;
+    }
+
+    .insta_section .owl-nav-custom button {
+        width: 36px;
+        height: 36px;
+        padding: 10px;
+    }
+
+    .insta_section .heading .btn_ig {
+        font: normal normal 600 12px / 150% var(--font-primary);
+        padding: 6px 14px;
+        gap: 6px;
+    }
+
+    .insta_section .heading .btn_ig img {
+        height: 24px;
+    }
+
+    .insta_section .item_card {
+        height: 415px;
+    }
+
+    .insta_section .item_card video {
+        border-radius: 12px;
+    }
+
+    .faq_section .accordion-item {
+        padding: 12px;
+    }
+
+    .faq_section .accordion-button {
+        font: normal normal 500 16px / 133.333% var(--font-primary);
+        border-radius: 8px;
+    }
+
+    .faq_section .accordion-body {
+        padding: 8px 0 0;
+    }
+
+    .faq_section .accordion {
+        gap: 12px;
+        padding: 0 52px;
+    }
+
+    .tour_agency .agency_content p {
+        margin-bottom: 12px;
+    }
+
+    .tour_agency .agency_content .read-more {
+        font: normal normal 600 12px / 133.333% var(--font-primary);
+        gap: 4px;
+    }
+
+    .tour_agency .agency_content .read-more img {
+        width: 14px;
+    }
+
+    .tour_agency .agency_tabs {
+        margin-top: 26px;
+        gap: 24px;
+    }
+
+    .tour_agency .agency_tabs .nav-pills {
+        gap: 6px;
+        min-width: 250px;
+        max-width: 250px;
+        max-height: 272px;
+    }
+
+    .tour_agency .agency_tabs .nav-pills .nav-link {
+        font: normal normal 400 15px / 144.444% var(--font-primary);
+        padding: 3px 3px 3px 12px;
+    }
+
+    .tour_agency .agency_tabs .brdr_line {
+        height: 272px;
+    }
+
+    .tour_agency .tags_btns .btn {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        padding: 8px 12px;
+    }
+}
+
+
+
+
+
+
+@media only screen and (max-width: 767px) {
+  #tcHomeTopFlightRoutes .topFlight_routes {
+    overflow-x: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #tcHomeTopFlightRoutes .topFlight_routes .row > div {
+    flex: 0 0 80%; 
+
+  }
+
+  #tcHomeTopFlightRoutes .topFlight_routes::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+  html, body {
+  width: auto!important; overflow-x: hidden!important
+  }
+.travel_legacy .card_legacy .legacy_grids .card_box span {
+    font: normal normal 600 30px / 100% var(--font-primary);
+    color: var(--color-primary);
+    display: block;
+  }
+  .card_legacy{
+  display:block !important;
+  }
+  .travel_legacy .card_legacy .legacy_grids {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+   }
+   #tcHomeForexSection  .forex_strip .left_blck,#tcHomeForexSection  .forex_strip .center_forex{
+   margin-bottom: 10px;
+   }
+   #tcHomeTopFlightRoutes .topFlight_routes .row{
+   flex-wrap: nowrap;
+   }
+  .forex_services .forex_grid {
+    display: block;}
+  .forex_services .forex_strip  {
+    display: block;
+	margin-top: 0;
+   }
+    .hero_section {
+     height: 240px;
+     margin: 0;
+    }
+.forex_services::before {
+     height:auto;
+    }
+    .hero_section .hero_wrapper {
+        clip-path: inset(0px round 0px);
+    }
+
+    .hero_section .hero_wrapper.with_overlay::before,
+    .hero_section .bnr_video video {
+        border-radius: 0;
+    }
+
+    .hero_section:has(.bnr_img) .bnr_text {
+        padding: 32px 48px;
+    }
+
+    .hero_section:has(.bnr_img) {
+        margin-top: 0;
+        height: 178px;
+    }
+
+    .hero_section:has(.bnr_img) .bnr_text h1 {
+        font: normal normal 400 20px / 100% var(--font-heading);
+    }
+
+    .hero_section .bnr_text h4 {
+        margin: 8px 0 20px;
+    }
+
+    .hero_section .bnr_text h4 {
+        font: normal normal 300 12px / 150% var(--font-primary);
+        letter-spacing: 0.12px;
+    }
+
+    .hero_section .voice_assistance {
+        position: absolute;
+        right: 4px;
+    }
+
+    .hero_section .voice_assistance .btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        background: #e7edf6;
+        backdrop-filter: blur(3px);
+    }
+
+    .hero_section .voice_assistance .btn img {
+        width: 18px;
+        height: auto;
+    }
+
+    .hero_section .search_container {
+        gap: 0;
+        width: 270px;
+        margin: auto;
+    }
+
+    .hero_section .search_box {
+        width: 100%;
+    }
+
+    .hero_section .search_box .btn_search {
+        right: 4px;
+        width: 36px;
+        height: 36px;
+        /*display: none;*/
+    }
+
+    .trending_section.rn__section__gapTop .carousel-card .carousel-caption-overlay {
+        transform: translateY(0);
+        border-radius: 0 0 100px 100px;
+    }
+    .trending_section .owl-item:not(.center) .carousel-card {
+        opacity: 0.54;
+    }
+  .hero_section .search_tcLanding .search_box {
+    width: 400px;
+	}
+  .trending_section .carousel-card {
+        height: auto;
+        border: 0;
+    }
+    .hero_section .search_box .search_icon {
+        position: absolute;
+        left: 16px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero_section .search_box .search_icon img {
+        width: 18px;
+        height: auto;
+    }
+
+    .hero_section .search_box .form-control {
+        font: normal normal 300 14px/142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+        padding: 12px 16px;
+        padding-left: 42px;
+    }
+
+    .hero_section .search_box .btn_cross {
+        right: 40px;
+    }
+
+    .hero_section .search_popup {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        margin-top: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+        z-index: 9999;
+        overflow-x: hidden;
+        overflow-y: auto;
+        transform: translateX(500px);
+    }
+
+    .hero_section .search_popup.show {
+        transform: translateX(0);
+    }
+
+    .hero_section .search_popup:has([data-type="domestic"]),
+    .hero_section .search_popup:has([data-type="international"]) {
+        height: 100vh;
+    }
+
+    .hero_section .search_popup .search_card {
+        height: auto;
+        overflow: unset;
+    }
+
+    .hero_section .search_popup .search_card .for_mobile {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+    }
+
+    .hero_section .search_item .recent_searches {
+        gap: 16px;
+    }
+
+    .hero_section .search_popup .top span,
+    .hero_section .search_popup .no-results {
+        letter-spacing: 0.06px;
+        font: normal normal 500 12px / 133.333% var(--font-primary);
+    }
+
+    .hero_section .search_item .recent_searches li {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        padding: 6px 12px;
+        gap: 8px;
+        letter-spacing: 0.12px;
+    }
+
+    .hero_section .search_box .top_item,
+    .hero_section .search_box .result_box {
+        height: auto;
+    }
+
+    .hero_section .search_item .thd_section .row {
+        --bs-gutter-x: 12px;
+        --bs-gutter-y: 12px;
+    }
+
+    .hero_section .search_item .thd_section .card_box {
+        border-radius: 12px;
+        gap: 6px;
+    }
+
+    .hero_section .search_item .thd_section .img_box {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+    }
+
+    .hero_section .search_item .thd_section .text_box span {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        letter-spacing: 0.06px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .hero_section .search_item .thd_section .text_box a {
+        font: normal normal 500 10px / 133.333% var(--font-primary);
+        letter-spacing: 0.05px;
+    }
+
+    .hero_section .search_result ul li a {
+        padding: 0px 6px 0px 0px;
+    }
+
+    .hero_section .search_card .search_form {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin: 12px 0 24px;
+    }
+
+    .hero_section .search_form {
+        position: relative;
+        margin: 16px 0 24px;
+    }
+
+    .hero_section .search_popup .search_form .form-control {
+        font: normal normal 400 16px / 24px var(--font-primary);
+        letter-spacing: 0.024px;
+        padding: 6px 14px;
+        border: 2px solid var(--Gray-Mode-100);
+        background: var(--color-white);
+        border-radius: 100px;
+    }
+
+    .hero_section .search_popup .btn_cross {
+        right: 60px;
+    }
+
+    .hero_section .search_popup .search_form .btn_cross {
+        right: 40px;
+        bottom: 0;
+    }
+
+    .hero_section .search_popup .btn_search {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 4px;
+        margin: auto;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-primary);
+        border-radius: 100px;
+        backdrop-filter: blur(3px);
+    }
+
+    .hero_section .search_box .btn_search img,
+    .hero_section .search_box .btn_cross img,
+    .hero_section .search_popup .btn_cross img {
+        width: 18px;
+        height: auto;
+    }
+
+    .hero_section .nav_heading {
+        display: flex;
+        align-items: center;
+        gap: 34px;
+    }
+
+    .hero_section .nav_heading .btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .hero_section .nav_heading .btn img {
+        width: 24px;
+        height: auto;
+    }
+
+    .hero_section .nav_heading span {
+        font: normal normal 600 14px / 142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+        color: var(--color-black);
+        display: block;
+    }
+
+    .recents_searches {
+        overflow: hidden;
+    }
+
+    .recents_searches .owl-nav {
+        display: none;
+    }
+
+    .recents_searches .owl-stage-outer {
+        overflow: unset;
+    }
+
+    .recents_searches .item_card {
+        padding: 2px;
+        border-radius: 12px;
+    }
+
+    .recents_searches .item_card .top_box {
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0px 1.659px 3.318px -0.829px rgba(0, 0, 0, 0.06);
+    }
+
+    .recents_searches .item_card .top_box h6 {
+        margin: 8px 0 6px;
+        line-height: 142.857%;
+        font-weight: 700;
+    }
+
+    .recents_searches .item_card .tp_lft .days {
+        font: normal normal 600 10px / 140% var(--font-primary);
+        letter-spacing: 0.05px;
+        padding: 2px 4px;
+    }
+
+    .recents_searches .item_card .tp_lft .top_blck span {
+        font: normal normal 600 10px / 140% var(--font-primary);
+        letter-spacing: 0.05px;
+    }
+
+    .recents_searches .item_card .top_box .btm_blck {
+        gap: 4px;
+    }
+
+    .recents_searches .item_card .top_box .btm_blck span {
+        font: normal normal 500 10px / 140% var(--font-primary);
+        letter-spacing: 0.05px;
+    }
+
+    .recents_searches .item_card .bottom_box {
+        padding: 6px 14px 8px;
+    }
+
+    .recents_searches .item_card .bottom_box h6 {
+        font-weight: 600;
+        line-height: 150%;
+        letter-spacing: 0.024px;
+    }
+
+    .recents_searches .item_card .bottom_box h5 span,
+    .recents_searches .item_card .top_box .btm_blck .btn {
+        font: normal normal 400 10px / 140% var(--font-primary);
+        letter-spacing: 0.05px;
+    }
+
+    .recents_searches .item_card .bottom_box .btn_withIcon {
+        font: normal normal 500 10px / 140% var(--font-primary);
+        letter-spacing: 0.05px;
+        padding: 7px 12px;
+        gap: 4px;
+    }
+
+    .recents_searches .item_card .bottom_box .btn_withIcon img {
+        width: 14px !important;
+        height: auto;
+    }
+
+    .trending_section {
+        overflow: hidden;
+    }
+
+    .trending_section .destinations_slide {
+        padding: 14px 0;
+    }
+
+    .trending_section .nav {
+        width: 100%;
+        gap: 0;
+    }
+
+    .trending_section .nav .nav-item {
+        width: 50%;
+    }
+
+    .trending_section .nav-pills .nav-link {
+        font: normal normal 500 12px / 133.333% var(--font-primary);
+        letter-spacing: 0.06px;
+        width: 100%;
+    }
+
+    .trending_section .owl-carousel .owl-stage-outer {
+        overflow: unset;
+    }
+
+    .trending_section .owl-item .card_animation,
+    .trending_section .owl-item .card_india {
+        transition: 0.5s all ease;
+    }
+
+    .trending_section .owl-item.center .card_animation,
+    .trending_section .owl-item.center .card_india {
+        transform: scale(1.15);
+    }
+
+    .trending_section .card_animation,
+    .trending_section .card_india {
+        height: 214px;
+        opacity: 0.54;
+        transition: 0.5s all ease;
+    }
+
+    .trending_section .owl-item.center .card_animation,
+    .trending_section .owl-item.center .card_india {
+        opacity: 1;
+    }
+
+    .trending_section .card_animation.australia {
+        padding-top: 24px;
+    }
+
+    .trending_section .card_animation.australia .text img,
+    .trending_section .card_animation.australia:hover .text img {
+        width: 70px;
+    }
+
+    .trending_section .card_animation.australia .bg_img,
+    .trending_section .card_animation.australia:hover .bg_img {
+        width: 170px;
+    }
+
+    .trending_section .card_animation.europe {
+        padding-top: 27px;
+    }
+
+    .trending_section .card_animation.europe .text img,
+    .trending_section .card_animation.europe:hover .text img {
+        width: 50px;
+    }
+
+    .trending_section .card_animation.europe:hover .bg_img,
+    .trending_section .card_animation.europe .bg_img {
+        width: 145px;
+    }
+
+    .trending_section .card_animation.europe::before,
+    .trending_section .card_animation.europe:hover::before {
+        left: -9px;
+        bottom: -59px;
+        background-size: 112px;
+    }
+
+    .trending_section .card_animation.europe::after,
+    .trending_section .card_animation.europe:hover::after {
+        right: -33px;
+        bottom: -41px;
+        background-size: 51.438px;
+    }
+
+    .trending_section .card_animation.mauritius {
+        padding-top: 26px;
+    }
+
+    .trending_section .card_animation.mauritius .text img,
+    .trending_section .card_animation.mauritius:hover .text img {
+        width: 71px;
+    }
+
+    .trending_section .card_animation.mauritius .bg_img,
+    .trending_section .card_animation.mauritius:hover .bg_img {
+        width: 138px;
+    }
+
+    .trending_section .card_animation.mauritius::before,
+    .trending_section .card_animation.mauritius:hover::before {
+        bottom: 0;
+        width: 70px;
+        background-size: 70px;
+    }
+
+    .trending_section .card_animation.singapore {
+        padding-top: 23px;
+    }
+
+    .trending_section .card_animation.singapore .text img,
+    .trending_section .card_animation.singapore:hover .text img {
+        width: 75px;
+    }
+
+    .trending_section .card_animation.singapore .bg_img,
+    .trending_section .card_animation.singapore:hover .bg_img {
+        width: 72px;
+    }
+
+    .trending_section .card_animation.singapore::before,
+    .trending_section .card_animation.singapore:hover::before {
+        width: 145px;
+        height: 90px;
+    }
+
+    .trending_section .card_animation.south-africa {
+        padding-top: 20px;
+    }
+
+    .trending_section .card_animation.south-africa .text img,
+    .trending_section .card_animation.south-africa:hover .text img {
+        width: 64px;
+    }
+
+    .trending_section .card_animation.south-africa .bg_img,
+    .trending_section .card_animation.south-africa:hover .bg_img {
+        width: 140px;
+        left: 0;
+    }
+
+    .trending_section .card_animation.south-africa::before,
+    .trending_section .card_animation.south-africa:hover::before {
+        bottom: -10px;
+        right: -28px;
+        background-size: 86px;
+    }
+
+    .trending_section .card_animation.vietnam {
+        padding-top: 21px;
+    }
+
+    .trending_section .card_animation.vietnam .text img,
+    .trending_section .card_animation.vietnam:hover .text img {
+        width: 80px;
+    }
+
+    .trending_section .card_animation.vietnam .bg_img,
+    .trending_section .card_animation.vietnam:hover .bg_img {
+        width: 160px;
+    }
+
+    .trending_section .card_animation .package,
+    .trending_section .card_india .package {
+        padding: 24px 12px 12px 12px;
+        transform: translateY(0);
+    }
+
+    .trending_section .card_animation .package h6,
+    .trending_section .card_india .package h6 {
+        font: normal normal 600 14px / 142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+        margin: 0 0 8px;
+    }
+
+    .trending_section .card_animation .package p,
+    .trending_section .card_india .package p {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        margin-bottom: 2px;
+        letter-spacing: 0.06px;
+    }
+
+    .trending_section .card_animation .package .btn,
+    .trending_section .card_india .package .btn {
+        padding: 8px;
+        gap: 0;
+        justify-content: center;
+    }
+
+    .trending_section .card_animation .package .btn img,
+    .trending_section .card_india .package .btn img {
+        height: 11px;
+    }
+
+    .trending_section .card_india.kerala {
+        padding-top: 17px;
+    }
+
+    .trending_section .card_india.kerala .text img,
+    .trending_section .card_india.kerala:hover .text img {
+        width: 45px;
+    }
+
+    .trending_section .card_india.kerala .bg_img,
+    .trending_section .card_india.kerala:hover .bg_img {
+        width: 165px;
+    }
+
+    .trending_section .card_india.bhutan {
+        padding-top: 21px;
+    }
+
+    .trending_section .card_india.bhutan .text img,
+    .trending_section .card_india.bhutan:hover .text img {
+        width: 64px;
+    }
+
+    .trending_section .card_india.bhutan .bg_img,
+    .trending_section .card_india.bhutan:hover .bg_img {
+        width: 160px;
+    }
+
+    .trending_section .card_india.sri-lanka,
+    .trending_section .card_india.sri-lanka:hover {
+        padding-top: 21px;
+    }
+
+    .trending_section .card_india.sri-lanka .text img,
+    .trending_section .card_india.sri-lanka:hover .text img {
+        width: 69px;
+    }
+
+    .trending_section .card_india.sri-lanka .bg_img,
+    .trending_section .card_india.sri-lanka:hover .bg_img {
+        width: 162px;
+    }
+
+    .trending_section .card_india.uttrakhand,
+    .trending_section .card_india.uttrakhand:hover {
+        padding-top: 27px;
+    }
+
+    .trending_section .card_india.uttrakhand .text img,
+    .trending_section .card_india.uttrakhand:hover .text img {
+        width: 60px;
+    }
+
+    .trending_section .card_india.uttrakhand .bg_img,
+    .trending_section .card_india.uttrakhand:hover .bg_img {
+        width: 164px;
+    }
+
+    .trending_section .card_india.kashmir,
+    .trending_section .card_india.kashmir:hover {
+        padding-top: 23px;
+    }
+
+    .trending_section .card_india.kashmir .text img,
+    .trending_section .card_india.kashmir:hover .text img {
+        width: 62px;
+    }
+
+    .trending_section .card_india.kashmir .bg_img,
+    .trending_section .card_india.kashmir:hover .bg_img {
+        width: 170px;
+    }
+
+    .trending_section .card_india.north-east,
+    .trending_section .card_india.north-east:hover {
+        padding-top: 27px;
+    }
+
+    .trending_section .card_india.north-east .text img,
+    .trending_section .card_india.north-east:hover .text img {
+        width: 71px;
+    }
+
+    .trending_section .card_india.north-east .bg_img,
+    .trending_section .card_india.north-east:hover .bg_img {
+        width: 160px;
+    }
+
+    .tc_specials .inner__gapTop {
+        gap: 16px;
+    }
+
+    .tc_specials .top_section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .tc_specials .top_section .char_dham,
+    .tc_specials .top_section .adventure {
+        padding: 18px;
+        border-radius: 14px;
+        min-height: 200px;
+    }
+
+    .tc_specials .top_section .char_dham:hover {
+        transform: translateY(0);
+    }
+
+    .tc_specials .top_section .adventure::before {
+        background-image: url(../img/adventure-bg-mobile.png);
+        background-size: 100%;
+    }
+
+    .tc_specials .top_section .char_dham::before {
+        width: 300px;
+        height: 200px;
+    }
+
+    .tc_specials .top_section .owl-dots {
+        position: absolute;
+        bottom: 18px;
+        left: 18px;
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .tc_specials .top_section .owl-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 100px;
+        background-color: var(--Gray-Mode-200);
+        transition: width 0.4s ease;
+    }
+
+    .tc_specials .top_section .owl-dot.active {
+        width: 20px;
+        background-color: var(--color-secondary);
+    }
+
+    .tc_specials .top_section .item_slide .img_box {
+        border-radius: 14px;
+    }
+
+    .tc_specials .wildlife_slide .festival_blck {
+        border-radius: 0;
+    }
+
+    .tc_specials .festival_blck:hover {
+        transform: translateY(0);
+    }
+
+    .tc_specials .owl-carousel .owl-item img,
+    .tc_specials .top_section .item_slide .img_box img,
+    .tc_specials .festival_blck .bg_img {
+        height: 200px;
+    }
+
+    .tc_specials .top_section .item_slide .content_blk,
+    .tc_specials .festival_blck .text_box {
+        padding: 18px;
+    }
+
+    .tc_specials .top_section h4,
+    .tc_specials .festival_blck h4 {
+        font: normal normal 600 14px / 142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+    }
+
+    .tc_specials .top_section h6,
+    .tc_specials .festival_blck h6 {
+        font: normal normal 400 10px / 140% var(--font-primary);
+        letter-spacing: 0.05px;
+        margin: 2px 0 6px;
+    }
+
+    .tc_specials .festival_blck .text_box span,
+    .tc_specials .top_section .item_slide .content_blk .price,
+    .tc_specials .bottom_section .card_box span {
+        font: normal normal 500 10px / 140% var(--font-primary);
+        letter-spacing: 0.5px;
+    }
+
+    .tc_specials .top_section .btn,
+    .tc_specials .festival_blck .btn {
+        font: normal normal 500 10px / 140% var(--font-primary);
+        letter-spacing: 0.05px;
+        padding: 7px 12px;
+        margin-top: 14px;
+    }
+
+    .tc_specials .top_section .btn img,
+    .tc_specials .festival_blck .btn img {
+        width: 14px;
+    }
+
+    .tc_specials .top_section .btn img {
+        width: auto;
+        height: 14px;
+    }
+
+    .tc_specials .bottom_section {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .tc_specials .bottom_section> :first-child {
+        grid-column: span 2;
+    }
+
+    .tc_specials .bottom_section .card_box {
+        border-radius: 14px;
+    }
+
+    .tc_specials .bottom_section .card_box .text_box {
+        padding: 12px;
+    }
+
+    .tc_specials .bottom_section .card_box h5 {
+        font: normal normal 700 14px / 142.857% var(--font-primary);
+    }
+
+    .tc_specials .bottom_section .card_box h6 {
+        font: normal normal 600 12px / 144.444% var(--font-primary);
+    }
+
+    .tc_specials .bottom_section .card_box h6 br {
+        display: none;
+    }
+
+    .tc_specials .bottom_section .card_box span {
+        font: normal normal 500 10px / 140.857% var(--font-primary);
+        letter-spacing: 0.1px;
+    }
+
+    .tc_specials .bottom_section .card_box span br {
+        display: none;
+    }
+
+    .tc_specials .bottom_section .btn_withIcon {
+        margin-top: 8px;
+        padding: 6px 8px;
+    }
+
+    .tc_specials .bottom_section .card_box .btn_withIcon span {
+        font: normal normal 700 12px / 133.857% var(--font-primary);
+    }
+
+    .tc_specials .bottom_section .card_box:hover .btn_withIcon {
+        padding: 6px 12px;
+    }
+
+    .tc_specials .bottom_section .video_container {
+        height: 226px;
+    }
+
+    .tc_specials .bottom_section .video_container,
+    .tc_specials .bottom_section video {
+        border-radius: 14px;
+    }
+
+    .tc_specials .bottom_section .fullscreen {
+        width: 18px;
+        height: 18px;
+        top: 8px;
+        right: 8px;
+    }
+
+    .tc_specials .bottom_section .fullscreen img {
+        width: 8px;
+    }
+
+    .tc_specials .bottom_section .video_container .controls,
+    .tc_specials .bottom_section .video_container .bottom-controls,
+    .tc_specials .bottom_section .video_container .fullscreen {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .tc_specials .bottom_section .controls {
+        width: 34px;
+        height: 34px;
+    }
+
+    .tc_specials .bottom_section .controls img {
+        width: 16px;
+    }
+
+    .tc_specials .bottom_section .bottom-controls {
+        bottom: 8px;
+        left: 8px;
+        gap: 7px;
+    }
+
+    .tc_specials .bottom_section .bottom-controls .volume {
+        width: 18px;
+        height: 18px;
+    }
+
+    .tc_specials .bottom_section .bottom-controls .volume img {
+        width: 10px;
+    }
+
+    .tc_specials .bottom_section .bottom-controls .time {
+        font: normal normal 500 8px/125.333% var(--font-primary);
+        padding: 4px 7px;
+        letter-spacing: 0.065px;
+    }
+
+    .selling_packages {
+        overflow: hidden;
+    }
+
+    .selling_packages .owl-stage-outer {
+        overflow: unset;
+    }
+
+    .selling_packages .item_card .img_block img {
+        height: 184px;
+        border-radius: 12px;
+    }
+
+    .selling_packages .item_card .content_blk h5 {
+        font: normal normal 600 16px / 100% var(--font-primary);
+        letter-spacing: 0.024px;
+    }
+
+    .selling_packages .item_card .content_blk .lft_blk,
+    .selling_packages .item_card .content_blk .rating {
+        gap: 3px;
+    }
+
+    .selling_packages .item_card .content_blk span {
+        font: normal normal 400 12px / 121.394% var(--font-primary);
+        letter-spacing: 0.12px;
+    }
+
+    .selling_packages .item_card .content_blk .btn_withIcon {
+        padding: 6px 10px;
+    }
+
+    .travel_consultation {
+        margin: 0;
+        background-image: url(../../images/thomasCookLP/TravelConsultation/cta-form-bg-mobile.png);
+        padding: 32px 0;
+        clip-path: unset;
+        overflow: unset;
+    }
+
+    .travel_consultation::before {
+        border-radius: 0;
+    }
+
+    .travel_consultation .row {
+        row-gap: 24px;
+    }
+
+    .travel_consultation .card_box .left_block h2 {
+        font: normal normal 600 24px / 133% var(--font-heading);
+        text-align: center;
+    }
+
+    .travel_consultation .card_box .left_block h2 br {
+        display: none;
+    }
+
+    .travel_consultation .card_box .left_block h6 {
+        margin-top: 8px;
+        font: normal normal 400 10px / 160% var(--font-primary);
+        letter-spacing: 0.1px;
+        text-align: center;
+    }
+
+    .travel_consultation .card_box .card_form {
+        width: 100%;
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .travel_consultation .card_box .card_form .row {
+        row-gap: 20px;
+    }
+
+    .travel_consultation .card_box .card_form .btn {
+        font: normal normal 400 16px/24px var(--font-primary);
+        letter-spacing: 0.024px;
+        margin-top: 0;
+        padding: 10px 18px;
+    }
+
+    .travel_consultation .card_box .card_form .btn img {
+        width: 20px;
+    }
+
+    .holiday_theme .image_grid {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .holiday_theme .image_grid .card_block {
+        width: 100%;
+        height: auto;
+        border-radius: 14px;
+    }
+
+    .holiday_theme .image_grid .card_block .text_block {
+        min-width: 100%;
+        min-height: 438px;
+    }
+
+    .holiday_theme .image_grid .card_block .text_block .btm_blk {
+        padding: 16px;
+        min-width: 100%;
+    }
+
+    .holiday_theme .image_grid .card_block .without_hover {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 16px;
+        transform: unset;
+        width: 100%;
+    }
+
+    .holiday_theme .image_grid .card_block .without_hover h3 {
+        font: normal normal 600 20px / 140% var(--font-primary);
+        letter-spacing: 0.02px;
+    }
+
+    .holiday_theme .image_grid .card_block.active .without_hover h3 {
+        transform: translateY(300px);
+    }
+
+    .holiday_theme .image_grid .card_block .text_block h3 {
+        font: normal normal 600 24px / 133.333% var(--font-primary);
+    }
+
+    .holiday_theme .image_grid .card_block .btm_blk span {
+        font: normal normal 400 12px / 133.33% var(--font-primary);
+        letter-spacing: 0.06px;
+        margin-top: 6px;
+    }
+
+    .holiday_theme .image_grid .card_block .left span {
+        font: normal normal 500 10px / 140.333% var(--font-primary);
+        letter-spacing: 0.1px;
+        padding: 5px 10px;
+    }
+
+    .holiday_theme .image_grid .card_block .right .btn_withIcon {
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+    }
+
+    .offers_section .main_heading {
+        gap: 10px;
+    }
+
+    .offers_section .item_card {
+        border-radius: 14px;
+        padding: 4px 4px 0;
+    }
+
+    .offers_section .item_card .img_block .coupon {
+        padding: 4px 8px;
+        right: 8px;
+        bottom: 8px;
+    }
+
+    .offers_section .item_card .img_block .coupon img {
+        width: 14px;
+        height: 14px;
+    }
+
+    .offers_section .item_card .text_box .top_blk .lft {
+        gap: 6px;
+    }
+
+    .offers_section .item_card .text_box .top_blk .lft .brdr {
+        height: 8px;
+    }
+
+    .offers_section .item_card .text_box {
+        padding: 12px;
+        gap: 6px;
+    }
+
+    .offers_section .item_card .text_box span {
+        font: normal normal 600 10px / 140.333% var(--font-primary);
+    }
+
+    .offers_section .item_card .text_box p {
+        min-height: 32px;
+    }
+
+    .international_package {
+        overflow: hidden;
+    }
+
+    .international_package .main_heading {
+        gap: 10px;
+    }
+
+    .international_package .filters_tab,
+    .comn_filterTab {
+        width: 100%;
+        gap: 0;
+        padding-bottom: 4px;
+        justify-content: space-between;
+    }
+
+    .international_package .filters_tab {
+        width: max-content;
+    }
+
+    .international_package .filters_tab .btn {
+        font: normal normal 500 16px / 150% var(--font-primary);
+        letter-spacing: 0.024px;
+        padding: 0 8px;
+        height: 40px;
+    }
+
+    .international_package .owl-stage-outer {
+        overflow: unset;
+    }
+
+    .international_package .item_card img,
+    .international_package .item_card::before {
+        border-radius: 14px;
+    }
+
+    .international_package .item_card .text_box h5 {
+        font: normal normal 600 16px / 150% var(--font-primary);
+        letter-spacing: 0.024px;
+    }
+
+    .international_package .item_card .text_box span {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        letter-spacing: 0.06px;
+        margin-top: 3px;
+    }
+
+    .comn_package {
+        overflow: hidden;
+    }
+
+    .comn_package .main_heading {
+        gap: 10px;
+    }
+
+    .comn_package .comn_filterTab {
+        width: 100%;
+    }
+
+    .comn_package .owl-stage-outer {
+        overflow: unset;
+    }
+
+    .comn_package .item_card,
+    .comn_package .item_card img {
+        border-radius: 12px;
+    }
+
+    .comn_package .item_card .text_box>div {
+        padding: 14px;
+    }
+
+    .comn_package .item_card .text_box h5 {
+        font: normal normal 600 16px / 150% var(--font-primary);
+        letter-spacing: 0.024px;
+    }
+
+    .comn_package .item_card .text_box span {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+    }
+
+    .comn_package .item_card .text_box .btn_withIcon {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+    }
+
+    .spiritual_package {
+        overflow: hidden;
+    }
+
+    .spiritual_package::before {
+        left: -102px;
+        bottom: -55px;
+        width: 350px;
+        height: 310px;
+    }
+
+    .spiritual_package::after {
+        right: -64px;
+        top: -48px;
+        width: 148px;
+        height: 175px;
+    }
+
+    .honeymoon_package {
+        min-height: 262px;
+        padding-bottom: 60px;
+        clip-path: inset(0 round 0);
+    }
+
+    .honeymoon_package h2 {
+        font: normal normal 500 18px var(--font-heading);
+        margin-bottom: 16px;
+    }
+
+    .why_thomascook .card_bg {
+        min-height: 408px;
+        padding: 16px;
+        border-radius: 14px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .why_thomascook .card_bg::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: 14px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+        z-index: -1;
+    }
+
+    .why_thomascook .card_bg .card_grids {
+        display: block;
+        position: unset;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box {
+        border-radius: 14px;
+        width: 100%;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box:hover {
+        transform: translateY(0);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_01 {
+        background: #fff6ed;
+        height: 252px;
+    }
+
+    .why_thomascook .card_bg .card_grids .owl-item .card_box::before {
+        background-size: 100%;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_01::before {
+        background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-img-01-mob.png);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_02 {
+        background: linear-gradient(225deg, #fd853a 0%, #ec4a0a 100%);
+        backdrop-filter: blur(39px);
+        height: 240px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_02::before {
+        background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-img-02-mob.png);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_03 {
+        background: linear-gradient(225deg, #2e90fa 0%, #175cd3 100%);
+        height: 170px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_03 p {
+        color: var(--color-white);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_04 {
+        background: #eff8ff;
+        height: 240px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_04::before {
+        background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-img-04-mob.png);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_04 h5 {
+        color: var(--color-primary);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_04 p {
+        color: var(--Blue-blue-10);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_05 {
+        background: #fffcd9;
+        height: 252px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_05::before {
+        background-image: url(../../images/thomasCookLP/WhyThomasCook/tc-bg-img-05-mob.png);
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_05 h4 {
+        color: #e3b100;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_05 p {
+        color: #af8b0c;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box h5 br,
+    .why_thomascook .card_bg .card_grids .card_box p br {
+        display: none;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box h4,
+    .why_thomascook .card_bg .card_grids .card_box h5 {
+        font: normal normal 600 20px/140% var(--font-primary);
+        letter-spacing: 0.02px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box p {
+        font: normal normal 300 16px / 150% var(--font-primary);
+        letter-spacing: 0.024px;
+    }
+
+    .why_thomascook .card_bg .card_grids .card_box.card_01 p,
+    .why_thomascook .card_bg .card_grids .card_box.card_05 p {
+        font: normal normal 400 14px / 142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+    }
+
+    .why_thomascook .card_bg .owl-carousel .owl-stage {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .why_thomascook .card_bg .owl-dots {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        display: flex;
+        gap: 4px;
+    }
+
+    .why_thomascook .card_bg .owl-carousel .owl-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 100px;
+        background-color: var(--Gray-Mode-200);
+        transition: width 0.4s ease;
+    }
+
+    .why_thomascook .card_bg .owl-carousel .owl-dot.active {
+        width: 20px;
+        background-color: var(--color-secondary);
+    }
+
+    .tourism_boards {
+        padding: 24px 0;
+    }
+
+    .tourism_boards .tourism_slide {
+        padding: 0 12px;
+    }
+
+    .tourism_boards .tourism_slide .owl-item .item_slide::before,
+    .tourism_boards .tourism_slide.owl-carousel .item_slide img {
+        border-radius: 16px;
+    }
+
+    .tourism_boards .tourism_slide.owl-carousel .owl-dots {
+        position: absolute;
+        top: -31px;
+        right: 16px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .tourism_boards .tourism_slide.owl-carousel button.owl-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 100px;
+        background: var(--Gray-Mode-200);
+    }
+
+    .tourism_boards .tourism_slide.owl-carousel button.owl-dot.active {
+        width: 20px;
+        background-color: var(--color-primary);
+    }
+
+    .our_blogs .item_card .text_box {
+        padding: 12px 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .our_blogs .item_card .text_box .btm_blk .btn_withIcon span {
+        font: normal normal 700 12px / 133.857% var(--font-primary);
+    }
+
+    .our_blogs .item_card .text_box span {
+        font: normal normal 600 10px / 140.333% var(--font-primary);
+    }
+
+    .our_blogs .item_card .text_box .btm_blk {
+        margin-top: 4px;
+    }
+
+    .customer_love {
+        padding: 40px 24px;
+    }
+
+    .customer_love .heading h2 {
+        font: normal normal 700 24px / 133.333% var(--font-heading);
+        letter-spacing: 0.036px;
+        max-width: 80%;
+        margin: auto;
+    }
+
+    .customer_love .statistics_blk {
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    .customer_love .statistics_blk h3 {
+        font: normal normal 500 18px / 144.444% var(--font-primary);
+        letter-spacing: 0.027px;
+    }
+
+    .customer_love .statistics_blk h6 {
+        font: normal normal 500 10px / 140% var(--font-primary);
+        margin-top: 0;
+    }
+
+    .customer_love .statistics_blk .brdr {
+        width: 1px;
+        height: 46px;
+    }
+
+    .customer_love .customer_slide {
+        margin-top: 20px;
+    }
+
+    .customer_love .item_slide {
+        padding: 20px 16px 16px 16px;
+        border-radius: 12px;
+    }
+
+    .customer_love .item_slide .quotes img {
+        height: 16px;
+        margin: auto;
+        display: block;
+    }
+
+    .customer_love .item_slide .quotes {
+        margin-bottom: 16px;
+    }
+
+    .customer_love .item_slide .content_blk p {
+        font: normal normal 400 14px/142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+        margin-bottom: 16px;
+        text-align: center;
+    }
+
+    .customer_love .cust_profile {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .customer_love .cust_profile .pro_img {
+        width: 48px;
+        height: 48px;
+        box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .customer_love .cust_profile .info p {
+        text-align: center;
+    }
+
+    .customer_love .cust_profile .info span {
+        font: normal normal 500 10px/140% var(--font-primary);
+        letter-spacing: 0.05px;
+        margin-top: 4px;
+        text-align: center;
+    }
+
+    .customer_love .customer_slide .owl-nav {
+        margin-top: 0;
+    }
+
+    .insta_section {
+        overflow: hidden;
+    }
+
+    .insta_section .owl-nav-custom {
+        display: none;
+    }
+
+    .insta_section .container {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .insta_section .ig_inner {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .insta_section .heading {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        gap: 16px;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .insta_section .heading h3 {
+        font: normal normal 600 24px / 134% var(--font-heading);
+        margin-top: 0;
+        max-width: 54%;
+    }
+
+    .insta_section .heading .btn_ig img {
+        width: 23.29px;
+        height: auto;
+    }
+
+    .insta_section .heading .btn_ig {
+        font: normal normal 600 14px / 20px var(--font-primary);
+        letter-spacing: 0.035px;
+        padding: 7px 16px;
+        gap: 12px;
+        border: 1px solid #0f4ca4;
+    }
+
+    .insta_section .owl-carousel .owl-stage-outer {
+        overflow: unset;
+    }
+
+    .insta_section .item_card {
+        width: 100%;
+        height: 485px;
+    }
+
+    .insta_section .item_card video {
+        border-radius: 14px;
+    }
+
+    .insta_section .item_card .video-container .overlay,
+    .insta_section .item_card .play-pause-btn {
+        opacity: 1;
+    }
+
+    .insta_section .item_card .play-pause-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .insta_section .owl-dots {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin: 24px auto 0;
+    }
+
+    .insta_section .owl-dots .owl-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 100px;
+        background: var(--Gray-Mode-200);
+        transition: width 0.4s ease;
+    }
+
+    .insta_section .owl-dots .owl-dot.active {
+        width: 20px;
+        background: var(--color-primary);
+    }
+
+    .faq_section .main_heading {
+        align-items: center;
+    }
+
+    .faq_section .accordion {
+        gap: 8px;
+        padding: 0;
+    }
+
+    .faq_section .accordion-item {
+        padding: 16px;
+    }
+
+    .faq_section .accordion-button::after {
+        width: 16px;
+        height: 16px;
+    }
+
+    .faq_section .accordion-body {
+        padding: 12px 0 0;
+    }
+
+    .faq_section .accordion-button {
+        font: normal normal 400 14px / 142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+    }
+
+    .faq_section .accordion-item.active .accordion-button {
+        font-weight: 600;
+    }
+
+    .tour_agency .main_heading {
+        align-items: flex-start;
+    }
+
+    .tour_agency .main_heading h4 {
+        font: normal normal 700 14px / 142.857% var(--font-primary);
+        letter-spacing: 0.035px;
+    }
+
+    .tour_agency .agency_content {
+        margin-top: 12px;
+    }
+
+    .tour_agency .agency_content p {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        letter-spacing: 0.06px;
+    }
+
+    .tour_agency .agency_content .read-more img {
+        width: 20px;
+    }
+
+    .tour_agency .agency_accordian {
+        margin-top: 24px;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .tour_agency .agency_accordian .accordion {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .tour_agency .agency_accordian .accordion-item {
+        border-radius: 8px;
+        border: 1px solid var(--Blue-blue-2);
+    }
+
+    .tour_agency .agency_accordian .accordion-button {
+        background: var(--Blue-blue-2);
+        border-radius: 8px;
+        box-shadow: none;
+        padding: 12px 16px;
+        font: normal normal 500 12px/133.333% var(--font-primary);
+        letter-spacing: 0.06px;
+        color: var(--Gray-Mode-700);
+    }
+
+    .tour_agency .accordion-button:not(.collapsed) {
+        background: var(--color-primary);
+        color: var(--color-white);
+    }
+
+    .tour_agency .accordion-item .accordion-body {
+        padding: 16px 8px;
+    }
+
+    .tour_agency .tags_btns {
+        gap: 8px;
+    }
+
+    .tour_agency .tags_btns .btn {
+        font: normal normal 400 12px / 133.333% var(--font-primary);
+        letter-spacing: 0.06px;
+        border: 1px solid rgba(15, 76, 164, 0.2);
+        padding: 8px;
+    }
+
+    .tour_agency .accordion-button::after {
+        width: 20px;
+        height: 20px;
+        background-image: url(../../images/common-img/plus.svg);
+        background-size: 100%;
+    }
+
+    .tour_agency .accordion-button:not(.collapsed)::after {
+        background-image: url(../../images/common-img/minus.svg);
+    }
+}
+
+.offers_slide .owl-nav .owl-prev{
+    margin-left: -15px;
+    position: absolute;
+    top: 10px;
+}
+
+.offers_slide .owl-nav .owl-next{
+    margin-right: -15px;
+    position: absolute;
+    top: 10px;
+}
+  .holidaysLPTourismBoardPartners h4{
+     padding-bottom: 15px;
+    margin-left: 120px;
+  }
+   
+.holidaysLPTourismBoardPartners .owl-carousel .owl-item .item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    transition: background-color 0.4s ease;
+}
+
+.holidaysLPTourismBoardPartners .owl-carousel .owl-item.center .item::before {
+     background-color: rgba(0, 0, 0, 0); 
+}
+.topFlight_routes::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: url(/images/tcHolidays/tcHome/flight-routes-bg.svg);
+    background-size: 892px;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+}
+trending_cities::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: ' ';
+    width: 805px;
+    height: 617px;
+    background-image: url(/images/tcHolidays/tcHome/map-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+}
+.travel_legacy .card_legacy::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 76, 164, 0.80);
+    backdrop-filter: blur(3px);
+    z-index: -1;
+}
+.travel_legacy .card_legacy {
+    border-radius: 32px;
+    background-image: url(/images/tcHolidays/tcHome/travel-legacy-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 24px;
+    display: grid
+;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+.why_thomascook .card_bg {
+    background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/why-thomas-ccok-bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 69.255vh;
+    padding: 54px 24px 24px 24px;
+    border-radius: 32px;
+    display: flex
+;
+    flex-direction: column;
+    justify-content: end;
+}
+.download_app {
+    background: var(--Blue-blue-2);
+}
+#tchomeTrendingCities .carousel-card .carousel-caption-overlay::after {
+    content: "";
+    display: flex;
+    background: url(/images/tcHolidays/arrow-up-right-dark.svg) center center no-repeat var(--color-secondary);
+    position: absolute;
+    border-radius: 100px;
+    width: 36px;
+    height: 24px;
+    right: 10px;
+    bottom: 15px;
+}
+
+/*=========Responsive CSS End==============*/
+
+/*===========Trending Cities CSS Start==========*/
+
+
+.trending_cities .carousel-card:hover .carousel-image-wrapper img {
+  transform: scale(1.1);
+}
+
+
+.trending_cities .carousel-image-wrapper img {
+  transition: transform 0.4s ease-out;
+}
+
+.trending_cities .carousel-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 53.12%, rgba(0,0,0,0.65) 90.74%, rgba(0,0,0,0.90) 99.96%);
+  z-index: 1;
+  pointer-events: none; 
+}
+.trending_cities .carousel-card .text_block {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    padding: 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.trending_cities .carousel-card .text_block .left_blc span {
+    font: normal normal 400 14px / 20px var(--font-primary);
+    color: var(--color-white);
+    letter-spacing: 0.035px;
+    display: block;
+    margin-top: 4px;
+}

@@ -1,0 +1,146 @@
+<div class="card_box">
+    <div class="top_block">
+        <div class="img_slider owl-carousel">
+            <div v-for="pic in pkgData.packageDetail.tcilHolidayPhotoVideoSrp" class="img_box item">
+                <img class="testtt" :src="getImages(pic)" :alt="pic.altTag">
+                <!-- baseImageURL/holidays/pic.packageId/photos/pic.path -->
+            </div>
+        </div>
+        <div class="over_img">
+            <div class="left_strip primary" v-if="(pkgData.packageDetail.isTcilRecomended == 'Most Booked') && !(pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != '')">
+                <img src="/images/tcHolidays/srp/thumbs-up.svg" alt="">
+                <span>Most Booked</span>
+            </div>
+            <div class="left_strip tertiary " v-if="(pkgData.packageDetail.isTcilRecomended == 'Recommended') && !(pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != '')">
+                <img src="/images/tcHolidays/srp/hearts.svg" alt="">
+                <span>Recommended</span>
+            </div>
+            <div class="left_strip tertiary " v-if="(pkgData.packageDetail.isTcilRecomended == 'Honeymoon Special') && !(pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != '')">
+                <img src="/images/tcHolidays/srp/hearts.svg" alt="">
+                <span>Honeymoon Special</span>
+            </div>
+            <div class="left_strip primary" v-if="(pkgData.packageDetail.isTcilRecomended == 'Online Exclusive') && !(pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != '')">
+                <img src="/images/tcHolidays/srp/stars.svg" alt="">
+                <span>Online Exclusive</span>
+            </div>
+            <div class="left_strip secondary" v-if="pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != ''" :title="pkgData.packageDetail.offers">
+                <img src="/images/tcHolidays/srp/sale.svg" alt="">
+                <span>Deal Available</span>
+            </div>
+            <div class="left_strip primary" v-if="(pkgData.packageDetail.isTcilRecomended == 'Xmas & New Year Departures') && !(pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != '')">
+                <img src="/images/tcHolidays/srp/stars.svg" alt="">
+                <span>Xmas & New Year Departures</span>
+            </div>
+            <div class="left_strip primary" v-if="(pkgData.packageDetail.isTcilRecomended == 'Diwali Departures') && !(pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != '')">
+                <img src="/images/tcHolidays/srp/stars.svg" alt="">
+                <span>Diwali Departures</span>
+            </div>
+            <div class="left_strip primary" v-if="(pkgData.packageDetail.isTcilRecomended == 'Durga Puja Departures') && !(pkgData.packageDetail.offers != undefined && pkgData.packageDetail.offers != '')">
+                <img src="/images/tcHolidays/srp/stars.svg" alt="">
+                <span>Durga Puja Departures</span>
+            </div>
+            <div class="wishlist"
+                 @click="wishlistSrp(pkgData.packageDetail.isWishlist,pkgData.packageDetail.packageId)">
+                <!--<img src="/images/tcHolidays/srp/heart-outline.svg" alt="">-->
+                <div class="wishlist-btn">
+                    <i class="" :class="pkgData.packageDetail.isWishlist ? 'icon-svg-favorite-solid' : 'icon-svg-favorite' "></i>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="compare">
+            <div class="form-check">
+                <input class="form-check-input addTo_Compare" type="checkbox" value="" id="addToCompare01">
+                <label class="form-check-label" for="addToCompare01">
+                    Add to Compare
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="cbt_blc">
+        <div class="center_block">
+            <div class="ctop_blc">
+                <div class="ctl_blc">
+                    <span>{{ pkgData.packageDetail.duration - 1 }}N/{{ pkgData.packageDetail.duration }}D</span>
+                    <span v-if="(pkgData.isCustomizedHolidaysPkg == true && pkgData.packageDetail.pkgSubtypeId.pkgSubtypeName == 'GIT') || pkgData.packageDetail.pkgSubtypeId.pkgSubtypeName != 'GIT'">Customized Tour</span>
+                    <span v-if="pkgData.isCustomizedHolidaysPkg == false && pkgData.packageDetail.pkgSubtypeId.pkgSubtypeName == 'GIT'">Group Tour</span>
+                    <span>{{getTourType(tourTypeFilterValue.length > 0 ? parseInt(tourTypeFilterValue[tourTypeFilterValue.length - 1]) : pkgData.minimumPricePackageClassId)}}</span>
+                </div>
+                <div class="ratings" v-if="pkgData.packageDetail.rating">
+                    <span class="star"><img src="/images/tcHolidays/star.svg" alt=""></span>
+                    <span>{{pkgData.packageDetail.rating}}</span>
+                    <span v-if="pkgData.packageDetail.noOfCustomers">({{formatNumber(pkgData.packageDetail.noOfCustomers)}})</span>
+                </div>
+            </div>
+            <div class="ccntr_blc">
+                <h6 :title="pkgData.packageDetail.pkgName">{{pkgData.packageDetail.pkgName}}</h6>
+                <div class="ccbtm_blc" style="display: flex;">
+                    <span v-for="timeline in pkgData.packageDetail.tcilHolidayTimelineCollection.slice(0, 2)">
+                        <!-- {{timeline}} -->
+                        <span>{{timeline.noOfNights}}N {{timeline.cityCode.cityName}}</span>
+                        <span class="dot"></span>
+                    </span>
+                    <span v-if="pkgData.packageDetail.tcilHolidayTimelineCollection.length > 2"><a
+                            data-bs-toggle="tooltip" data-bs-placement="auto"
+                            :title="getTimelineTitle(pkgData.packageDetail.tcilHolidayTimelineCollection)">+{{pkgData.packageDetail.tcilHolidayTimelineCollection.length
+                            - 2}}</a></span>
+                </div>
+            </div>
+            <div class="cbtm_blc">
+                <div class="cbtm_inr">
+                    <span v-if="pkgData.packageDetail.isFlightIncluded == 'Y'" :class="pkgData.packageDetail.holidayPlusSubType == 2 ? 'optional' : ''">
+                        <span v-if="pkgData.packageDetail.holidayPlusSubType == 2">Optional</span>
+                        <img src="/images/tcHolidays/srp/flights.svg" alt="">
+                        Flights
+                    </span>
+                    <span v-if="isAccommodationIncluded(pkgData)">
+                        <img src="/images/tcHolidays/srp/hotel.svg" alt="">
+                        Hotels
+                    </span>
+                    <span v-if="isSightseeingIncluded(pkgData)">
+                        <img src="/images/tcHolidays/srp/camera.svg" alt="">
+                        Sightseeing
+                    </span>
+                    <span v-if="isVisaIncluded(pkgData)">
+                        <img src="/images/tcHolidays/srp/visa.svg" alt="">
+                        Visa
+                    </span>
+                    <span v-if="isMealIncluded(pkgData)">
+                        <img src="/images/tcHolidays/srp/meal.svg" alt="">
+                        Meal
+                    </span>
+                    <span v-if="pkgData.packageDetail.isTourManagerIncluded == 'Y'">
+                        <img src="/images/tcHolidays/srp/tourist.svg" alt="">
+                        Tour Manager
+                    </span>
+                </div>
+                <div class="brdr_dotted"></div>
+            </div>
+        </div>
+
+        <div class="bottom_block">
+            <div class="fair_blc">
+                <div class="btf_blc">
+                    <span class="price" v-if="getStrikeoutPrice(pkgData)"><span class="rupeeSign"></span>{{ formatPrice(getStrikeoutPrice(pkgData)) }}</span>
+                    <span class="discount" v-if="getDiscount(pkgData)">{{ getDiscount(pkgData) }}% OFF</span>
+                </div>
+				<h5><span class="rupeeSign"></span>{{ formatPrice(getCurrentPrice(pkgData)) }}<span class="price_tag">Starting price per adult</span></h5>
+            </div>
+            <button
+                v-show="pkgData.packageDetail.srpAction === 'Y'"
+                @click="bookPkg(pkgData.packageDetail.packageId, pkgData.minimumPricePackageClassId, pkgData.packageDetail.pkgSubtypeId.pkgTypeId, pkgData.packageDetail.pkgName, pkgData.packageDetail)"
+                class="btn btn_primary">
+                Book Online
+            </button>
+
+            <button
+                v-if="pkgData.packageDetail.srpAction === 'N'"
+                @click="bookPkg(pkgData.packageDetail.packageId, pkgData.minimumPricePackageClassId, pkgData.packageDetail.pkgSubtypeId.pkgTypeId, pkgData.packageDetail.pkgName, pkgData.packageDetail)"
+                class="btn btn_primary">
+                View Details
+            </button>
+        </div>
+    </div>
+</div>

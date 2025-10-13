@@ -1,0 +1,1326 @@
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.Seo"%>
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.SeoDao"%>
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.HolidaysSrpSeo"%> 
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.FaqSection"%>
+<%@ page import="java.util.List"%>
+
+<%@page buffer="none" session="false" trimDirectiveWhitespaces="true" %><%--
+--%><%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %><%--
+--%><%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><%--
+--%><%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><%--
+--%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
+--%>
+<fmt:setLocale value="${cms.locale}" /> 
+<c:set var="uri" value="${cms.requestContext.uri}" />
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta name="facebook-domain-verification" content="u5uydpn303fkqwpfqj5diof71jn0uo" />
+	
+	
+       <%String str = request.getAttribute("reqUrl").toString();%>
+       <%String qurStr = request.getAttribute("reqQueryString").toString();%>
+	
+	    <%HolidaysSrpSeo srpSeo = new HolidaysSrpSeo();%>
+        <%Seo seoContent = srpSeo.HolidaysSrpSeoMethod(str, qurStr, request);%>
+		
+		<script>
+		
+		<%= seoContent.getDestinationFromUrl()%>
+		<%= seoContent.getUserSet()%>
+		<%= seoContent.getUserSetNew()%> 
+	</script>
+	<script>
+        <% if(("userSet").equals(seoContent.getUserSet())){%>
+        <%=seoContent.getContentSnippet()%> 
+        <%}else{%>
+        <%=seoContent.getContentSnippet()%>
+        <%}%>
+    </script>
+	
+    <script>
+        //smartech('create', 'ADGMOT35CHFLVDHBJNIG50K969LAAK8GCQ4EF7R4ANGU1503IS60' );
+        //smartech('register', 'a64327585b5d41b72a58ac79d18a7ee5');
+        //smartech('identify', '');
+    </script> 
+    <script type="application/ld+json">
+        { "@context" : "http://schema.org",
+        "@type" : "Organization",
+        "legalName" : "Thomas Cook (India) Limited",
+        "url" : "https://www.thomascook.in/",
+        "logo" : "https://www.thomascook.in/images/logo.jpg",  
+        "contactPoint" : [{
+        "@type" : "ContactPoint",
+        "telephone" : "+91 1800-2099-100", 
+        "contactType" : "Customer Care"
+        }],
+        "sameAs" : [ "https://www.facebook.com/ThomasCookIndiaLimited", 
+        "https://plus.google.com/+thomascookindia", 
+        "https://www.youtube.com/user/ThomasCookIndiaLtd", 
+        "https://in.pinterest.com/thomascookindia/", 
+        "https://www.instagram.com/thomascookofficial/",
+        "https://in.linkedin.com/company/thomas-cook-india-limited"  ]
+        } 
+    </script>
+
+    <title> 
+    <%
+    String userSet = seoContent.getUserSet();
+    String userSetNew = seoContent.getUserSetNew();
+    String familyPackages = seoContent.getFamilyPkg();
+	
+	String cityName = null;
+	if(familyPackages != null) {
+		String destination = seoContent.getDestinationFromUrl();
+    	cityName = destination.split("family")[0];
+	}
+	String count = seoContent.getTotalCount();
+	
+    if ("userSetNew".equals(userSetNew)) {
+    %>
+        <%= count + " " %> <%= seoContent.getDestinationFromUrl().replaceFirst(" from ", " Packages from ") %> Book Your Trip to <%= seoContent.getDestinationFromUrl() %>
+    <%
+    } else if ("FamilyPKG".equalsIgnoreCase(familyPackages)) { 
+    %>
+        <%= cityName %> Family Tour Packages - Plan a Relaxing Family Trip to <%= cityName %>
+    <%
+    } else {
+    %>
+        <%= seoContent.getMetaTitle() %>
+    <%
+    }
+    %>
+	
+</title>	
+	
+     <link rel="canonical" href="<%=seoContent.getCanonical().toLowerCase()%>" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <meta name="description" content=' 
+
+    <% if ("userSet".equals(userSet) && "userSetNew".equals(userSetNew)) { %>
+        <%= seoContent.getDestinationFromUrl().replaceFirst(" from ", " Packages from ") %> - Book <%= seoContent.getDestinationFromUrl().replaceFirst(" from ", " tour packages from ") %> starting at  Plan your trip to <%= seoContent.getDestinationFromUrl() %> with Thomas Cook.
+    <% } else if ("FamilyPKG".equalsIgnoreCase(familyPackages)) { %>
+        <%= cityName %> Family Tour Packages - Get the best deals on <%= cityName %> family packages with Thomas Cook. Book a <%= cityName %> trip for your family starting at just Rs  only!
+    <% } else { %>
+        <%= seoContent.getMetaDescription() %>
+    <% } %>
+' />
+          <meta name="keywords" content="
+          <% if(("userSet").equals(seoContent.getUserSet())){%>
+          <%=seoContent.getMetaKeywords()%>
+          <%}else{%>
+          <%=seoContent.getMetaKeywords()%>
+          <%}%>
+          " />
+          
+          
+		  
+
+		                                   
+<cms:enable-ade/>
+
+<cms:include file="../common/head.jsp"/>
+<cms:include file="../common/gtmHead.jsp"/>
+<link rel="stylesheet" href="/css/tcHolidays/holidaysSRP.css">
+<cms:include file="../common/tcHolidays/commonCSS.jsp"/>
+<cms:include file="../common/tcHolidays/commonJS.jsp"/>
+
+<style>
+.tabLPInternationalPackages {
+    margin-bottom: 150px;
+}
+.empty-state {
+    min-height: 60vh; /* centers nicely on screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.empty-state img {
+  max-width: 120px;
+  margin-bottom: 20px;
+}
+.empty-state h5 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.empty-state p {
+    color: #6c757d;
+    font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+<div id="header-revamp">
+    <div class="clearfix"></div>
+    <!------App Strip For Mobile Start ------->
+    <div class="tcHolidaysTheamData">
+        <cms:include file="../common/tcHolidays/mobileAppStrip.jsp" />
+    </div>
+    <div class="clearfix"></div>
+    <!------App Strip For Mobile Ends ------->
+
+    <!------Header Strip Start------->
+    <div id="header" class="tcHolidaysTheamData">
+        <cms:container name="tcHolidaysHeadercontainer" type="full" maxElements="1" />
+    </div>
+    <div class="clearfix"></div>
+    <!------Header Strip Ends------->
+
+
+
+    <!-----Common Login & SignUp Start from here ------->
+    <div class="tcHolidaysTheamData">
+        <cms:include file="../common/tcHolidays/commonLoginSignUp.jsp" />
+    </div>
+    <div class="clearfix"></div>
+    <!-----Common Login & SignUp Ends from here ------->
+</div>
+
+<div class="clearfix"></div>
+
+    <div>
+        <div class="srp_header d-block d-md-none">
+            <a href="/tcHolidays/tcHolidaysLP" class="btn">
+                <img src="/images/tcHolidays/arrow-left.svg" alt="">Holiday Search
+            </a>
+        </div>
+        <!------Hero Section------->
+        <div class="hero_section">
+			<cms:container name="holidaysSRPMainBanner" type="full" maxElements="1"/>
+			<div class="bnr_text">
+<h1>
+			<%
+           if ("notUserSet".equals(seoContent.getUserSet())) {
+           %>
+           <%= seoContent.getH1Tag().replace("&gt;", ">").replace("&lt;", "<") %>
+           <%
+           } else if ("userSet".equals(seoContent.getUserSet())) {
+           %>
+           <%= seoContent.getDestinationFromUrl().replace("-", " ").replace("tours", "") %> Tour Packages
+           <%
+           }
+           %>
+          </h1>
+			<h4><%
+         if (seoContent != null && "notUserSet".equals(seoContent.getUserSet())) {
+         String subHeader = seoContent.getSubHeaderTag();
+          if (subHeader != null) {
+         %>
+        <%= subHeader %>
+         <%
+         }
+          }%></h4> </div>
+            <cms:include file="holidaysJSP/holidaysLPHolidaysMainBanner.jsp" />
+        </div>
+        <script src="/js/tcHolidays/holidays-main-banner.js"></script>
+        <div class="bnr_text">
+             
+			<h1>
+			<%
+           if ("notUserSet".equals(seoContent.getUserSet())) {
+           %>
+           <%= seoContent.getH1Tag().replace("&gt;", ">").replace("&lt;", "<") %>
+           <%
+           } else if ("userSet".equals(seoContent.getUserSet())) {
+           %>
+           <%= seoContent.getDestinationFromUrl().replace("-", " ").replace("tours", "") %> Tour Packages
+           <%
+           }
+           %>
+          </h1>
+			<h4><%
+         if (seoContent != null && "notUserSet".equals(seoContent.getUserSet())) {
+         String subHeader = seoContent.getSubHeaderTag();
+          if (subHeader != null) {
+         %>
+        <h4><%= subHeader %></h4>
+         <%
+         }
+          }%></h4> </div>
+
+        <!---Vue App Container Start from here------->
+        <div class="srp-vue">
+       
+            <!------Tour Packages------->
+            <div class="tour_packages">
+                <div class="top_wrapper">
+                    <div class="container">
+                        <div class="row gx-0 justify-content-center">
+                            <div class="col-xxxl-9 col-xxl-12">
+                                <div class="breadcrumbs">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                                <%=seoContent.getBreadCrumb()%>
+                                        </ol>
+                                    </nav>
+                                </div>
+
+
+                                <div class="package_info">
+                                    <div class="left_block">
+                                        <h6>{{totalPackagesHeader}} {{destination}} Holiday packages</h6>
+                                        <div class="rating_forMobile">
+                                            <img src="/images/tcHolidays/star.svg" alt="">
+                                            <span><b>{{averageRating}}</b></span>
+                                            <span>({{totalCustomers}})</span>
+                                        </div>
+                                        <div class="rating">
+                                            <div>
+                                                <span>{{averageRating}}</span>
+                                                <div class="stars">
+                                                    <img src="/images/tcHolidays/star.svg" v-for="n in starCount" :key="n" alt="star" />
+                                                    <img v-if="hasHalfStar" src="/images/tcHolidays/Half-Star.svg" alt="half star" />
+                                                </div>
+                                            </div>
+                                            <div class="brdr"></div>
+                                            <div>
+                                                <span>{{totalCustomers}}</span>
+                                                <span><span>Reviews</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="right_block">
+                                        <div>
+                                            <div class="form-check">
+                                                <input class="form-check-input compareCheck" type="checkbox" value=""
+                                                    id="compareCheck">
+                                                <label class="form-check-label" for="compareCheck">
+                                                    Compare
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="brdr"></div>
+                                        <div class="sorting_blck">
+                                            <div class="sort_icon">
+                                                <img src="/images/tcHolidays/srp/switch-vertical.svg" alt="">
+                                            </div>
+                                            <div class="sort_dropdown">
+                                                <label class="sort_label"><span>Sort by:</span></label>
+                                                <div class="sort_selected">
+                                                    <label class="selected_option">Select</label>
+                                                    <span class="arrow"><img
+                                                            src="/images/tcHolidays/srp/chevron-down.svg" alt=""></span>
+                                                </div>
+                                                <ul class="sort_options">
+													<li class="active" @click="sortPackages('')">Select</li>
+                                                    <li  @click="sortPackages('PLH')">Price Low to High</li>
+                                                    <li @click="sortPackages('PHL')">Price High to Low</li>
+                                                    <li @click="sortPackages('DLH')">Duration Low to High</li>
+                                                    <li @click="sortPackages('DHL')">Duration High to Low</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="brdr"></div>
+                                        <div class="gridlist_buttons">
+                                            <button class="btn active"><img src="/images/tcHolidays/srp/grid.svg"
+                                                    alt=""></button>
+                                            <button class="btn"><img src="/images/tcHolidays/srp/list.svg"
+                                                    alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="filter_block">
+                                    <div class="filter-col-left">
+                                        <button class="btn filter_btn">
+                                            <span>Filter <span v-if="totalFiltersApplied > 0">{{ totalFiltersApplied
+                                                    }}</span></span> <img
+                                                src="/images/tcHolidays/srp/chevron-right-double.svg" alt="">
+                                        </button>
+                                    </div>
+                                    <div class="filter-col-right">
+                                        <div class="filter_forMobile">
+                                            <button class="btn sort_filter"><img
+                                                    src="/images/tcHolidays/switch-vertical.svg" alt="">Sort
+                                                by</button>
+                                            <button class="btn filter_btn"><img
+                                                    src="/images/tcHolidays/filter-funnel.svg"
+                                                    alt="">Filter</button>
+
+                                            <div class="sort_wrapper">
+                                                <div class="header_forMobile">
+                                                    <h6>Filters</h6>
+                                                    <button class="btn btn_close"><img
+                                                            src="/images/tcHolidays/close.svg" alt=""></button>
+                                                </div>
+                                                <div class="sort_content">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input btn_close" type="radio" @click="sortPackages('PLH')"
+                                                                    name="flexRadioDefault" id="flexRadioDefault1">
+                                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                                    Price Low to High
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input btn_close" type="radio" @click="sortPackages('PHL')"
+                                                                    name="flexRadioDefault" id="flexRadioDefault2">
+                                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                                    Price High to Low
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input btn_close" type="radio" @click="sortPackages('DLH')"
+                                                                    name="flexRadioDefault" id="flexRadioDefault3">
+                                                                <label class="form-check-label" for="flexRadioDefault3">
+                                                                    Duration Low to High
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input btn_close" type="radio"@click="sortPackages('DHL')"
+                                                                    name="flexRadioDefault" id="flexRadioDefault4">
+                                                                <label class="form-check-label" for="flexRadioDefault4">
+                                                                    Duration High to Low
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="filter_bar">
+                                            <div class="filter-scroll-wrapper">
+                                                <button class="scroll-btn left"><img
+                                                        src="/images/tcHolidays/srp/chevron-left.svg" alt=""></button>
+                                                <div class="filter-scroll">
+                                                    <ul class="filter-list">
+                                                        <li v-for="item in [
+                                                            { key: 'AP', count: totalPackagesHeader, label: 'All Packages', dataFilter: 'all' },
+                                                            { key: 'FIT', count: tagsCountObj?.FITLength || 0, label: 'Customised Tours', dataFilter: 'customised-tours' },
+                                                            { key: 'GIT', count: tagsCountObj?.GITLength || 0, label: 'Group Tours', dataFilter: 'group-tours' },
+                                                            { key: 'MBT', count: tagsCountObj?.MBTLength || 0, label: 'Most Booked', dataFilter: 'most-booked' },
+                                                            { key: 'RT', count: tagsCountObj?.RTLength || 0, label: 'Recommended', dataFilter: 'Recommended' },
+                                                            { key: 'HST', count: tagsCountObj?.HSTLength || 0, label: 'Honeymoon Special', dataFilter: 'honeymoon-special' },
+                                                            { key: 'DAT', count: tagsCountObj?.DATLength || 0, label: 'Deal Available', dataFilter: 'deal-available' },
+                                                            { key: 'OET', count: tagsCountObj?.OETLength || 0, label: 'Online Exclusive', dataFilter: 'online-exclusive' },
+                                                            { key: 'XM', count: tagsCountObj?.XMLength || 0, label: 'Xmas & New Year Departures', dataFilter: 'online-exclusive' },
+                                                            { key: 'DD', count: tagsCountObj?.DDLength || 0, label: 'Diwali Departures', dataFilter: 'online-exclusive' },
+                                                            { key: 'DPD', count: tagsCountObj?.DPDLength || 0, label: 'Durga Puja Departures', dataFilter: 'online-exclusive' },
+                                                        ].filter(i => i.count > 0).sort((a,b) => b.count - a.count)" 
+                                                            :key="item.key"
+                                                            class="filter-tab"
+                                                            :class="{ active: tagsFilterValue === item.key }"
+                                                            :data-filter="item.dataFilter"
+                                                            @click="filterPackages(item.key)"
+                                                            :value="item.key"
+                                                        >
+                                                            {{ item.label }}
+                                                            <span>({{ item.count }})</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <button class="scroll-btn right"><img src="/images/tcHolidays/srp/chevron-right.svg" alt=""></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="onScroll_filter">
+                    <div class="top_wrapper">
+                        <div class="container">
+                            <div class="row gx-0 justify-content-center">
+                                <div class="col-xxxl-9 col-xxl-12">
+                                    <div class="filter_block">
+                                        <div class="filter-col-left">
+                                            <button class="btn filter_btn">
+                                                <span>Filter <span v-if="totalFiltersApplied > 0">{{ totalFiltersApplied
+                                                        }}</span></span> <img
+                                                    src="/images/tcHolidays/srp/chevron-right-double.svg" alt="">
+                                            </button>
+                                        </div>
+                                        <div class="filter-col-center">
+                                            <div class="filter_bar">
+                                                <div class="filter-scroll-wrapper">
+                                                    <button class="scroll-btn left"><img
+                                                            src="/images/tcHolidays/srp/chevron-left.svg"
+                                                            alt=""></button>
+                                                    <div class="filter-scroll">
+                                                        <ul class="filter-list">
+                                                            <li v-for="item in [
+                                                                { key: 'AP', count: totalPackagesHeader, label: 'All Packages', dataFilter: 'all' },
+                                                                { key: 'FIT', count: tagsCountObj?.FITLength || 0, label: 'Customised Tours', dataFilter: 'customised-tours' },
+                                                                { key: 'GIT', count: tagsCountObj?.GITLength || 0, label: 'Group Tours', dataFilter: 'group-tours' },
+                                                                { key: 'MBT', count: tagsCountObj?.MBTLength || 0, label: 'Most Booked', dataFilter: 'most-booked' },
+                                                                { key: 'HST', count: tagsCountObj?.HSTLength || 0, label: 'Honeymoon Special', dataFilter: 'honeymoon-special' },
+                                                                { key: 'DAT', count: tagsCountObj?.DATLength || 0, label: 'Deal Available', dataFilter: 'deal-available' },
+                                                                { key: 'OET', count: tagsCountObj?.OETLength || 0, label: 'Online Exclusive', dataFilter: 'online-exclusive' },
+                                                                { key: 'XM', count: tagsCountObj?.XMLength || 0, label: 'Xmas & New Year Departures', dataFilter: 'online-exclusive' },
+                                                                { key: 'DD', count: tagsCountObj?.DDLength || 0, label: 'Diwali Departures', dataFilter: 'online-exclusive' },
+                                                                { key: 'DPD', count: tagsCountObj?.DPDLength || 0, label: 'Durga Puja Departures', dataFilter: 'online-exclusive' },
+                                                            ].filter(i => i.count > 0).sort((a,b) => b.count - a.count)" 
+                                                                :key="item.key"
+                                                                class="filter-tab"
+                                                                :class="{ active: tagsFilterValue === item.key }"
+                                                                :data-filter="item.dataFilter"
+                                                                @click="filterPackages(item.key)"
+                                                                :value="item.key"
+                                                            >
+                                                                {{ item.label }}
+                                                                <span>({{ item.count }})</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <button class="scroll-btn right"><img
+                                                            src="/images/tcHolidays/srp/chevron-right.svg"
+                                                            alt=""></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="filter-col-right">
+                                            <div class="form-check">
+                                                <input class="form-check-input compareCheck" type="checkbox" value=""
+                                                    id="compareCheck">
+                                                <label class="form-check-label" for="compareCheck">
+                                                    Compare
+                                                </label>
+                                            </div>
+                                            <div class="fc_left">
+                                                <div class="short_filter">
+                                                    <button class="btn">
+                                                        <img src="/images/tcHolidays/srp/switch-vertical.svg" alt="">
+                                                    </button>
+                                                    <ul class="sort_option">
+                                                        <li class="active">Price Low to High</li>
+                                                        <li>Price High to Low</li>
+                                                        <li>Duration Low to High</li>
+                                                        <li>Duration High to Low</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="seprtr"></div>
+                                            <div class="fc_right">
+                                                <div class="gridlist_buttons">
+                                                    <button class="btn active"><img
+                                                            src="/images/tcHolidays/srp/grid.svg" alt=""></button>
+                                                    <button class="btn"><img src="/images/tcHolidays/srp/list.svg"
+                                                            alt=""></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row gx-0 justify-content-center">
+                        <div class="col-xxxl-9 col-xxl-12">
+                            <div class="grids_block">
+                                <div class="filter_andCards">
+                                    <div class="all_filters">
+                                        <div class="header_forMobile">
+                                            <h6>Filters</h6>
+                                            <button class="btn btn_close"><img src="/images/tcHolidays/close.svg"
+                                                    alt=""></button>
+                                        </div>
+                                        <!-- Applied filters -->
+                                        <div class="comn_filter applied_filter">
+                                            <div class="top_block">
+                                                <p>Applied filters</p>
+                                                <button class="btn d-none d-md-block" v-if="totalFiltersApplied > 0" @click="resetFilters">Clear
+                                                    All</button>
+                                            </div>
+                                            <ul class="applied">
+                                                <li v-for="(appliedFilter, index) in filtersApplied" :key="index">
+                                                    {{appliedFilter.filter}}
+                                                    <button @click="deleteFilter(appliedFilter)" class="btn"><img
+                                                            src="/images/tcHolidays/x.svg" alt="">
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="seperator"></div>
+										<div class="applied-filter">
+                                            <div class="search_box">
+                                                    <input type="text" class="form-control" placeholder="Search"
+                                                        v-model="searchPackage" @input="searchCityByName">
+                                                    <span><img src="/images/tcHolidays/srp/search-icon.svg"
+                                                            alt=""></span>
+                                                </div>
+												</div>
+												<div class="seperator"></div>
+                                        <!--Flight -->
+                                        <div class="comn_filter dropdown_filter flightsDataFilter">
+                                            <button class="btn dropdown_button active">
+                                                Flight <img src="/images/tcHolidays/chevron-down-black.svg" alt="">
+                                            </button>
+                                            <div class="dropdown_list">
+                                                <ul>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="withFlights" value="Y" v-model="flightFilterValue"
+                                                                @change="filterPackages" />
+                                                            <label for="withFlights">With Flights</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.flightDetails">{{filterData.flightDetails.withFlightCount}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="withoutFlights" value="N"
+                                                                v-model="flightFilterValue" @change="filterPackages" />
+                                                            <label for="withoutFlights">Without Flights</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.flightDetails">{{filterData.flightDetails.withoutFlightCount}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="seperator"></div>
+
+                                        <!-- Departure City -->
+                                        <div class="comn_filter dropdown_filter departureCityFilter">
+                                            <button class="btn dropdown_button">
+                                                Departure City <img src="/images/tcHolidays/chevron-down-black.svg"
+                                                    alt="">
+                                            </button>
+                                            <div class="dropdown_list">
+                                                <div class="search_box">
+                                                    <input type="text" class="form-control" placeholder="Search"
+                                                        v-model="departCityInputValue" @input="departureCityInputEvent">
+                                                    <span><img src="/images/tcHolidays/srp/search-icon.svg"
+                                                            alt=""></span>
+                                                </div>
+                                                <ul class="dropdown_items">
+                                                    <li v-for="(city, index) in departureCityList" :key="index">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                :id="'departure-city-' + index" :value="city[0]"
+                                                                v-model="departureCityFilterValue"
+                                                                @change="filterPackages" />
+                                                            <label :for="'city-' + city">{{city[0]}}</label>
+															<label :for="'city-' + city">{{city[1]}}</label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="seperator"></div>
+
+                                        <!-- Month of Travel -->
+                                        <div class="comn_filter dropdown_filter monthOfTravelSideFilter">
+                                            <button class="btn dropdown_button">
+                                                Month of Travel 
+                                                <img src="/images/tcHolidays/chevron-down-black.svg" alt="">
+                                            </button>
+                                            <div class="dropdown_list">
+                                                <div class="year_calendar" id="yearCalendar">
+                                                    <div v-for="(yearBlock, yearIndex) in yearCalendar" :key="yearIndex" class="year_block">
+                                                        <div class="top_block">
+                                                            <p class="calendar-year">{{ yearBlock.year }}</p>
+                                                        </div>
+                                                        <div class="months-grid">
+                                                           <!-- <div v-for="(month, mIndex) in yearBlock.months"
+                                                                :key="mIndex"
+                                                                class="month"
+                                                                :data-month="month.index"
+                                                                :data-year="yearBlock.year"
+																:value="month.name+'-'+yearBlock.year"
+                                                                :class="{ selected: selectedMonth?.year === yearBlock.year && selectedMonth?.month === month.index }"
+																v-model="monthFilterValue"
+                                                                @click="selectMonth(yearBlock.year, month.index)">
+                                                                {{ month.name }}
+                                                            </div>-->
+	                                                      <label v-for="(month, mIndex) in yearBlock.months"
+                                                              :key="mIndex"
+                                                              class="month-label">
+                                                              <input type="checkbox"
+                                                              class="month-checkbox"
+                                                              :value=" month.index  + '-' + yearBlock.year"
+															   v-model="monthFilterValue"
+															   @change="filterPackages"/>
+                                                              <span class="month-text">{{ month.name }}</span>
+                                                           </label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="seperator"></div>
+
+                                        <!-- Duration -->
+                                        <div class="comn_filter dropdown_filter">
+                                            <button class="btn dropdown_button">
+                                                Duration <img src="/images/tcHolidays/chevron-down-black.svg"
+                                                    alt="">
+                                            </button>
+                                            <div class="dropdown_list">
+                                                <div class="range_container">
+                                                    <div class="sliders_control">
+                                                        <!--<input id="fromSlider" class="min_value" type="range" value="10"
+                                                        min="0" max="100" />
+                                                    <input id="toSlider" class="max_value" type="range" value="30"
+                                                        min="0" max="100" />-->
+
+                                                        <input  id="fromSlider" class="min_value"  :value="minDurationFilterValue" type="range"
+															@change="durationSilderEvent"
+                                                            :min="mindurationDays "
+                                                            :max="maxdurationDays "
+                                                            @input="updateDurationDisplay"
+                                                            />
+
+                                                        <input id="toSlider" class="max_value"  :value="maxDurationFilterValue"  type="range" 
+                                                            @change="durationSilderEvent"
+															:min="mindurationDays"
+                                                            :max="maxdurationDays"
+                                                            @input="updateDurationDisplay"
+                                                            />
+                                                    </div>
+                                                    <div class="display_value">
+                                                        <span class="activeValue" id="minDurationValueDisplay">{{mindurationDays}}</span>
+                                                        <span id="maxDurationValueDisplay" >{{ maxdurationDays }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <ul>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexCheckDefault1" value="1"
+                                                                v-model="durationFilterValue" @change="filterPackages">
+                                                            <label for="flexCheckDefault1" v-if="filterData.duration">{{filterData.duration.slot1.type}}</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.duration" >{{filterData.duration.slot1.count}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexCheckDefault2" value="2"
+                                                                v-model="durationFilterValue" @change="filterPackages">
+                                                            <label for="flexCheckDefault2" v-if="filterData.duration">{{filterData.duration.slot2.type}}</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.duration">{{filterData.duration.slot2.count}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexCheckDefault3" value="3"
+                                                                v-model="durationFilterValue" @change="filterPackages">
+                                                            <label for="flexCheckDefault3" v-if="filterData.duration">{{filterData.duration.slot3.type}}</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.duration">{{filterData.duration.slot3.count}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="seperator"></div>
+
+                                        <!-- Budget per person -->
+                                        <div class="comn_filter dropdown_filter">
+                                            <button class="btn dropdown_button">
+                                                Budget per person <img
+                                                    src="/images/tcHolidays/chevron-down-black.svg" alt="">
+                                            </button>
+                                            <div class="dropdown_list">
+                                                <div class="range_container">
+                                                    <div class="sliders_control">
+                                                        <input id="priceMinSlider" class="min_value" type="range" @change="budgetSilderEvent"
+                                                            :value="minBudgetFilterValue" :min="minPckgPrice" :max="maxPckgPrice" />
+                                                        <input id="priceMaxSlider" class="max_value" type="range" @change="budgetSilderEvent"
+                                                            :value="maxBudgetFilterValue" :min="minPckgPrice" :max="maxPckgPrice" />
+                                                    </div>
+                                                    <div class="display_value">
+                                                        ₹ <span id="priceMinDisplay">{{minPckgPrice}}</span>
+                                                        ₹ <span id="priceMaxDisplay">{{maxPckgPrice}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <ul>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexCheckDefaultBudget1" value="1"
+                                                                v-model="budgetFilterValue" @change="filterPackages">
+                                                            <label for="flexCheckDefaultBudget1"  v-if="filterData.budget">{{filterData.budget.slot1.type}}</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.budget">{{filterData.budget.slot1.count}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexCheckDefaultBudget2" value="2"
+                                                                v-model="budgetFilterValue" @change="filterPackages">
+                                                            <label for="flexCheckDefaultBudget2"  v-if="filterData.budget">{{filterData.budget.slot2.type}}</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.budget">{{filterData.budget.slot2.count}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexCheckDefaultBudget3" value="3"
+                                                                v-model="budgetFilterValue" @change="filterPackages">
+                                                            <label for="flexCheckDefaultBudget3"  v-if="filterData.budget">{{filterData.budget.slot3.type}}</label>
+                                                        </div>
+                                                        <span
+                                                            v-if="filterData.budget">{{filterData.budget.slot3.count}}</span>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="seperator"></div>
+
+                                        <!-- Tour Type -->
+                                        <div class="comn_filter dropdown_filter">
+                                            <button class="btn dropdown_button">
+                                                Tour Type <img src="/images/tcHolidays/chevron-down-black.svg"
+                                                    alt="">
+                                            </button>
+                                            <div class="dropdown_list tour-type-filter">
+                                                <ul>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="Standard"
+                                                                value="0" v-model="tourTypeStandardFilter" @change="toggleTourType(0)">
+                                                            <label for="Standard">Standard</label>
+                                                        </div>
+                                                        <span v-if="filterData.tourType">{{filterData.tourType.standardCount}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="Value"
+                                                                value="1" v-model="tourTypeValueFilter" @change="toggleTourType(1)">
+                                                            <label for="Value">Value</label>
+                                                        </div>
+                                                        <span v-if="filterData.tourType">{{filterData.tourType.valueCount}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="Premium"
+                                                                value="2" v-model="tourTypePremiumFilter" @change="toggleTourType(2)">
+                                                            <label for="Premium">Premium</label>
+                                                        </div>
+                                                        <span v-if="filterData.tourType">{{filterData.tourType.premiumCount}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="seperator"></div>
+
+                                        <!-- Must Include Places -->
+                                        <div class="comn_filter dropdown_filter">
+                                            <button class="btn dropdown_button">
+                                                Must Include Places <img
+                                                    src="/images/tcHolidays/chevron-down-black.svg" alt="">
+                                            </button>
+                                            <div class="dropdown_list">
+                                                <div class="search_box">
+                                                    <input type="text" class="form-control" placeholder="Search"
+                                                        v-model="mustIncludeInputValue" @input="mustIncludeInputEvent">
+                                                    <span><img src="/images/tcHolidays/srp/search-icon.svg"
+                                                            alt=""></span>
+                                                </div>
+                                                <ul class="dropdown_items">
+                                                    <li v-for="(place, index) in mustIncludeCityList" :key="index">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                :id="'city-most-include-place' + index" :value="place[0]"
+                                                                v-model="mustIncludeFilterValue"
+                                                                @change="filterPackages">
+                                                            <label
+                                                                :for="'city-most-include-place' + index">{{place[0]}}</label>
+																<label
+                                                                :for="'city-most-include-place' + index">{{place[1]}}</label>
+                                                        </div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="seperator"></div>
+
+                                        <!-- Themes -->
+                                        <div class="comn_filter dropdown_filter themes_filter">
+                                            <button class="btn dropdown_button">
+                                                Themes <img src="/images/tcHolidays/chevron-down-black.svg" alt="">
+                                            </button>
+                                            <div class="dropdown_list">
+                                                <ul class="dropdown_items">
+                                                    <li v-for="(theme, index) in filterData.themes" :key="index">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                :id="'type-theme-' + index" :value="theme[0]"
+                                                                v-model="themeFilterValue" @change="filterPackages">
+                                                            <label :for="'type-theme-' + index">{{theme[0]}}</label>
+															<label :for="'type-theme-' + index">{{theme[1]}}</label>
+                                                        </div>
+                                                    </li>
+
+                                                </ul>
+
+                                                <div class="seemore_wrapper">
+                                                    <button class="seemore_btn">See More <img
+                                                            src="/images/tcHolidays/srp/chevron-down-primary.svg"
+                                                            alt=""></button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="footer_forMobile d-md-none">
+                                            <button class="btn btn_primary_border" v-if="totalFiltersApplied > 0" @click="resetFilters">Clear all</button>
+                                            <button class="btn btn_primary btn_close">Apply</button>
+                                        </div>
+                                    </div>
+                                    <div class="row inner_gap package_grids" v-if="lazyLoadedPackageData.length > 0">
+                                        <!-- 1st for loop start -->
+                                        <div v-for="(pkgData, index) in lazyLoadedPackageData.slice(0, 5)" :key="index"
+                                            class="col-lg-4 col-md-4 package-card">
+                                            <cms:include file="holidaysJSP/SRP-Card-Box.jsp" />
+                                            <!-- Included the card box jsp -->
+                                        </div>
+                                        <!-- 1st for loop end -->
+
+                                        <!-- BUILD YOUR OWN TRIP -->
+                                        <div class="col-lg-4 col-md-4 package-card" data-category="all">
+                                            <div class="card_trip">
+                                                <h5>Build your own trip in just 10 minutes!</h5>
+                                                <a href="https://customize.thomascook.in/search/trips#travel_and_stay" target="_blank" class="btn btn_withIcon"><span>Read More</span>
+												<img src="/images/tcHolidays/arrow-up-right-dark.svg" alt=""></a>
+                                            </div>
+                                        </div>
+
+                                        <!-- LET US HELP -->
+                                        <div class="col-lg-12 package-card letushelp global_form" data-category="all">
+                                            <div class="help_block">
+                                                    <div class="components"></div>
+                                                <div class="before_submission">
+                                                <div class="top_heading">
+                                                    <h4>Let us Help you Decide</h4>
+                                                    <span>Plan your trip with travel experts for perfectly designed
+                                                        packages.</span>
+                                                </div>
+                                                <div class="contact_form">
+                                                <div class="form_wrpr">
+                                                    <div class="input_inr">
+                                                        <input type="text" v-model="name" class="form-control" placeholder=" ">
+                                                        <label class="input_label">Enter Name</label>
+                                                        <span class="error" v-if="nameError">{{ nameError }}</span>
+                                                    </div>
+                                                    <div class="input_inr">
+                                                        <input id="phone" type="tel" v-model="phoneNumber" class="form-control phone_number"
+                                                            placeholder=" ">
+                                                        <label class="input_label">Mobile No.</label>
+                                                        <span class="error" v-if="phoneNumberError">{{ phoneNumberError }}</span>
+                                                    </div>
+                                                    <div class="input_inr">
+                                                        <span class="icon"><img src="/images/tcHolidays/email-icon.svg"
+                                                                alt=""></span>
+                                                        <input type="text" v-model="emailId" class="form-control" placeholder=" ">
+                                                        <label class="input_label">Enter Mail ID</label>
+                                                        <span class="error" v-if="emailError">{{ emailError }}</span>
+                                                    </div>
+                                                    <button class="btn btn_primary" @click="leadFormSubmit()">Submit</button>
+                                                </div>
+                                                <div class="input_inr">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="termsConditions" checked="">
+                                                            <label class="form-check-label" for="termsConditions">
+                                                                I accept the <a href="/privacy-policy">Privacy Policy</a> and authorize
+                                                                Thomas Cook and Group of Companies to contact me with
+                                                                details.
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <div class="after_submission">
+                                                <h6>Thank you for your interest in our holiday package. <br>Our expert will
+                                                    contact you shortly.</h6>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <!-- 2nd for loop start -->
+                                        <div v-if="lazyLoadedPackageData.length > 5"
+                                            v-for="(pkgData, index) in lazyLoadedPackageData.slice(5, 999)" :key="index"
+                                            class="col-lg-4 col-md-4 package-card">
+                                            <cms:include file="holidaysJSP/SRP-Card-Box.jsp" />
+                                            <!-- Included the card box jsp -->
+                                        </div>
+                                        <!-- 2nd for loop end -->
+
+
+                                        <div class="col-lg-12">
+                                            <div class="more_wrapper">
+                                                <button class="btn btn_primary_border btn_loadMore m-auto"
+                                                    v-show="loadMoreState" @click="loadMoreClick">Load More <img
+                                                        src="/images/tcHolidays/chevron-down-primary.svg"
+                                                        alt=""></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row inner_gap package_grids" v-else>
+                                        <div class="empty-state">
+                                            <div>
+                                                <!-- Replace with your SVG / PNG icon -->
+                                                <img src="/images/tcHolidays/common-img/error-page.gif" alt="No Packages">
+                                                <h5>Looks like we’re out of packages for your current selection</h5>
+                                                <p>Try removing some filters to find your perfect getaway</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="addtoCompare_blc">
+                    <div class="left_blc">
+                        <div class="card_blc">
+                            <div class="cl_blc">
+                                <div class="img_blc">
+                                    <img src="/images/tcHolidays/srp/atc-01.png" alt="">
+                                </div>
+                                <span>Magical Dubai With Abu Dhabi With 2 Day 2 Park</span>
+                            </div>
+                            <button class="btn"><img src="/images/tcHolidays/srp/x.svg" alt=""></button>
+                        </div>
+                        <div class="card_blc">
+                            <div class="cl_blc">
+                                <div class="img_blc">
+                                    <img src="/images/tcHolidays/srp/atc-01.png" alt="">
+                                </div>
+                                <span>Simply Dubai Fully Loaded</span>
+                            </div>
+                            <button class="btn"><img src="/images/tcHolidays/srp/x.svg" alt=""></button>
+                        </div>
+                        <div class="card_blc">
+                            <div class="cl_blc">
+                                <div class="img_blc">
+                                    <img src="/images/tcHolidays/srp/atc-01.png" alt="">
+                                </div>
+                                <span>Magical Dubai With Abu Dhabi With 2 Day 2 Park</span>
+                            </div>
+                            <button class="btn"><img src="/images/tcHolidays/srp/x.svg" alt=""></button>
+                        </div>
+                    </div>
+                    <div class="right_blc">
+                        <button class="btn btn_clear">Clear All</button>
+                        <a href="campare.html" class="btn btn_compare">Compare</a>
+                    </div>
+                </div>
+            </div>
+
+            <!------Tour Managers------->
+            <div class="holidaysLPTourManager">
+                <cms:include file="holidaysJSP/holidaysLPTourManager.jsp" />
+            </div>
+            <!------Tour Managers END------->
+
+
+            <!------Why Thomas Cook ??? start from here ------->
+
+            <div id="holidaysLPWhyThomasCook" class="CMSTemplates tcHolidaysTheamData holidaysLPWhyThomasCook">
+                <cms:container name="holidaysLPWhyThomasCook" type="full" maxElements="1" />
+            </div>
+            <div class="clearfix"></div>
+
+            <!------Why Thomas Cook ??? Ends from here------->
+
+
+
+            <!------Tourism Board Partners Start from here coming from Folder Gallery----->
+            <div id="holidaysLPTourismBoardPartners"
+                class="CMSTemplates tcHolidaysTheamData holidaysLPTourismBoardPartners">
+                <cms:container name="holidaysLPTourismBoardPartners" type="full" maxElements="1" />
+            </div>
+            <div class="clearfix"></div>
+            <!------Tourism Board Partners Ends from here----->
+
+
+            <!------Our Travel Blogs Start from here------->
+<div class="blog-section container">
+  <div id="blog-carousel" class="owl-carousel owl-theme"></div>
+</div>
+<div class="tcHolidaysTheamData travelBlogs">
+    <cms:include file="holidaysJSP/holidaysLPOurTravelBlogs.jsp"/>
+</div>
+
+            <!------Our Travel Blogs Ends from here------->
+			
+			
+<!------Frequently Asked Questions start from here------->
+
+
+<!------Frequently Asked Questions-------> 
+
+<% 
+    // Declare faqList only once at the top or before this section
+    List<FaqSection> faqList = seoContent.getFaqs(); 
+%>
+
+<!-- ===== Frequently Asked Questions Section ===== -->
+<div class="faq_section rn__section__gapTop" style="<%= (faqList == null || faqList.isEmpty()) ? "display:none;" : "" %>">
+    <div class="container">
+        <div class="row gx-0 justify-content-center">
+            <div class="col-xxxl-8 col-xxl-10">
+                <div class="main_heading">
+                    <h4>Frequently Asked Questions</h4>
+                </div>
+
+                <div class="inner__gapTop">
+                    <div class="accordion" id="faqAccordian">
+                        <%
+                            if (faqList != null && !faqList.isEmpty()) {
+                                int index = 1;
+                                for (FaqSection faq : faqList) {
+                                    String collapseId = "collapse" + index;
+                                    String headingId = "heading" + index;
+                                    boolean isFirst = index == 1;
+                        %>
+                        <div class="accordion-item <%= isFirst ? "active" : "" %>">
+                            <h2 class="accordion-header" id="<%= headingId %>">
+                                <button class="accordion-button <%= isFirst ? "" : "collapsed" %>" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#<%= collapseId %>"
+                                        aria-expanded="<%= isFirst %>" aria-controls="<%= collapseId %>">
+                                    <%= faq.getQuestion() %>
+                                </button>
+                            </h2>
+                            <div id="<%= collapseId %>" class="accordion-collapse collapse <%= isFirst ? "show" : "" %>"
+                                 aria-labelledby="<%= headingId %>" data-bs-parent="#faqAccordian">
+                                <div class="accordion-body">
+                                    <p><%= faq.getAnswer() %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                                    index++;
+                                }
+                            } else {
+                        %>
+                        <p>No FAQs available.</p>
+                        <%
+                            }
+                        %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="clearfix"></div>
+<!------Frequently Asked Questions Ends from here------->
+
+<!------SEO Interling Start from here------->
+ 
+<div class="tcHolidaysTheamData vertical_tabs_section">	      
+	<div class="container agency_content">
+	<!-- this is for SEO Read More Text Start from Here -->
+	<div class="more_all_big">						
+	 <% if(("userSet").equals(seoContent.getUserSet())){%>
+        <%=seoContent.getContentSnippet()%> 
+        <%}else{%>
+        <%=seoContent.getContentSnippet()%>
+        <%}%>
+		</div>
+	<!-- this is for SEO Read More Text End Here -->
+	<!-- this is for SEO Tagging  Start from Here -->
+	<div class="taggingSEOData">						
+         <% if ("userSet".equals(seoContent.getUserSet())) { %>
+			<h2><%= seoContent.getDestinationFromUrl().replace("-", " ").replace("tours", "") %> Holiday Packages </h2>
+			<% } else { %>
+		<%= seoContent.getH2Tag() != null 
+        ? seoContent.getH2Tag().replace("&gt;", ">").replace("&lt;", "<") 
+        : "" %>
+
+		<% } %>
+
+</div>
+<!-- this is for SEO Tagging  Ends from Here -->
+</div>
+	
+</div>
+<!------SEO Interling END from here------->
+
+
+
+            <!------Why Customers Love Thomas Cook start from here------->
+
+            <div id="holidaysLPWhyCustomersLoveThomasCook"
+                class="CMSTemplates tcHolidaysTheamData holidaysLPWhyCustomersLoveThomasCook">
+                <cms:container name="holidaysLPWhyCustomersLoveThomasCook" type="full" maxElements="1" />
+            </div>
+            <div class="clearfix"></div>
+
+            <!------Why Customers Love Thomas Cook Ends from here------->
+
+
+
+            <!------Your Daily Dose of Wanderlust Start from here------->
+     
+            <!------Your Daily Dose of Wanderlust Ends from here------->
+
+
+
+
+            <!------Download TC App Start from here------->
+
+            <div id="holidaysLPDownloadTCApp" class="CMSTemplates tcHolidaysTheamData holidaysLPDownloadTCApp">
+                <cms:container name="holidaysLPDownloadTCApp" type="full" maxElements="1" />
+            </div>
+            <div class="clearfix"></div>
+
+            <!------Download TC App Ends from here------->
+
+
+
+            <!------Frequently Asked Questions start from here------->
+
+            <div id="holidaysLPFrequentlyAskedQuestions"
+                class="CMSTemplates tcHolidaysTheamData holidaysLPFrequentlyAskedQuestions">
+                <cms:container name="holidaysLPFrequentlyAskedQuestions" type="full" maxElements="1" />
+            </div>
+            <div class="clearfix"></div>
+            <!------Frequently Asked Questions Ends from here------->
+
+
+
+            <!------Tours and Travel Agency ? Thomas Cook India Start from here------->
+            <div class="tcHolidaysTheamData vertical_tabs_section">
+                <div class="container">
+
+
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div id="holidaysLPToursAndTravelAgencyThomasCookIndia"
+                class="CMSTemplates tcHolidaysTheamData holidaysLPToursAndTravelAgencyThomasCookIndia">
+                <div class="container">
+                    <cms:container name="holidaysLPToursAndTravelAgencyThomasCookIndia" type="full" maxElements="1" />
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <!------Tours and Travel Agency ? Thomas Cook India Ends from here------->
+
+
+
+
+            <!------CTA Section Start from here------->
+            <div class="tcHolidaysTheamData">
+                <cms:include file="holidaysJSP/holidaysFixedButton.jsp" />
+            </div>
+            <div class="clearfix"></div>
+
+            <div id="holidaysFixedButton" class="tcHolidaysTheamData holidaysFixedButton">
+                <cms:container name="holidaysFixedButton" type="full" maxElements="1" />
+            </div>
+            <div class="clearfix"></div>
+            <!------CTA Section Ends from here------->
+
+        </div>
+    </div>
+    <!---Vue App Container End from here------->
+	
+	<!------Newsletter Section Start from here------->
+    <div class="newsletter_section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxxl-11">
+                    <div class="newsletter_card">
+                        <h3>Stay in the Loop!</h3>
+                        <p>Be the first to know about exclusive travel deals, exciting destinations, and special
+                            offers!
+                        </p>
+                        <div class="input_form">
+                            <input id="newsLetterEmail" type="text" class="form-control" placeholder="Enter your email" @input="resetsubscribeEmail">
+                            <span><button class="btn" @click="subscribeEmail" >Subscribe</button></span>
+                        </div>
+						<p class="response_msg" style="display: none;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!------Newsletter Section Ends from here------->
+	
+	
+   <!------Vendors Script CTA Section Start from here------->
+    <div class="tcHolidaysTheamData">
+        <cms:include file="holidaysJSP/vendorScript.jsp" />
+    </div>
+    <!------Vendors Script CTA Section Ends from here------->
+    <!------Footer Section Start from here------->
+    <div id="footer" class="tcHolidaysTheamData">
+        <cms:container name="tcHolidaysFootercontainer" type="full" maxElements="1" />
+    </div>
+    <div class="clearfix"></div>
+    <!------Footer Section Ends from here------->
+
+
+
+ <section class="holiday_Consolidation">
+<cms:include file="../holidays/common-components/Consolidation-HolidayAssist.jsp"/>
+</section>
+
+
+
+</body>
+
+<script src="/js/tcHolidays/recentsearch.js"></script>
+
+
+
+<script>
+	
+	
+	
+	window.onload = function () {
+    $('.img_slider').owlCarousel({
+        autoplay: false,
+        items: 1,
+        loop: false,
+        nav: true,
+        dots: false,
+        autoplayTimeout: 7000,
+        smartSpeed: 800,
+        navText: [
+            "<img src='/images/tcHolidays/arrow-left-src.svg' alt='Previous'>",
+            "<img src='/images/tcHolidays/arrow-right-src.svg' alt='Next'>"
+        ],
+    });
+};
+
+</script>
+
+<script src="/js/tcHolidays/holidays-srp.js"></script>
+<script src="/js/tcHolidays/srpUi.js" type="module"></script>
+<script src="/js/tcHolidays/owlcarousel2-filter.min.js" type="module"></script>
+<script src="/js/tcHolidays/common-login-ui.js"></script>
+</html>

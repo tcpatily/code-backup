@@ -1,0 +1,671 @@
+var holidayContextRoot = "/tcHolidayRS/";
+
+function dateConvert(dateStr) {
+    if (!dateStr) return "";
+    const [day, month, year] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${day} ${monthNames[date.getMonth()]}, ${year}`;
+}
+
+function getRoomAndAdultCounts(roomDetails) {
+    let totalRooms = 1;
+    let totalAdults = 1;
+    if (Array.isArray(roomDetails)) {
+        totalRooms = roomDetails.length;
+        totalAdults = roomDetails.reduce((sum, room) => sum + (room.noOfAdults || 0), 0);
+    }
+    return { totalRooms, totalAdults };
+}
+
+function calculateAge(dobStr) {
+    if (!dobStr) return null;
+    const [day, month, year] = dobStr.split('-').map(Number);
+    const dob = new Date(year, month - 1, day);
+    const now = new Date();
+    let age = now.getFullYear() - dob.getFullYear();
+    const m = now.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) age--;
+    return age;
+}
+
+function getGenderText(gender, age) {
+    if (gender === 'M' && age >= 18) return "Male";
+    if (gender === 'F' && age >= 18) return "Female";
+    if (age < 18 && age > 1) return "Child";
+    return "Infant";
+}
+
+function getIconSrc(gender, age) {
+    if (age === null) return "";
+    if (age >= 18) {
+        if (gender === "M") return "/images/tcHolidays/common-img/user-icon-01.svg";
+        if (gender === "F") return "/images/tcHolidays/common-img/user-icon-02.svg";
+    } else if (age > 1 && age < 18) {
+        if (gender === "M") return "/images/tcHolidays/common-img/user-icon-03.svg";
+        if (gender === "F") return "/images/tcHolidays/common-img/user-icon-04.svg";
+    } else {
+        return "/images/tcHolidays/common-img/user-icon-05.svg";
+    }
+    return "";
+}
+
+function getLoggedInDetails() {
+    let user = "", custId = "";
+    let userDetailsObj = {
+        user: "",
+        custId: ""
+    }
+    const userDetailsFamilyTreeStr = localStorage.getItem('userDetailandFamilyTree');
+    if (userDetailsFamilyTreeStr != undefined && userDetailsFamilyTreeStr != null && userDetailsFamilyTreeStr != '') {
+        const userDetailsFamilyTree = JSON.parse(userDetailsFamilyTreeStr);
+        if (userDetailsFamilyTree != undefined && userDetailsFamilyTree != null) {
+            console.log("User Details:", userDetailsFamilyTree);
+            if (userDetailsFamilyTree.userDetail != undefined && userDetailsFamilyTree.userDetail != null) {
+                const userDetails = userDetailsFamilyTree.userDetail;
+                if (userDetails.userTypeId != undefined && userDetails.userTypeId != null) {
+                    console.log("User is Customer -- " + userDetails.userTypeId);
+                    if (userDetails.userTypeId == "Customer") {
+                        userDetailsObj.user = "Customer"
+                        userDetailsObj.custId = userDetails.custId;
+                    } else if (userDetails.userTypeId == "Staff") {
+                        userDetailsObj.user = "Staff"
+                    } else {
+                        userDetailsObj.user = "";
+                        userDetailsObj.custId = "";
+                        console.log("User Type is neither Customer nor Staff -- " + userDetails.userTypeId);
+                    }
+                }
+            }
+        }
+
+    }
+    return userDetailsObj;
+}
+
+// Decorate traveller (NEW)
+function decorateTraveller(raw) {
+    const age = calculateAge(raw.dob);
+    return {
+        ...raw,
+        age,
+        genderText: getGenderText(raw.gender, age),
+        iconSrc: getIconSrc(raw.gender, age),
+        fullName: `${raw.firstName || ''} ${raw.lastName || ''}`.trim()
+    };
+}
+
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+		minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
+}
+
+// -----------------------------------------
+// Vue App
+// -----------------------------------------
+ const travelersList=ref([])
+var traveller = ref({
+            firstName: '',
+            lastName: '',
+            title: '',
+            roomNo: 0,
+            travellerId: null,
+            dob: '',
+            passportNo: '',
+            passportExpireDate: '',
+            nameOnPanCard: 'Lokesh Mayekar',
+            dobOnPanCard: '16/12/1996',
+            isPayer: 'N',
+            paymentPayer: '',
+            hotelRoomType: null,
+            panNumber: 'AAAJD0430B',
+            osi: '',
+            travellerNo: 0,
+            paxType: 0,
+            gender: '',
+            mealPreference: '',
+            utilizedAmountByCust: 0,
+            usedForFutureBookings: false,
+            panMessage: '',
+            panStatus: '',
+            utilizedAmount: 0,
+            canvasUtilizedAmount: 0,
+            paxName: ''
+        });
+var listOfTravellers = [];
+var dummyTraveller = reactive({});
+var travellerMap = new Map();
+const activeRoom = ref(1);
+const activeTravellerIndex = reactive({});
+const listOfTravellerMap = ref([])
+const activeAdultTab=ref(0)
+
+console.log("traveller",travelersList)
+
+ 
+
+ 
+ 
+
+ watch(
+  [travelersList, activeAdultTab],
+  ([newTravelersList, newActiveAdultTab]) => {
+    
+	  if(activeAdultTab.value>0)
+	  {
+	    alert(activeAdultTab.value)
+	  traveller.value = newTravelersList?.[activeAdultTab.value-1];
+     }else
+	 {
+	 traveller.value = newTravelersList?.[activeAdultTab.value];
+}
+    
+  }
+);
+
+
+createApp({
+    setup() {
+        // Existing refs
+        const tdpData = ref(null);
+        const totalRooms = ref();
+        const totalAdults = ref();
+        const quoteId = ref("");
+
+
+        // PAN / TCS
+        var tcsResponse = ref();
+
+        // Legacy array placeholder
+        const travellersDetailsList = ref([]);
+
+        // Traveller form model (unchanged)
+       
+
+
+        // NEW: rooms computed from API
+        const rooms = computed(() => {
+            const roomDetails = tdpData.value?.tdpDetails?.roomDetails || [];
+            return roomDetails.map((r, idx) => ({
+                roomNo: r.roomNo || (idx + 1),
+                noOfAdults: r.noOfAdults,
+                noOfChildWithBed: r.noOfChildWithBed,
+                noOfChildWithoutBed: r.noOfChildWithoutBed,
+                raw: r
+            }));
+        });
+		
+		 const setActiveTab=(room,tabIndex,activeRoom)=>
+  {
+  alert(activeRoom , tabIndex)
+  
+  
+   setActiveTraveller(activeRoom, tabIndex)
+   
+  
+  const input = room;
+const [roomStr, adultStr, adultCount] = input.split('-'); // ["r1", "adult", "1"]
+const room1 = Number(roomStr.replace('r', '')); // 1
+const adult = Number(adultCount); // 1
+
+const result = {
+  room: room1,
+  adult: adult
+};
+    activeAdultTab.value=result?.adult
+}
+		
+        function onSelectPax(roomNo, idx, label) {
+            console.log("Onselect Pax");
+            activeTravellerIndex[roomNo] = idx;
+            if (listOfTravellers.length === 0) {
+                traveller.roomNo = roomNo;
+                traveller.paxName = label;
+                listOfTravellers.push({ ...traveller });
+            } else {
+                listOfTravellers.forEach(t => {
+                    if (t.roomNo === roomNo && t.paxName === label) {
+                        // fetch 
+                        mapToTraveller(traveller, t);
+                    } else {
+                        traveller.roomNo = roomNo;
+                        traveller.paxName = label;
+                        listOfTravellers.push({ ...traveller });
+                    }
+                });
+            }
+        }
+
+        function mapToTraveller(traveller, dummyTraveller) {
+            console.log("traveller ", traveller);
+            console.log("dummyTraveller ", dummyTraveller);
+            Object.keys(dummyTraveller).forEach(key => {
+                console.log("traveller[key] ", traveller[key]);
+                console.log("dummyTraveller[key] ", dummyTraveller[key]);
+                traveller[key] = dummyTraveller[key];
+            });
+        }
+
+
+        function getPaxTabs(roomNo) {
+            const roomRaw = rooms.value.find(r => r.roomNo === roomNo)?.raw || {};
+            const adults = roomRaw.noOfAdults || 0;
+
+            // Support both old & new field names
+            const childWithBed = roomRaw.noOfCwb ?? roomRaw.noOfChildWithBed ?? 0;
+            const cnbJunior = roomRaw.noOfCnbJunior ?? 0;
+            const cnbSenior = roomRaw.noOfCnbSenior ?? 0;
+            // If backend gives consolidated noOfChildWithoutBed use that, else sum junior+senior
+            const childWithoutBedExplicit = roomRaw.noOfChildWithoutBed ?? 0;
+            const childWithoutBed = childWithoutBedExplicit || (cnbJunior + cnbSenior);
+
+            const infants = roomRaw.noOfInfant || 0;
+
+            const pax = [];
+            // Adults
+            for (let i = 1; i <= adults; i++) {
+                pax.push({
+                    key: `r${roomNo}-adult-${i}`,
+                    type: 'adult',
+                    label: `Adult ${i}`,
+                    bedNote: null
+                });
+            }
+            // Children with bed
+            let childCounter = 0;
+            for (let i = 1; i <= childWithBed; i++) {
+                childCounter++;
+                pax.push({
+                    key: `r${roomNo}-cwb-${i}`,
+                    type: 'childWithBed',
+                    label: `Child ${childCounter}`,
+                    bedNote: 'With Bed'
+                });
+            }
+            // Children without bed
+            for (let i = 1; i <= childWithoutBed; i++) {
+                childCounter++;
+                pax.push({
+                    key: `r${roomNo}-cnb-${i}`,
+                    type: 'childWithoutBed',
+                    label: `Child ${childCounter}`,
+                    bedNote: 'Without Bed'
+                });
+            }
+            // Infants
+            for (let i = 1; i <= infants; i++) {
+                pax.push({
+                    key: `r${roomNo}-infant-${i}`,
+                    type: 'infant',
+                    label: infants > 1 ? `Infant ${i}` : 'Infant',
+                    bedNote: null
+                });
+            }
+
+            // Attach saved traveller info (position-based)
+            const roomTravellers = roomsWithTravellers.value.find(r => r.roomNo === roomNo)?.travellers || [];
+            pax.forEach((p, idx) => {
+                const t = roomTravellers[idx];
+                if (t) {
+                    p.name = t.fullName;
+                    if (t.genderText && t.age != null) {
+                        p.ageText = `${t.genderText.charAt(0)}/${t.age} years`;
+                    }
+                }
+            });
+            return pax;
+        }
+
+        // NEW: saved travellers decorated
+        const savedTravellers = computed(() => {
+            const list = tdpData.value?.savedTravellersList || [];
+            return list.map(decorateTraveller);
+        });
+
+        // NEW: group travellers by room
+        const roomsWithTravellers = computed(() => {
+            const map = {};
+            rooms.value.forEach(r => { map[r.roomNo] = { roomNo: r.roomNo, travellers: [] }; });
+            savedTravellers.value.forEach(t => {
+                const rn = t.roomNo || 1;
+                if (!map[rn]) map[rn] = { roomNo: rn, travellers: [] };
+                map[rn].travellers.push(t);
+            });
+            return Object.values(map).sort((a, b) => a.roomNo - b.roomNo);
+        });
+
+        // NEW: current room travellers
+        const currentRoomTravellers = computed(() =>
+            roomsWithTravellers.value.find(r => r.roomNo === activeRoom.value)?.travellers || []
+        );
+
+        // NEW: active traveller
+        const activeTraveller = computed(() => {
+            const idx = activeTravellerIndex[activeRoom.value] ?? 0;
+            return currentRoomTravellers.value[idx] || null;
+        });
+
+        // Helper IDs for tabs (NEW)
+        function getTravellerTabIds(roomNo, idx) {
+            return {
+                tabId: `trav-tab-r${roomNo}-${idx}`,
+                panelId: `trav-panel-r${roomNo}-${idx}`
+            };
+        }
+
+        function setActiveRoom(roomNo) {
+            activeRoom.value = roomNo;
+            if (activeTravellerIndex[roomNo] == null) activeTravellerIndex[roomNo] = 0;
+            const firstPax = getPaxTabs(roomNo)[activeTravellerIndex[roomNo]];
+            if (firstPax) {
+                traveller.roomNo = roomNo;
+                traveller.paxName = firstPax.label;
+            }
+        }
+        function setActiveTraveller(roomNo, idx) {
+		      alert("hello")
+               activeTravellerIndex[roomNo] = idx;
+               const paxArr = getPaxTabs(roomNo);
+              const pax = paxArr[idx];
+               if (pax) {
+                traveller.roomNo = roomNo;
+                traveller.paxName = pax.label; // << COPY LABEL HERE
+               }
+        }
+
+
+
+        // Existing totalRoomsArray (kept)
+        const totalRoomsArray = computed(() =>
+            rooms.value.length ? rooms.value.map(r => r.roomNo) : Array.from({ length: totalRooms.value || 0 }, (_, i) => i + 1)
+        );
+
+        // Existing travellersWithAgeAndIcon (kept)
+        const travellersWithAgeAndIcon = computed(() => savedTravellers.value);
+        
+        // Existing fetch with additions
+        async function getTdpData() {
+            try {
+                const holidayPlus = getQueryParam('isHolidayPlus');
+                let url = holidayContextRoot + `tdp?quotationId=${quoteId.value}&isHolidayPlus=${holidayPlus}`;
+                const loggedInDetails = getLoggedInDetails();
+                if (loggedInDetails.user === "Customer") {
+                    url += `&custId=${loggedInDetails.custId}`;
+                }
+                const response = await doAxios({ method: "get", url });
+                tdpData.value = response.data;
+                const roomDetails = response.data?.tdpDetails?.roomDetails || [];
+                travelersList.value = response.data?.travellersList || [];
+                console.log("travellersList",travelersList.value)
+
+                const result = getRoomAndAdultCounts(roomDetails);
+                totalRooms.value = result.totalRooms;
+
+                totalAdults.value = result.totalAdults;
+
+                // Init indices
+                rooms.value.forEach(r => {
+                    if (activeTravellerIndex[r.roomNo] == null) activeTravellerIndex[r.roomNo] = 0;
+                });
+            } catch (err) {
+                console.error("TDP fetch failed:", err);
+            }
+        }
+
+        async function addTraveller() {
+            travellerPayload = {
+    "custId": 1,
+
+    "travellersDetailsList":[
+        {
+            "firstName": "Lokesh",
+            "lastName": "Mayekar",
+            "title": "Mr",
+            "roomNo": 1,
+            "adult": 1,
+            "dob": "27-09-1999",
+            "passportNo": "111",
+            "isPayer": "Y",
+            "paymentPayer": "N",
+            "dobOnPanCard": "27-09-1999",
+            "nameOnPanCard": "Lokesh Mayekar",
+            "usedForFutureBookings":true
+
+        },
+          {
+            "firstName": "Rohit",
+            "lastName": "Sharma",
+            "title": "Mr",
+            "roomNo": 1,
+            "adult": 2,
+            "dob": "30-05-1989",
+            "passportNo": "111",
+            "isPayer": "Y",
+            "paymentPayer": "Y",
+            "dobOnPanCard": "30-05-1989",
+            "nameOnPanCard": "Rohit Sharma",
+             "usedForFutureBookings":true
+        }
+    ]
+}
+;
+            
+            try {
+                let url = holidayContextRoot + `tdp/addPax?quotationId=${quoteId.value}`;
+                const response = await doAxios({ method: "post", data:travellerPayload, url });
+                tdpData.value = response.data;
+                console.log("Response after adding traveller:", response.data);
+                // const roomDetails = response.data?.tdpDetails?.roomDetails || [];
+                // const result = getRoomAndAdultCounts(roomDetails);
+                // totalRooms.value = result.totalRooms;
+                // totalAdults.value = result.totalAdults;
+                // Init indices
+                // rooms.value.forEach(r => {
+                //     if (activeTravellerIndex[r.roomNo] == null) activeTravellerIndex[r.roomNo] = 0;
+                // });
+            } catch (err) {
+                console.error("addTraveller failed", err);
+            }
+        }
+
+        // Existing PAN verify (trimmed logs)
+        async function verifyPanCard() {
+            console.log("Verifying PAN with:", traveller.nameOnPanCard, traveller.panNumber, traveller.dobOnPanCard);
+            var request = {
+                "nameAsPerPan": traveller.nameOnPanCard,
+                "panCard": traveller.panNumber,
+                "dobAsPerPan": traveller.dobOnPanCard
+            }
+            console.log("PAN Verification Request:", request);
+            try {
+                const response = await doAxios({
+                    method: "post",
+                    data: request,
+                    url: holidayContextRoot + `tdp/verifyPanCard`,
+                });
+                console.log("PAN Verification Response:", response.data);
+                if (response.data != null && response.data != undefined) {
+                    console.log("PAN Verification Data:", response.data.panResponse);
+                    if (response.data.panResponse != null && response.data.panResponse != undefined) {
+                        let verifyPanResponse = response.data.panResponse;
+                        console.log("PAN Verification Details:", verifyPanResponse);
+                        if (verifyPanResponse.statusCode == 1 && verifyPanResponse.panStatus == "E" && verifyPanResponse.nameFlg == 'Y' && verifyPanResponse.DOBFlg == 'Y') {
+                            // PAN Verified Successfully 
+                            console.log("iNSIDE VERIFIED");
+                            traveller.panMessage = "PAN Card Verified";
+                            traveller.panStatus = "verified";
+                        } else {
+                            console.log("iNSIDE NOT VERIFIED");
+                            if (verifyPanResponse.panStatus != 'E') {
+                                traveller.panMessage = 'Invalid Pan Card';
+                            } else if (verifyPanResponse.nameFlg != 'Y') {
+                                traveller.panMessage = 'Name on PAN card mismatch, please correct and retry';
+                            } else if (verifyPanResponse.DOBFlg != 'Y') {
+                                traveller.panMessage = 'Date of Birth mismatch, please correct and retry';
+                            } else {
+                                traveller.panMessage = 'PAN Verification Failed Contact US for more details ';
+                            }
+                            traveller.panStatus = "panError";
+                        }
+                    }
+                    if (response.data.utilizedAmountResponse != null && response.data.utilizedAmountResponse != undefined) {
+                        traveller.canvasUtilizedAmount = response.data.utilizedAmountResponse.utilAmtFinYearWise || 0;
+                        console.log("canvasUtilized Amount Updated:", traveller.canvasUtilizedAmount);
+                    }
+                }
+
+            } catch (err) {
+                console.error("panResponse fetch failed:", err);
+            }
+        }
+
+        function getTravelDetails() {
+
+        }
+
+        // Existing calculate TCS improved (uses active traveller)
+        async function calculateTcs() {
+            if (traveller.panStatus == "verified") {
+                console.log("utilizedAmount --- ", traveller.utilizedAmount);
+                console.log("utilizedAmount --- ", traveller.utilizedAmount);
+                console.log("canvasUtilizedAmount --- ", traveller.canvasUtilizedAmount);
+                const utilizedAmt = traveller.utilizedAmount.replaceAll(',', '');
+                const tdpObj = tdpData.value.tdpDetails;
+                console.log("TDP Details --- ", tdpObj);
+                let jsonData = {
+                    "qId": quoteId.value,
+                    "utilizedAmount": parseInt(utilizedAmt) + parseInt(traveller.canvasUtilizedAmount),
+                    "productId": tdpObj.productId,
+                    "totalAmount": tdpObj.totalPrice,
+                    "travellerDetailId": 1,
+                };
+                const res = await doAxios({
+                    method: "post",
+                    url: "tcHolidayRS/tdp/calculateTcs",
+                    data: jsonData
+                });
+
+                tcsResponse.value = res.data?.tcsResponse;
+                console.log("TCS Response:", tcsResponse);
+            } else {
+                alert("Please verify PAN to calculate TCS");
+            }
+        }
+
+        // Existing getter
+        function getRoomNo(roomNo) {
+            setActiveRoom(roomNo);
+        }
+
+        // Mount init
+        onMounted(() => {
+            quoteId.value = getQueryParam('qId');
+            getTdpData();
+        });
+
+        watch(
+            () => traveller.utilizedAmount,
+            (newVal, oldVal) => {
+                if (newVal === oldVal) return;
+                console.log("changed Utilized Amount", oldVal, "->", newVal);
+                tcsResponse.value = null; // reset (null clearer than {})
+            }
+        );
+
+        watch(activeTravellerIndex, () => {
+            console.log("Active traveller changed:", activeTraveller);
+        });
+        watch(activeRoom, () => {
+            console.log("Active room changed:", activeRoom.value);
+            console.log(" traveller :", activeTravellerIndex[activeRoom.value]);
+        });
+
+        watch(traveller, (newVal, oldVal) => {
+            // Avoid initial undefined oldVal if desired
+            if (oldVal) {
+                console.log(traveller);
+
+
+                travellerMap.set(`${traveller.roomNo}-${traveller.paxName}`, { ...traveller });
+                console.log("Traveller Map:", travellerMap.values());
+                listOfTravellerMap
+            }
+        },
+            { deep: true }
+        );
+
+        watch(
+            () => [traveller.nameOnPanCard, traveller.panNumber, traveller.dobOnPanCard],
+            (newVals, oldVals) => {
+                if (JSON.stringify(newVals) === JSON.stringify(oldVals)) return;
+                console.log("changed pan card details", oldVals, "->", newVals);
+                traveller.panStatus = "";
+                traveller.panMessage = "";
+                traveller.canvasUtilizedAmount = 0;
+                tcsResponse.value = null;
+
+            }
+        );
+
+        watch(
+            () => [activeRoom.value, activeTravellerIndex[activeRoom.value]],
+            () => {
+                const rn = activeRoom.value;
+                const idx = activeTravellerIndex[rn] ?? 0;
+                const pax = getPaxTabs(rn)[idx];
+                if (pax) {
+                    traveller.roomNo = rn;
+                    traveller.paxName = pax.label;
+                }
+            }
+        );
+
+        // Return (includes old + new)
+        return {
+            // Raw data
+            tdpData,
+            totalRooms,
+            totalAdults,
+            quoteId,
+
+            // Rooms & travellers (NEW)
+            rooms,
+            roomsWithTravellers,
+            currentRoomTravellers,
+            activeRoom,
+            activeTravellerIndex,
+            activeTraveller,
+            setActiveRoom,
+            setActiveTraveller,
+            getTravellerTabIds,
+
+            // Legacy / compatibility
+            totalRoomsArray,
+            travellersWithAgeAndIcon,
+            travellersDetailsList,
+
+            // Traveller form
+            traveller,
+
+            // PAN / TCS
+            verifyPanCard,
+            calculateTcs,
+            tcsResponse,
+
+            addTraveller,
+            setActiveTab,
+            // Helpers
+            dateConvert,
+            getRoomNo,
+            getPaxTabs,
+            formatCurrency,
+            onSelectPax,
+            dummyTraveller
+        };
+    },
+}).mount(".tdpMount");

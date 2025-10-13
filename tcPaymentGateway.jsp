@@ -1,0 +1,1232 @@
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.Seo"%>
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.SeoDao"%>
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.HolidaysSrpSeo"%>
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.FaqSection"%>
+<%@ page import="java.util.List"%>
+
+
+<%@page buffer="none" session="false" trimDirectiveWhitespaces="true" %><%--
+--%><%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %><%--
+--%><%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><%--
+--%><%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><%--
+--%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
+--%>
+<fmt:setLocale value="${cms.locale}" />
+<c:set var="uri" value="${cms.requestContext.uri}" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <%String str=request.getAttribute("reqUrl").toString();%>
+        <%String qurStr=request.getAttribute("reqQueryString").toString();%>
+            <%Seo seo=SeoDao.seoMethod(str,qurStr); %>
+
+
+                <title>
+                    <% if(seo.getUserSet().equals("userSet")){%>
+                        Tour Packages - Payment Page
+                        <%}else{%>
+                            <%=seo.getMetaTitle()%>
+                                <%}%>
+                </title>
+                <link rel="canonical" href="https://www.thomascook.in" />
+                <meta name="description" content="
+          <% if(seo.getUserSet().equals(" userSet")){%>
+                Book International & Domestic holiday package online with Thomas Cook, India's best tour operator. Get
+                customized travel packages at best deals. Book now.
+                <%}else{%>
+                    <%=seo.getMetaDescription()%>
+                        <%}%>
+                            " />
+                            <meta name="keywords" content="
+          <% if(seo.getUserSet().equals(" userSet")){%>
+                            holidays, vacations, tour packages, tour and travels, holiday packages, tour operators,
+                            travel agency
+                            <%}else{%>
+                                <%=seo.getMetaKeywords()%>
+                                    <%}%>
+                                        " />
+
+                                        <cms:enable-ade />
+                                        <cms:include file="../common/head.jsp" />
+                                        <cms:include file="../common/gtmHead.jsp" />
+                                        <cms:include file="../common/tcHolidays/commonCSS.jsp" />
+                                        <!------------ Page Wise CSS files ------------->
+                                        <link rel="stylesheet" href="/css/commonLibrary/tcPaymentGateway.css">
+                                        <cms:include file="../common/tcHolidays/commonJS.jsp" />
+                                        <script src="/js/commonLibrary/common.js"></script>
+</head>
+  
+<body id="pg-app">
+
+    <!--Make Payment -->
+    <div class="make_payment">
+        <div class="booking_strip">
+            <div class="container">
+                <div class="row gx-0 justify-content-center">
+                    <div class="col-xxxl-9 col-xxl-12">
+                        <button class="btn btn_backPayment"><img
+                                src="/images/tcHolidays/common-img/arrow-narrow-left-white.svg" alt="" /> Make
+                            Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="booking_info">
+            <div class="container">
+                <div class="row gx-0 justify-content-center">
+                    <div class="col-xxxl-9 col-xxl-12">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-9">
+                                <div class="booking_wrpr">
+
+                                    <span v-if="productId == '4' || productId == '11'">
+                                        <cms:include file="../paymentGateway/PGHeadersJSP/HolidaysPGHeader.jsp" />
+                                    </span>
+                                    <span v-else-if="productId == '1'">
+
+                                    </span>
+
+                                    <div class="traveller_info">
+                                        <div class="accordion" id="accordionTraveller02">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingInfo001">
+                                                    <button class="accordion-button" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#collapseInfo001"
+                                                        aria-expanded="true" aria-controls="collapseInfo001">
+                                                        Traveller Details <span>2 Rooms (2 Adults/2 Child)</span>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseInfo001" class="accordion-collapse collapse show"
+                                                    aria-labelledby="headingInfo001"
+                                                    data-bs-parent="#accordionTraveller02">
+                                                    <div class="accordion-body">
+                                                        <div class="traveller_container">
+                                                            <ul class="nav nav-pills nav-rooms" id="pills-tab"
+                                                                role="tablist">
+                                                                <li v-for="roomDtl in holidaysHeaderData?.pgRoomDetails"
+                                                                    :key="roomDtl.room" class="nav-item" role="presentation">
+                                                                    <button class="nav-link"
+                                                                        :class="{ active: roomDtl.room === 1 }"
+                                                                        :id='"pills-roomTMP-0" + roomDtl.room + "-tab"'
+                                                                        data-bs-toggle="pill"
+                                                                        :data-bs-target='"#pills-roomTMP-0" + roomDtl.room'
+                                                                        type="button" role="tab"
+                                                                        :aria-controls='"pills-roomTMP-0" + roomDtl.room'
+                                                                        :aria-selected="index === 0 ? 'true' : 'false'">
+                                                                        Room {{ roomDtl.room }}
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+
+                                                            <div class="tab-content" id="pills-tabContent">
+                                                                <div v-for="roomDtl in holidaysHeaderData?.pgRoomDetails"
+                                                                    :key="roomDtl.room" class="tab-pane fade"
+                                                                    :class="{ 'show active': roomDtl.room == 1 }"
+                                                                    :id='"pills-roomTMP-0" + roomDtl.room' role="tabpanel"
+                                                                    :aria-labelledby='"pills-roomTMP-0" + roomDtl.room + "-tab"'>
+                                                                    <div class="added_traveller">
+                                                                            <div v-for="traveller in roomDtl.paxList" :key="traveller.travllerNo" class="added_card">
+                                                                                <div class="atc_left">
+                                                                                    <div class="icon">
+                                                                                        <img :src="getTravellerIcon(traveller)" :alt="traveller.firstName.charAt(0)" />
+                                                                                    </div>
+                                                                                    <div class="tac_info">
+                                                                                        <span>
+                                                                                            Traveller {{  traveller.travllerNo }}
+                                                                                            <span
+                                                                                                v-if="traveller.isPayer === 'Y'">Payer</span>
+                                                                                        </span>
+                                                                                        <p>
+                                                                                            {{ traveller.firstName }} {{
+                                                                                            traveller.lastName }},
+                                                                                            {{ getAge(traveller.dob) }}
+                                                                                            years
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="applied_promo" >
+                                            <!-- <div class="top_blck promoApply"> -->
+											<div class="top_blck promoApply" v-if=" promoCodeValue=='' ">
+                                                    <h6><img src="/images/tcHolidays/common-img/tag-03.svg" alt="" />Apply Promocode</h6>
+                                                    <span>Use a valid promocode to enjoy special offers.</span>
+                                            </div>
+                                            <div>
+                                                <div class="top_blck promoApplied"  v-if="promoValid && promocodeOutput && isPromoApplied">
+                                                    <h6><img src="/images/tcHolidays/common-img/tag-01.svg" alt="" />{{promocodeOutput.promocode}}
+                                                    </h6>
+                                                    <span>{{promocodeOutput.promocode}} applied successfully!</span>
+                                                </div>
+                                                <div class="top_blck promoInvalid" v-if="!promoValid && promocodeOutput">
+                                                    <h6><img src="/images/tcHolidays/common-img/tag-02.svg" alt="" />{{promoCodeValue}} is Invalid</h6>
+                                                        <!--<span>The applied promo code offer {{promoCodeValue}} is valid only for payment
+                                                        through Net Banking.</span>-->
+                                                        <span>{{promocodeOutput.errorMsg}}</span>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn_promoCode" data-bs-toggle="modal"
+                                                data-bs-target="#promotionalOffersModal">See All Promo code <img
+                                                    src="assets/images/common-img/chevron-right-02.svg" alt=""></button>
+                                        </div>
+
+                                        <div v-show="showTCSDeclerationSection" class="accordion" id="accordiontcsDeclaration" v-if="isPckgInt">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingtcsDeclaration001">
+                                                    <button class="accordion-button" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapsetcsDeclaration001" aria-expanded="true"
+                                                        aria-controls="collapsetcsDeclaration001">
+                                                        TCS Declaration
+                                                    </button>
+                                                </h2>
+                                                <div id="collapsetcsDeclaration001"
+                                                    class="accordion-collapse collapse show"
+                                                    aria-labelledby="headingtcsDeclaration001"
+                                                    data-bs-parent="#accordiontcsDeclaration">
+                                                    <div class="accordion-body">
+                                                        <div class="tcsDeclaration_wrpr">
+                                                            <div class="select_payer" v-if="holidaysHeaderData">
+                                                                <p>Select Payer for this Transaction</p>
+
+                                                                <div class="payer_wrpr">
+
+                                                                    <div class="payer_info" v-for="payer in holidaysHeaderData.travellersList" :key="payer.travellerId">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" name="flexRadioPayer"
+                                                                                :id='"flexRadioPayer" + payer.travellerId' @click="getUtilizedAmount(payer)">
+                                                                        </div>
+                                                                        <div class="info_inr">
+                                                                            <p>{{payer.firstName}} {{payer.lastname}}</p>
+                                                                            <span class="text-sm">{{payer.panNumber}}</span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="update_tcsDeclaration">
+                                                                <p>Update TCS declaration *</p>
+                                                                <span class="text-xs">You have spent below amount with
+                                                                    us on an
+                                                                    International Holiday for a FY25-26</span>
+
+                                                                <div class="row">
+                                                                    <div class="col-lg-4">
+                                                                        <div class="input_blc">
+                                                                            <span class="rupee_icon">₹</span>
+                                                                            <input type="text" placeholder=" " disabled class="form-control" :value="utilAmtFinYearWise">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="outside_tcsDeclaration">
+                                                                <p>Update TCS declaration *</p>
+                                                                <span class="text-xs">Utilized amount (Under outbound
+                                                                    tour package scheme) for TCS (against each payer) is
+                                                                    a combination of previously declared amount for the
+                                                                    Current FY + payments made by the respective payer
+                                                                    for this booking. TCS calculation for each payment
+                                                                    to be made is based on the Total Utilized Amount
+                                                                    mentioned above + additional usage (if any) declared
+                                                                    below. The below payment being made will also be
+                                                                    added to the Total Utilized Amount of the Current FY
+                                                                    & TCS will be computed accordingly for the
+                                                                    subsequent payments made within this FY.</span>
+                                                            </div>
+
+                                                            <div class="amount_utilized">
+                                                                <div class="row gx-3">
+                                                                    <div class="col-12">
+                                                                        <div class="input_grp">
+                                                                            <div class="input_blc">
+                                                                                <span class="rupee_icon">₹</span>
+                                                                                <input type="text" placeholder=" " class="form-control" v-model="amountUtilized">
+                                                                                <label class="input_label">Enter Amount Utilized</label>
+                                                                                <span class="checked">
+                                                                                    <img src="/images/tcHolidays/common-img/checked-circle-02.svg"
+                                                                                        alt="">
+                                                                                </span>
+                                                                            </div>
+                                                                            <button class="btn btn_amountEdit">
+                                                                                <img src="assets/images/common-img/edit-01.svg"
+                                                                                    alt="">
+                                                                            </button>
+                                                                            <button class="btn btn_primary btn_amountApply" disabled @click="calculateTcs">Apply</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <span class="text-xs tcs_calculator">How is your TCS
+                                                                    calculated?<a href="#">Click Here</a></span>
+                                                            </div>
+
+                                                            <div class="without_tcs" v-if="tcsRes">
+                                                                <div class="tcs_cells">
+                                                                    <span class="text-sm"><b>Amount Due without TCS</b></span>
+                                                                    <span class="text-sm"><b>₹{{pckgTotalPrice}}</b></span>
+                                                                </div>
+
+                                                                <div class="tcs_cells" v-for="tcsFBObj in tcsRes.tcsResponse.tcsFareBreakup">
+                                                                    <span class="text-sm">TCS @ {{tcsFBObj.percentage}}% for ₹ {{tcsFBObj.amount}}</span>
+                                                                    <span class="text-sm">₹ {{tcsFBObj.tcsValue}}</span>
+                                                                </div>
+
+                                                                <div class="tcs_cells">
+                                                                    <span class="text-sm"><b>Total Payable</b></span>
+                                                                    <span class="text-sm"><b>₹ {{tcsRes.tcsResponse.totalAmount}}</b></span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="groups_checkBoxes">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        id="policyCheck">
+                                                                    <label class="form-check-label" for="policyCheck">
+                                                                        I understand and agree with the rules and
+                                                                        restrictions of this fare, the <a
+                                                                            href="">Payment Terms</a>
+                                                                        Cancellation Policy, and the <a href="">Terms &
+                                                                            Conditions</a> of Thomas Cook</label>
+                                                                </div>
+
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        id="tcsDeclaration">
+                                                                    <label class="form-check-label"
+                                                                        for="tcsDeclaration">
+                                                                        I confirm that I have read and I accept the <a
+                                                                            href="">TCS
+                                                                            Declaration</a></label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="button_countinue">
+                                                                <button class="btn btn_primary btn_tcsDeclaration"
+                                                                    disabled>Continue</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mobile_edgePoint">
+                                            <button class="btn btn_edgePoint">
+                                                <span class="icon"><img src="/images/tcHolidays/common-img/edge.png"
+                                                        alt=""></span>
+                                                Redeem Edge Point
+                                                <span class="arrow">
+                                                    <img src="assets/images/common-img/chevron-right-w.svg" alt="">
+                                                </span>
+                                            </button>
+                                        </div>
+
+                                        <div class="complete_payment" v-if="pgInfo">
+                                            <div class="top_header">
+                                                <h6>Complete Payment</h6>
+                                            </div>
+                                            <div class="payment_options" v-for="(option, index) in pgInfo.fop">
+                                                
+                                                <!-- cc -->
+                                                <div class="payment_mode" v-if="option.fopId == 0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            :value="option.category[0].categoryValues[0].categoryPg"
+                                                            name="paymentMethod" id="creditCard" @click="calculateConvFee(option, 'credit')">
+                                                        <label class="form-check-label" for="creditCard">
+                                                            <img src="/images/tcHolidays/credit-card.svg"
+                                                                alt="">
+                                                            Credit Card</label>
+                                                    </div>
+
+                                                    <div class="payment_info">
+                                                        <div class="fee_strip" v-if="convenienceFeeOutput.totalConvenienceFee > 0">
+                                                            <span>{{convenienceFeeOutput.txnMessage}}</span>
+                                                        </div>
+
+                                                        <div class="card_info">
+                                                            <div class="input_inr">
+                                                                <input v-model="cNo" @keyup="handleCNOInput(option)" type="text" class="form-control" placeholder=" ">
+                                                                <label>Card Number</label>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input v-model="cName" type="text" class="form-control" placeholder=" ">
+                                                                <label>Name on Card</label>
+                                                            </div>
+                                                            <div class="input_grps">
+                                                                <div class="input_inr select_wrapper">
+                                                                    <select v-model="cMonth" class="form-select select_dropdown"
+                                                                        required>
+                                                                        <option value="" selected >MM</option>
+                                                                        <option value="01">1</option>
+                                                                        <option value="02">2</option>
+                                                                        <option value="03">3</option>
+                                                                        <option value="04">4</option>
+                                                                        <option value="05">5</option>
+                                                                        <option value="06">6</option>
+                                                                        <option value="07">7</option>
+                                                                        <option value="08">8</option>
+                                                                        <option value="09">9</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="11">11</option>
+                                                                        <option value="12">12</option>
+                                                                    </select>
+                                                                    <!-- <label class="select_label">MM</label> -->
+                                                                </div>
+
+                                                                <div class="input_inr select_wrapper">
+                                                                    <select v-model="cYear" class="form-select select_dropdown"
+                                                                        required>
+                                                                        <option value="" selected >YYY</option>
+                                                                        <option value="25">2025</option>
+                                                                        <option value="26">2026</option>
+                                                                        <option value="27">2027</option>
+                                                                        <option value="28">2028</option>
+                                                                        <option value="29">2029</option>
+                                                                        <option value="30">2030</option>
+                                                                        <option value="31">2031</option>
+                                                                        <option value="32">2032</option>
+                                                                        <option value="33">2033</option>
+                                                                        <option value="34">2034</option>
+                                                                        <option value="35">2035</option>
+                                                                        <option value="36">2036</option>
+                                                                        <option value="37">2037</option>
+                                                                        <option value="38">2038</option>
+                                                                        <option value="39">2039</option>
+                                                                    </select>
+                                                                    <!-- <label class="select_label">YYYY</label> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input v-model="cvv" type="text" class="form-control" placeholder=" ">
+                                                                <label>CVV</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- dc -->
+                                                <div class="payment_mode" v-if="option.fopId == 0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            :value="option.category[0].categoryValues[0].categoryPg"
+                                                            name="paymentMethod" id="debitCard" @click="calculateConvFee(option, 'debit')">
+                                                        <label class="form-check-label" for="debitCard">
+                                                            <img src="/images/tcHolidays/credit-card.svg" alt="">Debit Card</label>
+                                                    </div>
+
+                                                    <div class="payment_info">
+                                                        <div class="fee_strip" v-if="convenienceFeeOutput.totalConvenienceFee > 0">
+                                                            <span>{{convenienceFeeOutput.txnMessage}}</span>
+                                                        </div>
+
+                                                        <div class="card_info">
+                                                            <div class="input_inr">
+                                                                <input type="text" v-model="cNo" @keyup="handleCNOInput(option)" class="form-control" placeholder=" ">
+                                                                <label>Card Number</label>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input type="text" v-model="cName" class="form-control" placeholder=" ">
+                                                                <label>Name on Card</label>
+                                                            </div>
+                                                            <div class="input_grps">
+                                                                <div class="input_inr select_wrapper">
+                                                                    <select v-model="cMonth" class="form-select select_dropdown"
+                                                                        required>
+                                                                        <option value="" selected >MM</option>
+                                                                        <option value="01">1</option>
+                                                                        <option value="02">2</option>
+                                                                        <option value="03">3</option>
+                                                                        <option value="04">4</option>
+                                                                        <option value="05">5</option>
+                                                                        <option value="06">6</option>
+                                                                        <option value="07">7</option>
+                                                                        <option value="08">8</option>
+                                                                        <option value="09">9</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="11">11</option>
+                                                                        <option value="12">12</option>
+                                                                    </select>
+                                                                    <!-- <label class="select_label">MM</label> -->
+                                                                </div>
+
+                                                                <div class="input_inr select_wrapper">
+                                                                    <select v-model="cYear" class="form-select select_dropdown"
+                                                                        required>
+                                                                        <option value="" selected >YYY</option>
+                                                                        <option value="25">2025</option>
+                                                                        <option value="26">2026</option>
+                                                                        <option value="27">2027</option>
+                                                                        <option value="28">2028</option>
+                                                                        <option value="29">2029</option>
+                                                                        <option value="30">2030</option>
+                                                                        <option value="31">2031</option>
+                                                                        <option value="32">2032</option>
+                                                                        <option value="33">2033</option>
+                                                                        <option value="34">2034</option>
+                                                                        <option value="35">2035</option>
+                                                                        <option value="36">2036</option>
+                                                                        <option value="37">2037</option>
+                                                                        <option value="38">2038</option>
+                                                                        <option value="39">2039</option>
+                                                                    </select>
+                                                                    <!-- <label class="select_label">YYYY</label> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input type="text" v-model="cvv" class="form-control" placeholder=" ">
+                                                                <label>CVV</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- nb -->
+                                                <div class="payment_mode" v-if="option.fopId == 1">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" @click="calculateConvFee(option)"
+                                                            name="paymentMethod" id="netBanking">
+                                                        <label class="form-check-label" for="netBanking">
+                                                            <img src="/images/tcHolidays/bank.svg" alt="">Net banking</label>
+                                                    </div>
+                                                    <div class="payment_info">
+                                                        <div class="fee_strip" v-if="convenienceFeeOutput.totalConvenienceFee > 0">
+                                                            <span>{{convenienceFeeOutput.txnMessage}}</span>
+                                                        </div>
+                                                        <div class="card_info">
+                                                            <div class="input_blc select_wrapper">
+                                                                <select class="form-select select_dropdown" required @change="calculateConvFee(option, $event.target.value)">
+                                                                    <option value="" selected hidden></option>
+                                                                    <option v-for="bank in getAllBanks(option.category)" :key="bank.categoryId" :value="bank.categoryId">
+                                                                        {{ bank.categoryDisplayText }}
+                                                                    </option>
+                                                                </select>
+
+                                                                <label class="select_label">Select Your Bank</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- upi -->
+                                                <div class="payment_mode" v-if="option.fopId == 13">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="paymentMethod" id="upi" @click="calculateConvFee(option)">
+                                                        <label class="form-check-label" for="upi">
+                                                            <img src="/images/tcHolidays/upi.svg" alt="">
+                                                            UPI</label>
+                                                    </div>
+                                                    <div class="payment_info">
+                                                        <div class="fee_strip" v-if="convenienceFeeOutput.totalConvenienceFee > 0">
+                                                            <span>{{convenienceFeeOutput.txnMessage}}</span>
+                                                        </div>
+                                                        <div class="card_info bhim_upi">
+                                                            <div class="left_blck">
+                                                                <div class="top_blck">
+                                                                    <div class="input_inr">
+                                                                        <input type="text" v-model="vpa" :value="vpa" class="form-control" placeholder=" ">
+                                                                        <label>UPI ID</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="radio" id="pay-with-app" hidden/>
+                                                                    </div>
+                                                                    <button class="btn btn_primary btn_verify" @click="verifyUPI">Verify</button>
+                                                                </div>
+                                                                <div class="center_top" v-if="vpaName">
+                                                                    <span class="font_regular verified">{{vpaName}}</span>
+                                                                    <span class="font_regular">Payment request will be sent to the phone no. linked to your UPI ID.</span>
+                                                                </div>
+                                                                <div class="center_top" v-show="!isVPAValid">
+                                                                    <span class="font_regular" style="color:red;">Invalid VPA ID</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="center_blck">
+                                                                <span class="font_regular">OR</span>
+                                                            </div>
+                                                            <div class="right_blck">
+                                                                <div class="qr_code">
+                                                                    <div class="top_qr">
+                                                                        <span class="font_regular">Scan & Pay</span>
+                                                                        <img src="/images/tcHolidays/common-img/bhim-upi.png"
+                                                                            alt="">
+                                                                    </div>
+                                                                    <div class="bottom_qr">
+                                                                        <img :src="qrImagePath" alt="">
+                                                                        <button class="btn btn_primary btn_qr" @click="paymentProceed({}, true)">Show QR Code</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- emi -->
+                                                <div class="payment_mode" v-if="option.fopId == 14">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            :value="option.category[0].categoryValues[0].categoryPg"
+                                                            name="paymentMethod" id="emi"  @click="calculateConvFee(option, 'emi')">
+                                                        <label class="form-check-label" for="emi">
+                                                            <img src="/images/tcHolidays/calendar-check.svg" alt=""> EMI</label>
+                                                    </div>
+
+                                                    <div class="payment_info">
+                                                        <div class="fee_strip" v-if="convenienceFeeOutput.totalConvenienceFee > 0">
+                                                            <span>{{convenienceFeeOutput.txnMessage}}</span>
+                                                        </div>
+
+                                                        <div class="plansEmi_wrpr">
+                                                            <div class="input_blc select_wrapper">
+                                                                <select v-model="emiBanks" class="form-select select_dropdown" required>
+                                                                    <option value="" selected >Select Your Bank</option>
+                                                                    <option value="SBIN">State Bank of India (SBI)</option>
+                                                                    <option value="HDFC">HDFC Bank</option>
+                                                                    <%-- <option value="icici">ICICI Bank</option>
+                                                                    <option value="axis">Axis Bank</option>
+                                                                    <option value="kotak">Kotak Mahindra Bank</option>
+                                                                    <option value="bob">Bank of Baroda</option>
+                                                                    <option value="pnb">Punjab National Bank (PNB)</option>
+                                                                    <option value="canara">Canara Bank</option>
+                                                                    <option value="idfc">IDFC FIRST Bank</option>
+                                                                    <option value="yes">Yes Bank</option>
+                                                                    <option value="indusind">IndusInd Bank</option>
+                                                                    <option value="union">Union Bank of India</option>
+                                                                    <option value="rbl">RBL Bank</option>
+                                                                    <option value="federal">Federal Bank</option>
+                                                                    <option value="bandhan">Bandhan Bank</option>
+                                                                    <option value="au">AU Small Finance Bank</option>
+                                                                    <option value="saraswat">Saraswat Bank</option> --%>
+                                                                </select>
+
+                                                                <!-- <label class="select_label">Select Your Bank</label> -->
+                                                            </div>
+
+                                                            <div class="plans_list" style="display: none;">
+                                                                <div class="grid_header">
+                                                                    <div class="grid_cell">
+                                                                        <span><b>EMI Plan</b></span>
+                                                                    </div>
+                                                                    <div class="grid_cell">
+                                                                        <span><b>Interest (pa)</b></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="grid_row">
+                                                                    <div class="grid_cell">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" v-model="selectedEMIPlan" value ="3" name="EMIplans" id="3months" checked>
+                                                                            <label class="form-check-label" for="3months">3 months X ₹18473/month</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="grid_cell">
+                                                                        <span><b>@16% = ₹1484</b></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="grid_row">
+                                                                    <div class="grid_cell">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" v-model="selectedEMIPlan" value ="6" name="EMIplans" id="6months">
+                                                                            <label class="form-check-label" for="6months">6 months X ₹9672/month</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="grid_cell">
+                                                                        <span><b>@16% = ₹1484</b></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="grid_row">
+                                                                    <div class="grid_cell">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" v-model="selectedEMIPlan" value="9" name="EMIplans" id="9months">
+                                                                            <label class="form-check-label" for="9months">9 months X ₹6575/month</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="grid_cell">
+                                                                        <span><b>@16% = ₹3760</b></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="grid_row">
+                                                                    <div class="grid_cell">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" v-model="selectedEMIPlan" value="12" name="EMIplans" id="12months">
+                                                                            <label class="form-check-label" for="12months">12 months X ₹5028/month</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="grid_cell">
+                                                                        <span><b>@16% = ₹4920</b></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="card_info">
+                                                            <div class="input_inr">
+                                                                <input type="text" v-model="cNo" class="form-control" placeholder=" ">
+                                                                <label>Card Number</label>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input type="text" v-model="cName" class="form-control" placeholder=" ">
+                                                                <label>Name on Card</label>
+                                                            </div>
+                                                            <div class="input_grps">
+                                                                <div class="input_inr select_wrapper">
+                                                                    <select v-model="cMonth" class="form-select select_dropdown"
+                                                                        required>
+                                                                        <option value="" selected >MM</option>
+                                                                        <option value="01">1</option>
+                                                                        <option value="02">2</option>
+                                                                        <option value="03">3</option>
+                                                                        <option value="04">4</option>
+                                                                        <option value="05">5</option>
+                                                                        <option value="06">6</option>
+                                                                        <option value="07">7</option>
+                                                                        <option value="08">8</option>
+                                                                        <option value="09">9</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="11">11</option>
+                                                                        <option value="12">12</option>
+                                                                    </select>
+                                                                    <!-- <label class="select_label">MM</label> -->
+                                                                </div>
+
+                                                                <div class="input_inr select_wrapper">
+                                                                    <select v-model="cYear" class="form-select select_dropdown"
+                                                                        required>
+                                                                        <option value="" selected >YYYY</option>
+                                                                        <option value="25">2025</option>
+                                                                        <option value="26">2026</option>
+                                                                        <option value="27">2027</option>
+                                                                        <option value="28">2028</option>
+                                                                        <option value="29">2029</option>
+                                                                        <option value="30">2030</option>
+                                                                        <option value="31">2031</option>
+                                                                        <option value="32">2032</option>
+                                                                        <option value="33">2033</option>
+                                                                        <option value="34">2034</option>
+                                                                        <option value="35">2035</option>
+                                                                        <option value="36">2036</option>
+                                                                        <option value="37">2037</option>
+                                                                        <option value="38">2038</option>
+                                                                        <option value="39">2039</option>
+                                                                    </select>
+                                                                    <!-- <label class="select_label">YYYY</label> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input type="text" v-model="cvv" class="form-control" placeholder=" ">
+                                                                <label>CVV</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="payment_mode" v-if="option.fopId == 10">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="paymentMethod" id="giftCard">
+                                                        <label class="form-check-label" for="giftCard">
+                                                            <img src="0/images/tcHolidays/gift.svg" alt="">
+                                                            Gift Card</label>
+                                                    </div>
+                                                    <div class="payment_info">
+                                                        <div class="fee_strip" v-if="convenienceFeeOutput.totalConvenienceFee > 0">
+                                                            <span>{{convenienceFeeOutput.txnMessage}}</span>
+                                                        </div>
+
+                                                        <div class="card_info">
+                                                            <div class="input_inr">
+                                                                <input type="text" class="form-control" placeholder=" ">
+                                                                <label>Gift Card Number</label>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input type="text" class="form-control" placeholder=" ">
+                                                                <label>Gift Card Pin</label>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input type="text" class="form-control" placeholder=" ">
+                                                                <label>Name as on PAN Card</label>
+                                                            </div>
+                                                            <div class="input_inr single-calender">
+                                                                <input type="text" placeholder=" "
+                                                                    class="form-control calender_input"
+                                                                    data-calendartype="dob">
+                                                                <span class="input_calendar">
+                                                                    <img src="/images/tcHolidays/calendar-check.svg"
+                                                                        alt="">
+                                                                </span>
+                                                                <label>Date of Birth</label>
+
+                                                                <div class="singleDate-calendar" data-type="dob">
+                                                                    <div class="top_header">
+                                                                        <h6>Select Date of Birth</h6>
+                                                                        <button class="btn btn_closeCalander"><img
+                                                                                src="assets/images/common-img/x-close.svg"
+                                                                                alt=""></button>
+                                                                    </div>
+                                                                    <div class="calendar-header">
+                                                                        <select
+                                                                            class="form-select month-select"></select>
+                                                                        <select
+                                                                            class="form-select year-select"></select>
+                                                                    </div>
+                                                                    <div class="calendar-body">
+                                                                        <div class="calendar-weekdays">
+                                                                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                                                        </div>
+                                                                        <div class="calendar-dates"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="input_inr">
+                                                                <input type="text" class="form-control" placeholder=" ">
+                                                                <label>PAN Card Number</label>
+                                                            </div>
+                                                            <button class="btn btn_verifiedPan">Verify PAN
+                                                                Card</button>
+                                                        </div>
+
+                                                        <div class="card_giftCard">
+                                                            <div class="card_info">
+                                                                <div class="input_inr">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder=" ">
+                                                                    <label>Gift Card Number</label>
+                                                                </div>
+                                                                <div class="input_inr">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder=" ">
+                                                                    <label>Gift Card Pin</label>
+                                                                </div>
+                                                                <button class="btn btn_giftRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="divider"></div>
+                                                        <button class="btn btn_primary_border btn_addGiftCard">
+                                                            <img src="/images/tcHolidays/common-img/plus-p.svg" alt="">
+                                                            Add E-Gift Voucher
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="fixed_payStrip">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="policyCheck" checked>
+                                            <label class="form-check-label" for="policyCheck">
+                                                By clicking on ‘Pay Now’, you agree that you have read and understood
+                                                our <a href="">Payment Terms,</a> <a href="">Terms &amp; Conditions</a>
+                                                and <a href="">Cancellation Policy</a>
+                                            </label>
+                                        </div>
+
+                                        <div class="amount_toPay">
+                                            <div class="total_amount" v-if="fareBreakup">
+                                                <span>Amount Payable</span>
+                                                <h6>₹ {{payNowFinalAmount}}</h6>
+                                            </div>
+                                            <button class="btn btn_primary btn_pay" @click="payNowClick()" :disabled="isPayNowDisabled">Pay Now</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="fareBreakup_buttons">
+                                        <div class="fareBreakup_mobile">
+                                            <p>Fare Breakup</p>
+                                            <button class="btn btn_fareBreakup">₹1,25,280
+                                                <img src="assets/images/common-img/chevron-down-white.svg"
+                                                    alt=""></button>
+                                            <span>(Inclusive of GST)</span>
+                                            <div class="fareWapper_mobile" style="display: none;">
+                                                <div class="top_header">
+                                                    <h6>Fare Breakup</h6>
+                                                    <button class="btn btn_close"><img
+                                                            src="assets/images/common-img/x-close.svg"></button>
+                                                </div>
+                                                <div class="fareCard_inr">
+                                                    <div class="fare_breakup">
+                                                        <div class="fb_item">
+                                                            <div class="fbItem_dropdown">
+                                                                <div class="top_blck">
+                                                                    <button class="btn">
+                                                                        Base Amount<img
+                                                                            src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                    </button>
+                                                                    <span class="font_medium"><b>₹ 1,13,042</b></span>
+                                                                </div>
+                                                                <ul class="items_dropdown">
+                                                                    <li>Adults (₹56,521 × 2)</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <div class="fbItem_dropdown">
+                                                                <div class="top_blck">
+                                                                    <button class="btn">
+                                                                        Secure your flight<img
+                                                                            src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                    </button>
+                                                                    <span class="font_medium"><b>₹ 0</b></span>
+                                                                </div>
+                                                                <ul class="items_dropdown">
+                                                                    <li>Full Refund on Visa Rejection (₹7,630 × 2)
+                                                                        <span></span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <span class="font_medium">Fees &amp; Taxes</span>
+                                                            <span class="font_medium"><b>₹ 4,702</b></span>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <span class="font_medium">Promo Discount</span>
+                                                            <span class="font_medium"><b>- ₹ 8,600</b></span>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <div class="fbItem_dropdown">
+                                                                <div class="top_blck">
+                                                                    <button class="btn">
+                                                                        Edge Points<img
+                                                                            src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                    </button>
+                                                                    <span class="font_medium"><b>- ₹ 2,000</b></span>
+                                                                </div>
+                                                                <ul class="items_dropdown">
+                                                                    <li>Seat × 4 <span>₹ 2,100</span></li>
+                                                                    <li>Meal × 4 <span>₹ 1,245</span></li>
+                                                                    <li>Baggage × 4 <span>₹ 1,642</span></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <div class="fbItem_dropdown">
+                                                                <div class="top_blck">
+                                                                    <button class="btn">
+                                                                        Extra Services<img
+                                                                            src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                    </button>
+                                                                    <span class="font_medium"><b>₹ 7,536</b></span>
+                                                                </div>
+                                                                <ul class="items_dropdown">
+                                                                    <li>Travel Insurance <span>₹ 1,121</span></li>
+                                                                    <li>Cab <span>₹ 1,428</span></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="seperator"></div>
+                                                    <div class="fb_total">
+                                                        <div>
+                                                            <h6>Total Price</h6>
+                                                            <span class="font_regular">(Including GST)</span>
+                                                        </div>
+                                                        <h6>₹1,25,280</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="buttons_stepper">
+                                            <button class="btn btn_primary btn-continue-pay">Continue</button>
+                                            <button class="btn btn_primary btn-pay-now">Pay Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3">
+                                <div class="price_offers">
+                                    <div class="total_wrapper">
+                                        <div class="total_price">
+                                            <div class="top_blc">
+                                                <p class="title">Total Price <span class="text-xs">(Inclusive of
+                                                        GST)</span></p>
+
+                                                <div class="price_withFare">
+                                                    <h3 v-if="holidaysHeaderData" class="total_amount">₹{{fareBreakup.totalPrice}}</h3>
+                                                    <button class="btn btn_fareBreakup">
+                                                        Fare Breakup
+                                                        <img src="/images/tcHolidays/common-img/chevron-down-p.svg"
+                                                            alt="">
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div v-if="fareBreakup" class="fare_container">
+                                                <div class="fare_wrapper">
+                                                    <div class="fare_breakup">
+                                                        <div class="fb_item">
+                                                            <span>Tour Cost</span>
+                                                            <span><b> ₹ {{fareBreakup.tourTotalCost}}</b></span>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <span>Optional Activity</span>
+                                                            <span><b>+ {{fareBreakup.optionalActivity}}</b></span>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <span>Early Bird Discount</span>
+                                                            <span><b>- ₹ {{fareBreakup.earlyBirdDiscount}}</b></span>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <span>
+                                                                Promo Discount
+                                                                <button class="btn">
+                                                                    <img
+                                                                        src="/images/tcHolidays/common-img/edit-02-primary.svg">
+                                                                </button>
+                                                            </span>
+                                                            <span><b>- ₹ {{fareBreakup.promoDiscount}}</b></span>
+                                                        </div>
+                                                        <div class="fb_item">
+                                                            <span>GST @5%</span>
+                                                            <span><b>+ ₹ {{fareBreakup.gst}}</b></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fb_total">
+                                                        <div>
+                                                            <p>Total Price</p>
+                                                            <span>(Including GST)</span>
+                                                        </div>
+                                                        <p>₹ {{fareBreakup.totalPrice}}</p>
+                                                    </div>
+                                                    <div class="note">
+                                                        <span v-if="fareBreakup.currencyBreakup">
+                                                            Note: <span>{{fareBreakup.currencyBreakup.CCode}} Calculated<b> @ INR {{fareBreakup.currencyBreakup.CRate}}</b></span>
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="viewTcs_block">
+                                                        <button class="btn btn_tooltip"><img
+                                                                src="/images/tcHolidays/common-img/info-circle-02.svg">
+                                                            View
+                                                            TCS</button>
+
+                                                        <div class="custom_tooltip">
+                                                            <div class="tootip_content">
+                                                                <span>
+                                                                    <u>Tax Collected at Source (TCS) for
+                                                                        Outbound/International Tour Packages to paid
+                                                                        additional over and above the mentioned tour
+                                                                        cost. Calculation will be as below:</u>
+                                                                </span>
+                                                                <span>
+                                                                    Tax Collection at Source (TCS) at the rate of 5% up
+                                                                    to outbound tour of INR 10 lakh and 20% beyond INR
+                                                                    10 lakhs per individual payer per annum will be
+                                                                    levied under
+                                                                    section 206C(1G)(b) of the Income Tax Act on
+                                                                    outbound tour services. The TCS collected will be
+                                                                    reflected in the 26AS of the passenger in whose name
+                                                                    receipt is raised
+                                                                    (Payer/s for the package) for claiming Income Tax
+                                                                    credit. Hence the name of the payer &amp; the
+                                                                    associated
+                                                                    PAN Number on the receipt should be reconfirmed at
+                                                                    the time of
+                                                                    making the payment for the holiday package booking.
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tbr_bottom redeem_section">
+                                        <div class="tbrb_top">
+                                            <h6>Redeem Points</h6>
+                                        </div>
+                                        <div class="contact_form">
+                                            <div class="comn_height mobile_number" v-show="showLoyalityLp">
+                                                <p>Enter mobile number to view EDGE points</p>
+                                                <div class="form_inr">
+                                                    <div class="input_inr">
+                                                        <input type="text" v-model="mobileRedeem" class="form-control phone_number"
+                                                            placeholder=" " />
+                                                        <label class="input_label">Mobile No.</label>
+                                                    </div>
+                                                    <button class="btn btn_primary btn_check" disabled @click="sendOtp">Check
+                                                        Now</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="comn_height otp_number" v-show="showLoyalityNoInput">
+                                                <div class="top_blc">
+                                                    <p>OTP verification</p>
+                                                    <span>
+                                                        Enter OTP sent to <b>+91 {{mobileRedeem}}</b>
+                                                        <a href=""><img src="assets/images/common-img/edit-02.svg"
+                                                                alt="" /></a>
+                                                    </span>
+                                                </div>
+                                                <div class="form_inr">
+                                                    <div class="center_blc">
+                                                        <div class="otp_digits">
+                                                            <input type="tel" v-for="(digit, index) in redeemPointsOtp" :key="index" v-model="redeemPointsOtp[index]" maxlength="1" class="form-control"
+                                                                pattern="\d" />
+                                                        </div>
+													<span class="d-flex"> Resend OTP in  <span >{{ otpTimer }}</span> s</span>
+                                                    </div>
+                                                 <button  class="btn btn_primary btn_submit"  :disabled="isOtpTimerRunning"  @click="verifyOtp"> Submit</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="comn_height change_number" v-show="redeemPointsChangeNo">
+                                                <div class="icon">
+                                                    <img src="/images/tcHolidays/common-img/info-circle-01.svg"
+                                                        alt="" />
+                                                </div>
+                                                <div class="form_inr" v-show="invalidOtpError">
+                                                    <span>Invalid OTP!</span>
+                                                    <button class="btn btn_changeNo" @click="changeNo">Change Number</button>
+                                                </div>
+                                                <div class="form_inr" v-show="isEdgeMemberError">
+                                                    <span>Oops! You are not a Edge member. Become a Edge member by
+                                                        booking your first Holiday Package!</span>
+                                                    <button class="btn btn_changeNo" @click="changeNo">Change Number</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="comn_height points_available" v-show="redeemPointsSuccess">
+                                                <div class="icon">
+                                                    <img src="/images/tcHolidays/common-img/check-circle-02.svg"
+                                                        alt="" />
+                                                </div>
+                                                <div class="form_inr">
+                                                    <span>You have <b>{{redeemableEdgePoints}} EDGE</b> Points available to redeem.</span>
+                                                    <button class="btn btn_primary btn_apply" @click="applyRedeemPoints">Apply Now</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="comn_height redeem_points" v-show="pointsAppliedSuccess">
+                                                <div class="icon">
+                                                    <img src="/images/tcHolidays/common-img/check-circle-03.svg"
+                                                        alt="" />
+                                                </div>
+                                                <div class="form_inr">
+                                                    <span><b>{{redeemableEdgePoints}} EDGE</b> Points redeem!</span>
+                                                    <button class="btn btn_remove" @click="removeRedeemPoints">Remove</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn_points">
+                                            <div class="top_blck">
+                                                <div class="img_blc"><img src="/images/tcHolidays/common-img/edge.png"
+                                                        alt="" />
+                                                </div>
+                                                <div class="points_withTooltip">
+                                                    <p>Earn <span>2104</span> Points</p>
+                                                    <button class="btn btn_tooltip">
+                                                        <img src="/images/tcHolidays/common-img/info-circle.svg"
+                                                            alt="" />
+                                                    </button>
+                                                    <div class="custom_tooltip">
+                                                        <span>Above points are approximate & calculated for Silver tier
+                                                            members, actual points will be credited basis your
+                                                            membership, after your travel is completed</span>
+                                                        <ul>
+                                                            <li>Silver Member - 1%*Total value ( Net )</li>
+                                                            <li>Gold Member - 1.5%*Total value ( Net )</li>
+                                                        </ul>
+                                                        <span>For more information, <a href="" class="btn">click
+                                                                here</a></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="notes_block">
+                                        <p>You book it. We handle the rest.</p>
+                                        <ul>
+                                            <li>Once you’ve paid, a travel advisor will reach out to finalize your
+                                                booking.</li>
+                                            <li>We’ll collect traveler details and valid ID copies.</li>
+                                            <li>You’ll get regular updates via SMS, WhatsApp, and email—right up to
+                                                departure.</li>
+                                            <li>You’ll receive all pre-departure info, including your tour manager’s
+                                                details.</li>
+                                            <li>When your tour starts, just relax. Your tour manager takes it from
+                                                there, making sure everything runs smoothly.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Applied Promotional Offers Modal -->
+    <div class="modal fade promotionalOffers_modal comn_modal" id="promotionalOffersModal" tabindex="-1"
+        aria-labelledby="promotionalOffersModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Applied Promotional Offers</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="top_input">
+                        <label for="">Enter Promo Code</label>
+                        <div class="input_withIcon">
+                            <input type="text" class="form-control" :value="promoCodeValue" v-model="promoCodeValue" @input="promoInputEvent" />
+                            <button class="btn btn_clearCoupon" @click="removePromoCode"><img src="/images/tcHolidays/x-close-red.svg" alt="" /></button>
+                        </div>
+                    </div>
+                    <div class="divider">
+                        <span>Or Select Promo Code</span>
+                    </div>
+
+                    <div class="coupon_codes">
+                        <div v-for="promo in holidaysHeaderData?.pgPromoCodes" :key="promo.promocode"
+                            :class="promo.promocode == promoCodeValue && isPromoApplied ? 'coupon_card selected' : 'coupon_card'">
+                            <div class="top_blck">
+                                <span>{{promo.promocode}}</span>
+                                <button class="btn btn_apply" @click="selectPromo(promo.promocode)">Select</button>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="btm_blck">
+                                <span>{{promo.promoDescription}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="fixed_bottom">
+                        <button class="btn btn_primary btn_promoApply" @click="applyPromocode()">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/commonLibrary/custom.js"></script>
+    <!------------ Page Wise JS files ------------->
+    <script src="/js/commonLibrary/tcPaymentGateway.js"></script>
+	
+    <script src="/js/paymentGateway/revamp/payment-gateway-revamp.js"></script>
+    <script type="text/javascript" src="https://checkout.razorpay.com/v1/razorpay.js"></script>
+</body>
+
+</html>

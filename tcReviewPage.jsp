@@ -1,0 +1,1814 @@
+<%@page import="com.thomascook.in.astra.cmssecurity.seo.Seo" %>
+    <%@page import="com.thomascook.in.astra.cmssecurity.seo.SeoDao" %>
+        <%@page import="com.thomascook.in.astra.cmssecurity.seo.HolidaysSrpSeo" %>
+            <%@page import="com.thomascook.in.astra.cmssecurity.seo.FaqSection" %>
+                <%@ page import="java.util.List" %>
+
+
+                    <%@page buffer="none" session="false" trimDirectiveWhitespaces="true" %><%-- --%>
+                            <%@ taglib prefix="cms" uri="http://www.opencms.org/taglib/cms" %><%-- --%>
+                                    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><%-- --%>
+                                            <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><%--
+                                                    --%>
+                                                    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
+                                                            --%>
+                                                            <fmt:setLocale value="${cms.locale}" />
+                                                            <c:set var="uri" value="${cms.requestContext.uri}" />
+                                                            <!DOCTYPE html>
+                                                            <html lang="en">
+
+                                                            <head>
+                                                                <meta name="viewport"
+                                                                    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+                                                                <meta http-equiv="X-UA-Compatible"
+                                                                    content="IE=edge,chrome=1" />
+                                                                <meta charset="utf-8" />
+                                                                <%String
+                                                                    str=request.getAttribute("reqUrl").toString();%>
+                                                                    <%String
+                                                                        qurStr=request.getAttribute("reqQueryString").toString();%>
+                                                                        <%Seo seo=SeoDao.seoMethod(str,qurStr); %>
+
+
+                                                                            <title>
+                                                                                <%
+                                                                                    if(seo.getUserSet().equals("userSet")){%>
+                                                                                    Tour Packages - Book Holiday
+                                                                                    Packages for Your Next Holiday Trip
+                                                                                    <%}else{%>
+                                                                                        <%=seo.getMetaTitle()%>
+                                                                                            <%}%>
+                                                                            </title>
+                                                                            <link rel="canonical"
+                                                                                href="https://www.thomascook.in" />
+                                                                            <meta name="description" content="
+              <% if(seo.getUserSet().equals(" userSet")){%>
+                                                                            Book International & Domestic holiday
+                                                                            package online with Thomas Cook, India's
+                                                                            best tour operator. Get
+                                                                            customized travel packages at best deals.
+                                                                            Book now.
+                                                                            <%}else{%>
+                                                                                <%=seo.getMetaDescription()%>
+                                                                                    <%}%>
+                                                                                        " />
+                                                                                        <meta name="keywords" content="
+              <% if(seo.getUserSet().equals(" userSet")){%>
+                                                                                        holidays, vacations, tour
+                                                                                        packages, tour and travels,
+                                                                                        holiday packages, tour
+                                                                                        operators,
+                                                                                        travel agency
+                                                                                        <%}else{%>
+                                                                                            <%=seo.getMetaKeywords()%>
+                                                                                                <%}%>
+                                                                                                    " />
+
+                                                                                                    <cms:enable-ade />
+                                                                                                    <cms:include
+                                                                                                        file="../common/head.jsp" />
+                                                                                                    <cms:include
+                                                                                                        file="../common/gtmHead.jsp" />
+                                                                                                    <cms:include
+                                                                                                        file="../common/tcHolidays/commonCSS.jsp" />
+                                                                                                    <!------------ Page Wise CSS files ------------->
+                                                                                                    <link
+                                                                                                        rel="stylesheet"
+                                                                                                        href="/css/tcHolidays/reviewPage.css">
+                                                                                                    <cms:include
+                                                                                                        file="../common/tcHolidays/commonJS.jsp" />
+                                                            </head>
+
+                                                            <body>
+
+    <div id="header-revamp">
+        <div id="header" class="tcHolidaysHeadercontainer">
+            <cms:container name="tcHolidaysHeadercontainer" type="full" maxElements="1" />
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="tcHolidaysTheamData mobileAppStrip">
+            <cms:include file="../common/tcHolidays/mobileAppStrip.jsp" />
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="tcHolidaysTheamData commonLoginSignUp">
+            <cms:include file="../common/tcHolidays/commonLoginSignUp.jsp" />
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!--Review Booking -->
+    <div class="tdpMount">
+        <div class="review_booking review_payment">
+            <div class="booking_strip">
+                <div class="container">
+                    <div class="row gx-0 justify-content-center">
+                        <div class="col-xxxl-9 col-xxl-12">
+                            <button class="btn btn_reviewBack"><img
+                                    src="/images/tcHolidays/common-img/arrow-narrow-left-white.svg" alt="" /> Review
+                                Booking</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booking_info">
+                <div class="container">
+                    <div class="row gx-0 justify-content-center">
+                        <div class="col-xxxl-9 col-xxl-12">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-9">
+                                    <div class="booking_wrpr">
+                                        <div class="top_cards">
+                                            <div class="card_box">
+                                                <div class="tcb_top">
+                                                    <div class="tcb_chips">
+                                                        <span>{{
+                                                            tdpData?.tdpDetails?.duration
+                                                            ===
+                                                            1
+                                                            ?
+                                                            '1D'
+                                                            :
+                                                            (tdpData?.tdpDetails?.duration
+                                                            -
+                                                            1)
+                                                            +
+                                                            'N/'
+                                                            +
+                                                            tdpData?.tdpDetails?.duration
+                                                            +
+                                                            'D'
+                                                            }}</span>
+
+                                                        <span>{{tdpData?.tdpDetails?.packageClassId
+                                                            ===
+                                                            0
+                                                            ?
+                                                            'Standard'
+                                                            :
+                                                            tdpData?.tdpDetails?.packageClassId
+                                                            ===
+                                                            1
+                                                            ?
+                                                            'Value'
+                                                            :
+                                                            'Premium'
+                                                            }}</span>
+                                                        <span>{{[1,3,5].includes(tdpData?.tdpDetails?.pkgSubtypeId)
+                                                            ?
+                                                            'Group Tour'
+                                                            :
+                                                            'Customized Tour'}}</span>
+                                                    </div>
+                                                    <h4>
+                                                        {{
+                                                        tdpData?.tdpDetails?.pkgName}}
+                                                        <button @click="goBack"><img
+                                                                src="/images/tcHolidays/common-img/edit-02-primary.svg"
+                                                                alt="" /></button>
+                                                    </h4>
+                                                </div>
+
+                                                <div class="pointers">
+                                                    <span
+                                                        v-for="(timeline, index) in tdpData?.tdpDetails?.timelineCityList"
+                                                        :key="index">
+                                                        {{
+                                                        timeline
+                                                        }}
+                                                    </span>
+                                                </div>
+
+                                                <div class="user_info tcb_comn">
+                                                    <div class="info_lft">
+                                                        <span>From
+                                                            <b>{{tdpData?.tdpDetails?.hub}}</b></span>
+                                                        <span><b>({{dateConvert(tdpData?.tdpDetails?.departureDate)}}
+                                                                -
+                                                                {{dateConvert(tdpData?.tdpDetails?.returnDate)}})</b></span>
+                                                    </div>
+                                                    <div class="divider">
+                                                    </div>
+                                                    <span><b>{{
+                                                            totalRooms
+                                                            }}
+                                                            Room
+                                                            -
+                                                            {{
+                                                            totalAdults
+                                                            }}
+                                                            Adult</b></span>
+                                                </div>
+
+                                                <div class="brdr">
+                                                </div>
+
+                                                    <div class="optional tcb_comn">
+                                                        <div class="text_item">
+                                                            <span>Optional
+                                                                Activity:</span>
+                                                            <div class="item_wrpr">
+                                                                <span><b>{{ optionalActivityCount }} {{ optionalActivityCount === 1 ? 'Activity' : 'Activities' }}</b></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="divider" v-if = "outboundFlights.length">
+                                                        </div>
+                                                        <div class="text_item" v-if = "outboundFlights.length">
+                                                            <span>Onward
+                                                                Flight:</span>
+                                                            <div class="item_wrpr">
+                                                                <span v-for="f in outboundFlights" :key="f.rowId"><b>
+                                                                {{ f.airlineName }}
+                                                                </b></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="divider" v-if = "returnFlights.length">
+                                                        </div>
+                                                        <div class="text_item" v-if = "returnFlights.length">
+                                                            <span>Return
+                                                                Flight:</span>
+                                                            <div class="item_wrpr">
+                                                                <span v-for="f in returnFlights" :key="f.rowId"><b>
+                                                                {{ f.airlineName }}
+                                                                </b></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <div class="card_login login_travellerCard">
+                                                <div class="components">
+                                                </div>
+                                                <div class="login_wrpr">
+                                                    <div class="card_left">
+                                                        <div class="login_title">
+                                                            <h4>Login
+                                                                to
+                                                                save
+                                                                your
+                                                                <br><span>booking
+                                                                    details</span>
+                                                            </h4>
+                                                        </div>
+
+                                                        <div class="process_blck">
+                                                            <div class="item_card">
+                                                                <div class="icon">
+                                                                    <img src="/images/tcHolidays/common-img/edge.svg"
+                                                                        alt="">
+                                                                </div>
+                                                                <span>Earn
+                                                                    Loyalty
+                                                                    points<br>
+                                                                    on
+                                                                    every
+                                                                    booking</span>
+                                                            </div>
+                                                            <div class="item_card">
+                                                                <div class="icon">
+                                                                    <img src="/images/tcHolidays/common-img/holidays.svg"
+                                                                        alt="">
+                                                                </div>
+                                                                <span>Manage
+                                                                    your<br>
+                                                                    Holidays</span>
+                                                            </div>
+                                                            <div class="item_card">
+                                                                <div class="icon">
+                                                                    <img src="/images/tcHolidays/common-img/discount.svg"
+                                                                        alt="">
+                                                                </div>
+                                                                <span>Exclusive
+                                                                    deals<br>
+                                                                    &
+                                                                    discount</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="btn_grps">
+                                                        <button class="btn btn_primary_border">Continue
+                                                            as
+                                                            Guest</button>
+                                                        <button class="btn btn_loginReview" data-bs-toggle="modal"
+                                                            data-bs-target="#loginModal">Login</button>
+                                                    </div>
+                                                    <div class="form_block" style="display: none;">
+                                                        <div class="input_inr">
+                                                            <span class="icon"><img
+                                                                    src="/images/tcHolidays/common-img/email-icon.svg"
+                                                                    alt=""></span>
+                                                            <input type="text" class="form-control"
+                                                                id="guest-user-email" placeholder=" ">
+                                                            <label>Enter
+                                                                Mail
+                                                                ID</label>
+                                                        </div>
+
+                                                        <div class="btn_grps">
+                                                            <button class="btn btn_primary_border">Cancel</button>
+                                                            <button class="btn btn_submit btn-continue-guest"
+                                                                disabled>Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="after_login" style="display: none;">
+                                                    <h6>You’re
+                                                        Logged
+                                                        in
+                                                        as
+                                                        guest
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="traveller_info">
+                                            <div class="accordion" id="accordionTraveller">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingInfo01">
+                                                        <button class="accordion-button" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseInfo01"
+                                                            aria-expanded="true" aria-controls="collapseInfo01">
+                                                            Traveller
+                                                            Details
+                                                            <span>({{
+                                                                totalRooms
+                                                                }}
+                                                                Room
+                                                                -
+                                                                {{
+                                                                totalAdults
+                                                                }}
+                                                                Adult)</span>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseInfo01" class="accordion-collapse collapse show"
+                                                        aria-labelledby="headingInfo01"
+                                                        data-bs-parent="#accordionTraveller">
+                                                        <div class="accordion-body">
+                                                            <button class="btn btn_addTraveller" data-bs-toggle="modal"
+                                                            v-show="travellersListForDisplay?.length == travellersListForDisplay?.filter(t => !t.isTravellerSaved).length"
+                                                                data-bs-target="#travellerDetailsModal"><img
+                                                                    src="/images/tcHolidays/common-img/plus-p.svg"
+                                                                    alt="" />Add Traveller</button>
+
+                                                            <div
+  class="traveller_container"
+ 
+   v-show="travellersListForDisplay?.filter(t => t?.isTravellerSaved)?.length == travellersListForDisplay?.length"
+>
+  <!-- Room Tabs -->
+  <ul class="nav nav-pills nav-rooms" role="tablist" v-if="uniqueRoomNumbers.length">
+    <li v-for="roomNo in uniqueRoomNumbers" :key="roomNo" class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        :class="{ active: roomNo === summarySelectedRoom }"
+        type="button"
+        @click="summarySelectedRoom = roomNo"
+      >
+        Room {{ roomNo }}
+      </button> 
+    </li>
+  </ul>
+
+  <!-- Room Panels -->
+  <div class="tab-content">
+    <div
+      class="tab-pane fade"
+      :class="{ 'show active': roomNo === summarySelectedRoom }"
+      v-for="roomNo in uniqueRoomNumbers"
+      :key="'panel-'+roomNo"
+      role="tabpanel"
+    >
+      <div class="added_traveller">
+        <div
+          class="added_card"
+          v-for="t in travellersByRoom(roomNo)"
+          :key="t.travellerNo"
+        >
+          <div class="atc_left">
+            <div class="icon">
+              <img :src="travellerIcon(t)" alt="" />
+            </div>
+            <div class="tac_info">
+              <span>
+                {{ t.paxLabel || ('Traveller '+ t.travellerNo) }}
+                <span v-if="t.isPayer === 'Y'">Payer</span>
+              </span>
+              <p>
+                {{ (t.firstName || '').trim() }} {{ (t.lastName || '').trim() }}
+                <template v-if="travellerAge(t) !== null && travellerAge(t) !== undefined && travellerAge(t) !== ''">
+                  , {{ travellerAge(t) }} {{ travellerAge(t) === 1 ? 'year' : 'years' }}
+                </template>
+              </p>
+            </div>
+          </div>
+          <div class="btn_groups">
+            <button
+              class="btn"
+              data-bs-toggle="modal"
+              data-bs-target="#travellerDetailsModal"
+              @click="editTraveller(t)"
+            >
+              <img src="/images/tcHolidays/common-img/edit-05.svg" alt="" />
+            </button>
+          </div>
+        </div>
+
+        <div v-if="!travellersByRoom(roomNo).length" class="no_travellers">
+          <em>No travellers added for this room yet.</em>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                    <div v-if="loggedInDetails?.user == 'Staff'" class="canvasAgent_block">
+                                                    <div class="global_form">
+                                                        <div class="input_inr">
+  <input
+    type="text"
+    class="form-control"
+    :value="oppId"
+    readonly
+    placeholder=" " />
+  <label class="input_label">Opportunity ID</label>
+  <span class="sub_title">(The Opportunity ID will be mapped in Canvas file)</span>
+</div>
+
+                                                    <div class="input_inr">
+                                                        <div class="select_wrapper">
+                                                            <select class="form-select select_dropdown"
+            v-model="selectedUserAssignedBranch"
+            required>
+      <option value="" disabled hidden>Select Branch</option>
+      <option v-for="b in userAssignedBranch"
+              :key="b"
+              :value="b">
+       {{b}}
+      </option>
+    </select>
+                                                            <span class="sub_title">(The booking will show in this
+                                                                branch)</span>
+                                                        </div>
+                                                    </div>
+
+                                                        <div class="input_inr">
+                                                            <div class="select_wrapper">
+                                                                <input
+        type="text"
+        class="form-control"
+        v-model="canvasAgentQuery" 
+        placeholder="Select Canvas Agent"
+        autocomplete="off"/>
+    
+                                                                <!-- <select class="form-select select_dropdown" required>
+                                                                    <option v-for="c in canvasAgentDetails"
+                                                                        :key="c.agenType"
+                                                                        :value="c.agentName">{{c.agentName}}</option>
+                                                                
+                                                                </select>   -->
+                                                                <!-- Dropdown for autosuggest results -->
+    <ul v-if="canvasAgentDetails.length" v-model="selectedAgent" class="dropdown-menu show">
+        <li
+        v-for="c in canvasAgentDetails"
+        :key="c.agenType"
+        @click="selectCanvasAgent(c)"
+        class="dropdown-item"
+        >
+        {{ c.agentName }}
+        </li>
+    </ul>
+                                                        
+                                                                <span class="sub_title">(The Agent ID will be mapped in
+                                                                    Canvas file)</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingInfo02">
+                                                            <button class="accordion-button collapsed" type="button"
+                                                                data-bs-toggle="collapse" data-bs-target="#collapseInfo02"
+                                                                aria-expanded="false" aria-controls="collapseInfo02">
+                                                                Enter
+                                                                Contact
+                                                                Details
+                                                                <span>(Booking
+                                                                    Details
+                                                                    will
+                                                                    be
+                                                                    sent
+                                                                    to
+                                                                    this
+                                                                    person)</span>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseInfo02" class="accordion-collapse collapse"
+                                                            aria-labelledby="headingInfo02"
+                                                            data-bs-parent="#accordionTraveller">
+                                                            <div class="accordion-body">
+                                                                <div class="contact_details traveller_contact">
+                                                                    <div class="cntct_forms">
+                                                                        <div class="row gx-3">
+                                                                            <div class="col-12">
+                                                                                <div class="input_grp">
+                                                                                    <div class="input_blc select_wrapper">
+                                                                        <select class="form-select select_dropdown " v-model="contactDetails.title" @change="validateField('title')" @blur="validateField('title')" required>
+                                                                            <option value="" selected >Title</option>
+                                                                            <option value="Mr">Mr.</option>
+                                                                            <option value="Mrs">Mrs.</option>
+                                                                            <option value="Ms">Ms.</option>
+                                                                            <option value="Dr">Dr.</option>
+                                                                        </select>
+                                                                        <span class="error_message" v-if="errors.title">{{ errors.title }}</span>
+                                                                        <!-- <label class="select_label">Title</label> -->
+                                                                    </div>
+                                                                                        <div class="input_blc">
+                                                                                        <input type="text" placeholder=" "
+                                                                                            class="form-control" v-model="contactDetails.firstName" @keypress="validateField('firstName', $event)" @input="validateField('firstName')" @blur="validateField('firstName')" />
+                                                                                        <label class="input_label">Enter
+                                                                                            First
+                                                                                            Name</label>
+                                                                                 <span class="error_message" v-if="errors.firstName">{{ errors.firstName }}</span>
+                                                                                </div>
+
+                                                                                    <div class="input_blc">
+                                                                                        <input type="text" placeholder=" "
+                                                                                            class="form-control" v-model="contactDetails.lastName" @keypress="validateField('lastName', $event)" @input="validateField('lastName')" @blur="validateField('lastName')"/>
+                                                                                        <label class="input_label">Enter
+                                                                                            Last
+                                                                                            Name</label>
+                                                                                                <span class="error_message" v-if="errors.lastName">{{ errors.lastName }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="input_blc">
+                                                                                    <input type="text" placeholder=" "
+                                                                                        class="form-control phone_number" v-model="contactDetails.mobNumber" @keypress="validateField('mobNumber', $event)" @input="validateField('mobNumber')" @blur="validateField('mobNumber')"  maxlength="10"/>
+                                                                                    <label class="input_label">Mobile
+                                                                                        No.</label>
+                                                                                    <span class="error_message" v-if="errors.mobNumber">{{ errors.mobNumber }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="input_blc">
+                                                                                    <span class="icon">
+                                                                                        <img src="/images/tcHolidays/common-img/email-icon.svg"
+                                                                                            alt="" />
+                                                                                    </span>
+                                                                                    <input type="text" placeholder=" "
+                                                                                        class="form-control" v-model="contactDetails.emailId" @keypress="validateField('emailId', $event)" @input="validateField('emailId')" @blur="validateField('emailId')" />
+                                                                                    <label class="input_label">Enter
+                                                                                        Mail
+                                                                                        ID</label>
+                                                                                    <span class="error_message" v-if="errors.emailId">{{ errors.emailId }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="input_blc">
+                                                                                    <input type="text" placeholder=" "
+                                                                                        class="form-control" v-model="contactDetails.address" @keypress="validateField('address', $event)" @input="validateField('address')" @blur="validateField('address')" />
+                                                                                    <label class="input_label">Enter
+                                                                                        Address</label>
+                                                                                    <span class="error_message" v-if="errors.address">{{ errors.address }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <div class="input_grp input_grpGrid">
+                                                                                    <div class="input_blc">
+                                                                                        <input type="text" placeholder=" "
+                                                                                            class="form-control" v-model="contactDetails.pinCode" @keypress="validateField('pinCode', $event)" @input="validateField('pinCode')" @blur="validateField('pinCode')"  maxlength="6"/>
+                                                                                        <label
+                                                                                            class="input_label">Pincode</label>
+                                                                                            <span class="error_message" v-if="errors.pinCode">{{ errors.pinCode }}</span>
+                                                                                    </div>
+                                                                                    <div class="input_blc select_wrapper">
+                                                                        <select class="form-select select_dropdown select_state" v-model="contactDetails.stateCode" required @change="validateField('stateCode')" @blur="validateField('stateCode')">
+        <option value="">Select State</option>
+        <option v-for="state in gstStates" :key="state.gstStateCode" :value="state.gstStateCode">
+            {{ state.gstState }}
+        </option>
+    </select>
+     <span class="error_message" v-if="errors.stateCode">{{ errors.stateCode }}</span>
+</div>
+
+<div class="input_blc city_autocomplete" :class="{ open: showCitySuggestions }">
+    <input type="text" placeholder=" " class="form-control" v-model="contactDetails.city" autocomplete="off"
+        role="combobox" :aria-expanded="showCitySuggestions ? 'true' : 'false'" aria-autocomplete="list"
+        aria-haspopup="listbox"
+        :aria-activedescendant="showCitySuggestions && filteredCitySuggestions.length ? 'city-opt-0' : null"
+        @input="onCityInput" @focus="onCityFocus" @blur="onCityBlur" @keydown="onCityKeydown" />
+    <label class="input_label">City</label>
+    <ul v-if="showCitySuggestions && filteredCitySuggestions.length" class="autosuggest_list" role="listbox">
+        <li v-for="(c,i) in filteredCitySuggestions" :key="c" :id="`city-opt-${i}`" role="option"
+            @mousedown.prevent="selectCitySuggestion(c)">{{ c }}</li>
+    </ul>
+     <span class="error_message" v-if="errors.city">{{ errors.city }}</span>
+</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    <div v-if="loggedInDetails?.user == 'Customer'" class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                            value="" id="defaultCheck1" />
+                                                                        <label class="form-check-label"
+                                                                            for="defaultCheck1">
+                                                                            Save
+                                                                            this
+                                                                            Address
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <div class="divider">
+                                                                    </div>
+
+                                                                    <div v-if="loggedInDetails?.user == 'Customer'" class="address_block">
+                                                                        <p><span>Or</span>
+                                                                            (select
+                                                                            from
+                                                                            saved
+                                                                            address)
+                                                                        </p>
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6 col-md-6"
+                                                                                v-if="tdpData "
+                                                                                v-for="(contactDetailsObj, index) in tdpData?.contactDetailsList">
+                                                                                <div class="card_box">
+                                                                                    <div class="form-check">
+                                                                                        <input class="form-check-input"
+                                                                                            type="radio"
+                                                                                            name="flexRadioDefault"
+                                                                                            @Click="onSelectSavedContact(contactDetailsObj)"
+                                                                                            id="flexRadioDefault1" />
+                                                                                        <label class="form-check-label"
+                                                                                            for="flexRadioDefault1">
+                                                                                            Address
+                                                                                            {{index + 1}}
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="information">
+                                                                                        <span><b>Name:</b>{{contactDetailsObj.firstName}}
+                                                                                            {{contactDetailsObj.lastName}}</span>
+                                                                                        <span><b>Address:</b>{{contactDetailsObj.address}}</span>
+                                                                                        <span><b>City:</b>{{contactDetailsObj.city}}</span>
+                                                                                        <span><b>State:</b>{{contactDetailsObj.state}}</span>
+                                                                                        <span><b>Pin
+                                                                                                Code:</b>{{contactDetailsObj.pinCode}}</span>
+                                                                                        <span><b>Phone:</b>{{contactDetailsObj.mobNumber}}</span>
+                                                                                        <span><b>Email:</b>{{contactDetailsObj.emailId}}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="gst_booking">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="GSTforBooking" />
+                                                <label class="form-check-label" for="GSTforBooking">
+                                                    Use
+                                                    GSTIN
+                                                    for
+                                                    Booking
+                                                </label>
+                                            </div>
+
+                                            <div class="row gx-3 input_field GSTnumber">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <div class="input_blc">
+                                                        <input type="text" placeholder=" " class="form-control" v-model="gstNumber" maxlength="15"/>
+                                                        <label class="input_label">GSTIN
+                                                            Number</label>
+                                                        <span v-if="gstError" class="error_message">Invalid GST Number</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <button class="btn btn_primary" :disabled="!gstNumber" @click="getGstDetails(gstNumber)">Verify</button>
+                                                </div>
+                                            </div>
+                                            <div class="row gx-3 input_field GSTdetails">
+                                                <div class="col-12" >
+                                                    <div class="input_blc">
+                                                        <input type="text" placeholder=" " class="form-control" disabled
+                                                            v-model="gstInDetails.customerLegalName"/>
+                                                        <label class="input_label">Company
+                                                            Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <div class="input_blc" >
+                                                        <input type="text" placeholder=" " class="form-control" disabled
+                                                            v-model="gstInDetails.customerPincode"/>
+                                                        <label class="input_label">Pin
+                                                            Code</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                     <div class="input_blc select_wrapper" disabled>
+    <select
+      class="form-select select_dropdown select_state " disabled
+      v-model="gstInDetails.customerStateCode"
+      required>
+      <option value="" selected hidden>Select State</option>
+      <option
+        v-for="state in gstStates"
+        :key="state.gstStateCode"
+        :value="state.gstStateCode">
+        {{ state.gstState }}
+      </option>
+    </select>
+  </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <div class="input_blc" >
+                                                        <input type="text" placeholder=" " class="form-control" disabled
+                                                            v-model="gstInDetails.customerLocation"/>
+                                                        <label class="input_label">City</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="input_blc" >
+                                                        <input type="text" placeholder=" " class="form-control" disabled
+                                                             v-model="gstInDetails.customerBuildingNumber"/>
+                                                        <label class="input_label">Address</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="fareBreakup_buttons">
+                                            <div class="fareBreakup_mobile">
+                                                <p>Fare
+                                                    Breakup
+                                                </p>
+                                                <button class="btn btn_fareBreakup">₹1,25,280
+                                                    <img src="/images/tcHolidays/common-img/chevron-down-white.svg"
+                                                        alt=""></button>
+                                                <span>(Inclusive
+                                                    of
+                                                    GST)</span>
+                                                <div class="fareWapper_mobile" style="display: none;">
+                                                    <div class="top_header">
+                                                        <h6>Fare
+                                                            Breakup
+                                                        </h6>
+                                                        <button class="btn btn_close"><img
+                                                                src="/images/tcHolidays/common-img/x-close.svg"></button>
+                                                    </div>
+                                                    <div class="fareCard_inr">
+                                                        <div class="fare_breakup">
+                                                            <div class="fb_item">
+                                                                <div class="fbItem_dropdown">
+                                                                    <div class="top_blck">
+                                                                        <button class="btn">
+                                                                            Base
+                                                                            Amount<img
+                                                                                src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                        </button>
+                                                                        <span class="font_medium"><b>₹
+                                                                                1,13,042</b></span>
+                                                                    </div>
+                                                                    <ul class="items_dropdown">
+                                                                        <li>Adults
+                                                                            (₹56,521
+                                                                            ×
+                                                                            2)
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="fb_item">
+                                                                <div class="fbItem_dropdown">
+                                                                    <div class="top_blck">
+                                                                        <button class="btn">
+                                                                            Secure
+                                                                            your
+                                                                            flight<img
+                                                                                src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                        </button>
+                                                                        <span class="font_medium"><b>₹
+                                                                                0</b></span>
+                                                                    </div>
+                                                                    <ul class="items_dropdown">
+                                                                        <li>Full
+                                                                            Refund
+                                                                            on
+                                                                            Visa
+                                                                            Rejection
+                                                                            (₹7,630
+                                                                            ×
+                                                                            2)
+                                                                            <span></span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="fb_item">
+                                                                <span class="font_medium">Fees
+                                                                    &amp;
+                                                                    Taxes</span>
+                                                                <span class="font_medium"><b>₹
+                                                                        4,702</b></span>
+                                                            </div>
+                                                            <div class="fb_item">
+                                                                <span class="font_medium">Promo
+                                                                    Discount</span>
+                                                                <span class="font_medium"><b>-
+                                                                        ₹
+                                                                        8,600</b></span>
+                                                            </div>
+                                                            <div class="fb_item">
+                                                                <div class="fbItem_dropdown">
+                                                                    <div class="top_blck">
+                                                                        <button class="btn">
+                                                                            Edge
+                                                                            Points<img
+                                                                                src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                        </button>
+                                                                        <span class="font_medium"><b>-
+                                                                                ₹
+                                                                                2,000</b></span>
+                                                                    </div>
+                                                                    <ul class="items_dropdown">
+                                                                        <li>Seat
+                                                                            ×
+                                                                            4
+                                                                            <span>₹
+                                                                                2,100</span>
+                                                                        </li>
+                                                                        <li>Meal
+                                                                            ×
+                                                                            4
+                                                                            <span>₹
+                                                                                1,245</span>
+                                                                        </li>
+                                                                        <li>Baggage
+                                                                            ×
+                                                                            4
+                                                                            <span>₹
+                                                                                1,642</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="fb_item">
+                                                                <div class="fbItem_dropdown">
+                                                                    <div class="top_blck">
+                                                                        <button class="btn">
+                                                                            Extra
+                                                                            Services<img
+                                                                                src="/images/tcHolidays/common-img/chevron-down.svg">
+                                                                        </button>
+                                                                        <span class="font_medium"><b>₹
+                                                                                7,536</b></span>
+                                                                    </div>
+                                                                    <ul class="items_dropdown">
+                                                                        <li>Travel
+                                                                            Insurance
+                                                                            <span>₹
+                                                                                1,121</span>
+                                                                        </li>
+                                                                        <li>Cab
+                                                                            <span>₹
+                                                                                1,428</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="seperator">
+                                                        </div>
+                                                        <div class="fb_total">
+                                                            <div>
+                                                                <h6>Total
+                                                                    Price
+                                                                </h6>
+                                                                <span class="font_regular">(Including
+                                                                    GST)</span>
+                                                            </div>
+                                                            <h6>{{formatCurrency(tdpData?.tdpDetails?.totalPrice)}}</h6>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="buttons_stepper">
+                                                <button class="btn btn_primary btn_makePayment" >Make
+                                                    Payment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3">
+                                    <div class="price_offers">
+                                        <div class="total_wrapper">
+                                            <div class="total_price">
+                                                <div class="top_blc">
+                                                    <p class="title">
+                                                        Total
+                                                        Price
+                                                        <span class="text-xs">(Inclusive
+                                                            of
+                                                            GST)</span>
+                                                    </p>
+
+                                                    <div class="price_withFare">
+                                                        <h3 class="total_amount">
+                                                            {{formatCurrency(tdpData?.tdpDetails?.totalPrice)}}
+                                                        </h3>
+
+                                                        <button class="btn btn_fareBreakup active">
+                                                            Fare
+                                                            Breakup
+                                                            <img src="/images/tcHolidays/common-img/chevron-down-p.svg"
+                                                                alt="" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                    <div class="fare_container active">
+                                                        <div class="fare_wrapper">
+                                                            <div class="fare_breakup">
+                                                                <div class="fb_item">
+                                                                    <span>Tour
+                                                                        Cost</span>
+                                                                    <span>
+                                                                        <b>{{formatCurrency(tdpData?.tdpDetails?.tourCost)}}</b>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="fb_item" v-if ="optionalsTourCost > 0">
+                                                                    <span>Optional
+                                                                        Activity</span>
+                                                                    <span><b>+
+                                                                            
+                                                                            {{formatCurrency(optionalsTourCost)}}</b></span>
+                                                                </div>
+                                                                <div class="fb_item" v-if ="ltDiscountAmount > 0">
+                                                                    <span>Early
+                                                                        Bird
+                                                                        Discount</span>
+                                                                    <span><b>-
+                                                                            
+                                                                            {{formatCurrency(ltDiscountAmount)}}</b></span>
+                                                                </div>
+                                                                <div class="fb_item" v-if = "promocodeAmount > 0">
+                                                                    <span>
+                                                                        Promo
+                                                                        Discount
+                                                                        <button class="btn">
+                                                                            <img
+                                                                                src="/images/tcHolidays/common-img/edit-02-primary.svg" />
+                                                                        </button>
+                                                                    </span>
+                                                                    <span><b>-
+                                                                            ₹
+                                                                            {{
+                                                                            formatCurrency(promocodeAmount)}}</b></span>
+                                                                </div>
+                                                                <div class="fb_item" v-if = "gstAmount > 0">
+                                                                    <span>GST
+                                                                        @5%</span>
+                                                                    <span><b>+
+                                                                            
+                                                                            {{formatCurrency(gstAmount)}}</b></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="fb_total">
+                                                                <div>
+                                                                    <p>Total
+                                                                        Price
+                                                                    </p>
+                                                                    <span>(Including
+                                                                        GST)</span>
+                                                                </div>
+                                                                <p> {{
+                                                                    formatCurrency(tdpData?.tdpDetails?.totalPrice)
+                                                                    }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="AdvanceAmount_section">
+                                                            <div class="fb_item"
+                                                            v-if="tdpData?.tdpDetails?.paymentAmountType != 'F'">
+                                                            <p>
+                                                                Advance Amount Payable
+                                                                <button class="btn">
+                                                                    <!-- <img src="/images/tcHolidays/common-img/edit-02-primary.svg" /> -->
+                                                                </button>
+                                                            </p>
+                                                            <p><b>{{formatCurrency(tdpData?.tdpDetails?.paymentAmount)}}</b></p>
+                                                        </div>
+                                                        <div class="fb_item"
+                                                            v-if="tdpData?.tdpDetails?.paymentAmountType != 'F'">
+                                                            <p>
+                                                                Balance Amount due
+                                                                <button class="btn">
+                                                                    <!-- <img src="/images/tcHolidays/common-img/edit-02-primary.svg" /> -->
+                                                                </button>
+                                                            </p>
+                                                            <p><b>{{formatCurrency(tdpData?.tdpDetails?.totalPrice -
+                                                                    tdpData?.tdpDetails?.paymentAmount)}}</b></p>
+                                                        </div>
+                                                        </div>
+                                                            <div
+  class="note"
+  v-if="currencyBreakupList && currencyBreakupList.length && currencyBreakupList.some(c => c.currencycode !== 'INR')"
+>
+  <span>
+    Note:
+    <span
+      v-for="c in currencyBreakupList.filter(x => x.currencycode !== 'INR')"
+      :key="c.currencycode"
+      class="currency_item"
+    >
+      {{ c.currencycode }}
+      Calculated <b>@ INR {{ c.currencyRate }}</b>
+    </span>
+  </span>
+</div>
+
+                                                        <div class="viewTcs_block">
+                                                            <button class="btn btn_tooltip"><img
+                                                                    src="/images/tcHolidays/common-img/info-circle-02.svg" />
+                                                                View
+                                                                TCS</button>
+
+                                                            <div class="custom_tooltip">
+                                                                <div class="tootip_content">
+                                                                    <span>
+                                                                        <u>Tax
+                                                                            Collected
+                                                                            at
+                                                                            Source
+                                                                            (TCS)
+                                                                            for
+                                                                            Outbound/International
+                                                                            Tour
+                                                                            Packages
+                                                                            to
+                                                                            paid
+                                                                            additional
+                                                                            over
+                                                                            and
+                                                                            above
+                                                                            the
+                                                                            mentioned
+                                                                            tour
+                                                                            cost.
+                                                                            Calculation
+                                                                            will
+                                                                            be
+                                                                            as
+                                                                            below:</u>
+                                                                    </span>
+                                                                    <span>
+                                                                        Tax
+                                                                        Collection
+                                                                        at
+                                                                        Source
+                                                                        (TCS)
+                                                                        at
+                                                                        the
+                                                                        rate
+                                                                        of
+                                                                        5%
+                                                                        up
+                                                                        to
+                                                                        outbound
+                                                                        tour
+                                                                        of
+                                                                        INR
+                                                                        10
+                                                                        lakh
+                                                                        and
+                                                                        20%
+                                                                        beyond
+                                                                        INR
+                                                                        10
+                                                                        lakhs
+                                                                        per
+                                                                        individual
+                                                                        payer
+                                                                        per
+                                                                        annum
+                                                                        will
+                                                                        be
+                                                                        levied
+                                                                        under
+                                                                        section
+                                                                        206C(1G)(b)
+                                                                        of
+                                                                        the
+                                                                        Income
+                                                                        Tax
+                                                                        Act
+                                                                        on
+                                                                        outbound
+                                                                        tour
+                                                                        services.
+                                                                        The
+                                                                        TCS
+                                                                        collected
+                                                                        will
+                                                                        be
+                                                                        reflected
+                                                                        in
+                                                                        the
+                                                                        26AS
+                                                                        of
+                                                                        the
+                                                                        passenger
+                                                                        in
+                                                                        whose
+                                                                        name
+                                                                        receipt
+                                                                        is
+                                                                        raised
+                                                                        (Payer/s
+                                                                        for
+                                                                        the
+                                                                        package)
+                                                                        for
+                                                                        claiming
+                                                                        Income
+                                                                        Tax
+                                                                        credit.
+                                                                        Hence
+                                                                        the
+                                                                        name
+                                                                        of
+                                                                        the
+                                                                        payer
+                                                                        &
+                                                                        the
+                                                                        associated
+                                                                        PAN
+                                                                        Number
+                                                                        on
+                                                                        the
+                                                                        receipt
+                                                                        should
+                                                                        be
+                                                                        reconfirmed
+                                                                        at
+                                                                        the
+                                                                        time
+                                                                        of
+                                                                        making
+                                                                        the
+                                                                        payment
+                                                                        for
+                                                                        the
+                                                                        holiday
+                                                                        package
+                                                                        booking.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="seperator">
+                                        </div>
+
+                                        <div class="btn_points">
+                                            <div class="top_blck">
+                                                <div class="img_blc">
+                                                    <img src="/images/tcHolidays/common-img/edge.png" alt="" />
+                                                </div>
+                                                <div class="points_withTooltip">
+                                                    <p>Earn
+                                                        <span>{{tdpData?.tdpDetails?.earnPoints}}</span>
+                                                        Points
+                                                    </p>
+                                                    <button class="btn btn_tooltip">
+                                                        <img src="/images/tcHolidays/common-img/info-circle.svg"
+                                                            alt="" />
+                                                    </button>
+                                                    <div class="custom_tooltip">
+                                                        <span>Above
+                                                            points
+                                                            are
+                                                            approximate
+                                                            &
+                                                            calculated
+                                                            for
+                                                            Silver
+                                                            tier
+                                                            members,
+                                                            actual
+                                                            points
+                                                            will
+                                                            be
+                                                            credited
+                                                            basis
+                                                            your
+                                                            membership,
+                                                            after
+                                                            your
+                                                            travel
+                                                            is
+                                                            completed</span>
+                                                        <ul>
+                                                            <li>Silver
+                                                                Member
+                                                                -
+                                                                1%*Total
+                                                                value
+                                                                (
+                                                                Net
+                                                                )
+                                                            </li>
+                                                            <li>Gold
+                                                                Member
+                                                                -
+                                                                1.5%*Total
+                                                                value
+                                                                (
+                                                                Net
+                                                                )
+                                                            </li>
+                                                        </ul>
+                                                        <span>For
+                                                            more
+                                                            information,
+                                                            <a href="" class="btn">click
+                                                                here</a></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn_primary btn_makePayment" @click="submitBooking" :disabled="!isMakePaymentAvailable">Make
+                                                Payment</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Traveller Details Modal -->
+        <div class="modal fade travellerDetails_modal comn_modal" id="travellerDetailsModal" tabindex="-1"
+            aria-labelledby="travellerDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p>Add Traveller Details</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="tabs_wrpper">
+                            <ul class="nav nav-pills nav-rooms" id="pills-tab" role="tablist" v-if="uniqueRoomNumbers?.length > 0">
+                                <li v-for="roomNo in uniqueRoomNumbers" :key="roomNo" class="nav-item" role="presentation">
+                                    <button class="nav-link" :class="{ active: roomNo === selectedRoom }"
+                                        :id="'pills-room-' + roomNo + '-tab'" data-bs-toggle="pill"
+                                        :data-bs-target="'#pills-room-' + roomNo" type="button" role="tab"
+                                        :aria-controls="'pills-room-' + roomNo"
+                                        :aria-selected="roomNo === selectedRoom ? 'true' : 'false'" @click="setActiveRoom(roomNo)">
+                                        Room {{ roomNo }}
+                                    </button>
+                                </li>
+                                
+                            </ul>
+                            
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-room-1" role="tabpanel"
+                                    aria-labelledby="pills-room-1-tab">
+                                    <div class="top_block">
+                                        <ul class="nav nav-pills nav-traveller" role="tablist">
+                                             <li class="nav-item" role="presentation"
+                                                v-for="pax in travellersForRoom(selectedRoom)" :key="pax.travellerNo">
+                                                <button v-if="!pax.isTravellerSaved"
+                                                    @click="setActiveTraveller(pax.travellerNo)"
+                                                    class="nav-link"
+                                                    :class="{ active: (pax.travellerNo === selectedTraveller) }"
+                                                    type="button" role="tab"
+                                                    :aria-selected="(pax.travellerNo === selectedTraveller)">
+                                                    <span class="title">{{ pax.paxLabel }}</span>
+                                                </button>
+                                                <button v-else="!pax.isTravellerSaved"
+                                                    @click="setActiveTraveller(pax.travellerNo)"
+                                                    class="nav-link"
+                                                    :class="{ active: (pax.travellerNo === selectedTraveller) }"
+                                                    type="button" role="tab"
+                                                    :aria-selected="(pax.travellerNo === selectedTraveller)">
+                                                      <span class="title d-none">{{ pax.paxLabel }}</span>
+                                                <span class="traveller_name">{{ pax.firstName }}</span>
+                                                <span class="traveller_age">{{pax.gender}}/{{ travellerAge(pax) }} {{ travellerAge(pax) === 1 ? 'year' : 'years' }}</span>
+                                                </button>
+                                                <span v-if="pax.paxBedNote" class="child_title">{{ pax.paxBedNote }}</span>
+                                            </li>
+                                           
+                                        </ul>
+
+                                        <div v-if="loggedInDetails?.user == 'Customer'" class="saved_list">
+                                            <button class="btn btn_savedList">
+                                                Select from saved list
+                                                <img src="/images/tcHolidays/common-img/chevron-down-p.svg" alt="" />
+                                            </button>
+                                            <div class="traveller_list">
+                                                <div class="top_header">
+                                                    <h6>Select
+                                                        Existing
+                                                        Traveller
+                                                    </h6>
+                                                    <button class="btn btn_close"><img
+                                                            src="/images/tcHolidays/common-img/x-close.svg"></button>
+                                                </div>
+                                                <ul class="list_options">
+                                                    <li v-for="(traveller, index) in travellersWithAgeAndIcon"
+                                                        :key="traveller.travellerDetailId + '-' + index" @click="selectSavedTraveller(traveller)">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input savedTraveller"
+                                                                type="checkbox" :id="`savedTraveller${index+1}`" />
+                                                        </div>
+                                                        <div class="user_icon">
+                                                            <img :src="traveller.iconSrc" alt="" />
+                                                        </div>
+                                                        <div class="user_info">
+                                                            <span class="name">{{
+                                                                traveller.fullName
+                                                                }}</span>
+                                                            <span class="info">{{
+                                                                traveller.genderText
+                                                                }},
+                                                                {{
+                                                                traveller.age
+                                                                }}
+                                                                years</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="footer_btns">
+                                                    <button class="btn btn_primary select_traveller">Select
+                                                        Traveller</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div v-if="travellersListForDisplay.length > 0" 
+                                           v-for="pax in travellersListForDisplay.filter(t => t.roomNo === selectedRoom && t.travellerNo === selectedTraveller)"
+                                            :key="pax.travellerNo"
+                                           class="tab-pane fade show active" id="pills-one-adult-1" 
+                                           role="tabpanel"
+                                            aria-labelledby="pills-adult-1-tab">
+                                            
+                                            <div class="center_block">
+                                                <div class="cntct_forms">
+                                                    <div class="row gx-3 traveller_details">
+                                                        <div class="col-12">
+                                                            <div class="input_grp">
+                                                                <div class="input_blc select_wrapper">
+  <select
+    class="form-select select_dropdown"
+    v-model="pax.title"
+    @change="onTitleChange(pax)"
+  >
+    <option  value="">Title </option>
+    <template v-if="pax.paxType === 0">
+      <option value="Mr">Mr.</option>
+      <option value="Mrs">Mrs.</option>
+      <option value="Ms">Ms.</option>
+      <option value="Dr">Dr.</option>
+    </template>
+    <template v-else>
+      <option value="Master">Master</option>
+      <option value="Miss">Miss</option>
+    </template>
+  </select>
+
+  <span class="error_message" v-if="pax?.errors?.title">{{pax?.errors?.title}}</span>
+  
+</div>
+
+
+                                                                    <div class="input_blc">
+                                                                        <input type="text" placeholder=" "
+                                                                            v-model="pax.firstName"
+                                                                            @keypress="blockNameKeypress"
+                                                                            @input="onFirstNameInput(pax)"
+                                                                            class="form-control" />
+                                                                        <label>Enter First Name</label>        
+                                                                        <span class="error_message" v-if="pax?.errors?.firstName">{{pax?.errors?.firstName}}</span>                                                            
+                                                                    </div>
+
+                                                                    <div class="input_blc">
+                                                                        <input type="text" placeholder=" "
+                                                                            v-model="pax.lastName"
+                                                                            @keypress="blockNameKeypress"
+                                                                            @input="onLastNameInput(pax)"
+                                                                            class="form-control" />
+                                                                        <label>Enter
+                                                                            Last
+                                                                            Name</label>
+                                                                        <span class="error_message" v-if="pax?.errors?.lastName">{{pax?.errors?.lastName}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <div class="input_blc single-calender">
+                                                                    <input type="text" placeholder=" "
+                                                                        v-model="pax.dob"
+                                                                        @change="onDobInput(pax)"
+                                                                        class="form-control calender_input"
+                                                                        data-calendartype="dob"  />
+                                                                    <span class="input_calendar">
+                                                                        <img src="/images/tcHolidays/common-img/calendar.svg"
+                                                                            alt="" />
+                                                                    </span>
+                                                                    <label>Date
+                                                                        of
+                                                                        Birth</label>
+                                                                    <span class="error_message" v-if="pax?.errors?.dob">{{pax?.errors?.dob}}</span>
+                                                                    <div class="singleDate-calendar" data-type="dob">
+                                                                        <div class="top_header">
+                                                                            <h6>Select
+                                                                                Date
+                                                                                of
+                                                                                Birth
+                                                                            </h6>
+                                                                            <button class="btn btn_closeCalander"><img
+                                                                                    src="/images/tcHolidays/common-img/x-close.svg"
+                                                                                    alt=""></button>
+                                                                        </div>
+                                                                        <div class="calendar-header">
+                                                                            <select
+                                                                                class="form-select month-select"></select>
+                                                                            <select
+                                                                                class="form-select year-select"></select>
+                                                                        </div>
+                                                                        <div class="calendar-body">
+                                                                            <div class="calendar-weekdays">
+                                                                                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                                                            </div>
+                                                                            <div class="calendar-dates">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3" v-if="isInternationalPackage">
+  <div class="input_blc">
+    <input
+      type="text"
+      placeholder=" "
+      @change="onPassportNoInput(pax)"
+      v-model="pax.passportNo"
+      class="form-control"
+      maxlength="9"
+    />
+    <label>Passport No.</label>
+    <span class="error_message" v-if="pax?.errors?.passportNo">{{pax?.errors?.passportNo}}</span>
+  </div>
+</div>
+                                                            <div class="col-lg-3" v-if="isInternationalPackage">
+                                                                <div class="input_blc single-calender">
+                                                                    <input
+      type="text"
+      placeholder=" "
+      v-model="pax.passportExpireDate"
+        @change="onPassportExpiryInput(pax)"
+      class="form-control calender_input"
+      data-calendartype="expiry"
+    />
+                                                                    <span class="input_calendar">
+                                                                        <img src="/images/tcHolidays/common-img/calendar.svg"
+                                                                            alt="" />
+                                                                    </span>
+                                                                    <label>Passport
+                                                                        Expiry</label>
+                                                                            <span class="error_message" v-if="pax?.errors?.passportExpireDate">{{pax?.errors?.passportExpireDate}}</span>
+                                                           
+                                                                <div class="singleDate-calendar" data-type="expiry">
+                                                                    <div class="top_header">
+                                                                        <h6>Select
+                                                                            Expiry
+                                                                        </h6>
+                                                                        <button class="btn btn_closeCalander"><img
+                                                                                src="/images/tcHolidays/common-img/x-close.svg"
+                                                                                alt=""></button>
+                                                                    </div>
+                                                                    <div class="calendar-header">
+                                                                        <select
+                                                                            class="form-select month-select"></select>
+                                                                        <select
+                                                                            class="form-select year-select"></select>
+                                                                    </div>
+                                                                    <div class="calendar-body">
+                                                                        <div class="calendar-weekdays">
+                                                                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                                                        </div>
+                                                                        <div class="calendar-dates">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="input_blc select_wrapper">
+
+                                                                <select class="form-select select_dropdown " v-model="pax.mealPreference" @change="onMealPreferenceChange(pax)" required  >
+                                                                    <option value="" selected>Meal Preference</option>
+                                                                    <option value="VEG">Veg</option>
+                                                                    <option value="NVEG">Non-Veg</option>
+                                                                    <option value="JAIN">Jain Special</option>
+                                                                    </select>
+                                                                <span class="error_message" v-if="pax?.errors?.mealPreference">{{pax?.errors?.mealPreference}}</span>
+                                                               
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-lg-12" v-if="loggedInDetails?.user == 'Customer'">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input saveBooking"
+                                                                    type="checkbox" id="saveBooking1"
+                                                                    v-model="pax.usedForFutureBookings" />
+                                                                <label class="form-check-label" for="saveBooking1">
+                                                                    Save for future bookings
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="disclaimer">
+                                                        <span><b>Disclaimer:</b>
+                                                            Meal
+                                                            shown
+                                                            above
+                                                            is
+                                                            for
+                                                            the
+                                                            land
+                                                            arrangement
+                                                            and
+                                                            not
+                                                            part
+                                                            of
+                                                            In-Flight
+                                                            meal.</span>
+                                                    </div>
+
+                                                    <div class="divider">
+                                                    </div>
+
+                                                        <div class="form-check" v-if="pax.paxType === 0">
+                                                            <input class="form-check-input payerDetails" type="checkbox"
+                                                                id="payerDetails1"
+                                                                :checked="pax.isPayer === 'Y'"
+                                                                @change="pax.isPayer = $event.target.checked ? 'Y' : 'N'"
+                                                                />
+                                                            <label class="form-check-label" for="payerDetails1">
+                                                                Add this person as a Payer
+                                                            </label>
+                                                        </div>
+
+
+                                                    <div class="payer_details" style="display: none;">
+                                                        <div class="section_payer">
+                                                            <div class="row gx-3">
+                                                                <div class="col-12">
+                                                                    <div class="input_grp">
+                                                                        <div class="input_blc">
+                                                                            <input type="text" placeholder=" "
+                                                                                v-model="pax.nameOnPanCard"
+                                                                                @keypress="blockNameKeypress"
+                                                                                @input="onPanNameInput(pax)"
+                                                                                class="form-control"  />
+                                                                            <label>Name
+                                                                                as
+                                                                                per
+                                                                                Pan
+                                                                                Card</label>
+                                                                            <span class="error_message" v-if="pax?.errors?.nameOnPanCard">{{pax?.errors?.nameOnPanCard}}</span>
+                                                                        </div>
+
+                                                                        <div class="input_blc single-calender">
+                                                                            <input type="text" placeholder=" "
+                                                                                v-model="pax.dobOnPanCard"
+                                                                                @change="onDobOnPanCardInput(pax)"
+                                                                                class="form-control calender_input"
+                                                                                data-calendartype="dob"  />
+                                                                            <span class="input_calendar">
+                                                                                <img src="/images/tcHolidays/common-img/calendar.svg"
+                                                                                    alt="" />
+                                                                            </span>
+                                                                            <label>DOB
+                                                                                as
+                                                                                per
+                                                                                Pan
+                                                                                Card</label>
+                                                                            <span class="error_message" v-if="pax?.errors?.dobOnPanCard">{{pax?.errors?.dobOnPanCard}}</span>
+
+                                                                            <div class="singleDate-calendar"
+                                                                                data-type="dob">
+                                                                                <div class="top_header">
+                                                                                    <h6>Select
+                                                                                        Date
+                                                                                        of
+                                                                                        Birth
+                                                                                    </h6>
+                                                                                    <button
+                                                                                        class="btn btn_closeCalander"><img
+                                                                                            src="/images/tcHolidays/common-img/x-close.svg"
+                                                                                            alt=""></button>
+                                                                                </div>
+                                                                                <div class="calendar-header">
+                                                                                    <select
+                                                                                        class="form-select month-select"></select>
+                                                                                    <select
+                                                                                        class="form-select year-select"></select>
+                                                                                </div>
+                                                                                <div class="calendar-body">
+                                                                                    <div class="calendar-weekdays">
+                                                                                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                                                                    </div>
+                                                                                    <div class="calendar-dates">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                            <div class="input_blc">
+                                                                                <input type="text" placeholder=" "
+                                                                                    v-model="pax.panNumber"
+                                                                                    @change="onPanNumberInput(pax)"
+                                                                                    class="form-control" maxlength="10"/>
+                                                                                <label>Pan
+                                                                                    Number</label>
+                                                                                <span class="error_message" v-if="pax?.errors?.panNumber">{{pax?.errors?.panNumber}}</span>
+                                                                            </div>
+                                                                            <button class="btn btn_primary_border"
+                                                                                @click="verifyPanCard(pax)">Verify</button>
+
+                                                                    </div>
+                                                                    <span
+                                                                        v-bind:class="pax.panStatus">{{pax.panMessage}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="divider">
+                                                        </div>
+
+                                                        <div class="tcs_declaration comn_blck">
+                                                            <p>Update TCS declaration *</p>
+                                                             
+                                                            <span>You have spent below amount with us
+                                                                on an
+                                                                International Holiday for a FY25-26</span>
+                                                            <div class="row">
+                                                                <div class="col-lg-4">
+                                                                    <div class="input_blc">
+                                                                        <input type="text" placeholder=" "
+                                                                            v-model="pax.canvasUtilizedAmount"
+                                                                             readonly class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="amount_declaration comn_blck">
+                                                            <p>Update Amount declaration outside of Thomas Cook India
+                                                            </p>
+                                                            <span>
+                                                                Utilized amount (Under outbound tour package scheme) for TCS (against each payer) is a combination of previously declared amount for the Current FY plus payments made by the respective payer for this booking. TCS calculation for each payment to be made is based on the Total Utilized Amount mentioned above plus additional usage (if any) declared below. The below payment being made will also be added to the Total Utilized Amount of the Current FY and TCS will be computed accordingly for the subsequent payments made within this FY.
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="amount_utilized">
+                                                            <div class="utilizes_wrpr">
+                                                                <div class="input_grp">
+                                                                    <div class="input_blc">
+                                                                        <span class="rupee_icon">₹</span>
+                                                                        <input type="text" placeholder=" "
+                                                                            v-model="pax.utilizedAmount"
+                                                                            @keypress="blockDigitsOnlyKeypress"
+                                                                            @input="onUtilizedAmountInput(pax)"
+                                                                            class="form-control" />
+                                                                        <label>Enter
+                                                                            Amount
+                                                                            Utilized</label>
+                                                                        <span class="error_message" v-if="pax?.errors?.utilizedAmount">{{pax?.errors?.utilizedAmount}}</span>
+                                                                        <span class="checked" >
+                                                                            <img src="/images/tcHolidays/common-img/checked-circle-02.svg"
+                                                                                alt="" />
+                                                                        </span>
+                                                                    </div>
+                                                                    <span class="tcs_calculator">How
+                                                                        is
+                                                                        your
+                                                                        TCS
+                                                                        calculated?<a href="#">Click
+                                                                            Here</a></span>
+                                                                </div>
+                                                                <button class="btn btn_primary btn_amountApply"
+                                                                    @click="calculateTcs(pax)"    >Apply</button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="without_tcs">
+                                                            <div class="tcs_cells">
+                                                                <p>Amount
+                                                                    Due
+                                                                    without
+                                                                    TCS
+                                                                </p>
+                                                                <p>₹ {{tdpData?.tdpDetails?.totalPrice}}
+                                                                </p>
+                                                            </div>
+                                                            <div class="tcs_cells" v-if="tcsResponse?.tcsFareBreakup"
+                                                                v-for="fare in tcsResponse.tcsFareBreakup">
+                                                                <p>TCS
+                                                                    @
+                                                                    {{
+                                                                    fare.percentage
+                                                                    }}
+                                                                    %
+                                                                    for
+                                                                    {{fare.amount}}
+                                                                </p>
+                                                                <p>₹ {{fare.tcsValue}}
+                                                                </p>
+                                                            </div>
+                                                            <div class="tcs_cells" v-if="tcsResponse?.tcsFareBreakup"
+                                                                v-for="fare in tcsResponse.tcsFareBreakup">
+                                                                <p><b>Total
+                                                                        Payable</b>
+                                                                </p>
+                                                                <p>₹ {{
+                                                                    tcsResponse?.totalAmount}}
+                                                                </p>
+                                                            </div>
+                                                            <span>
+                                                                <p>
+                                                                </p>
+                                                            </span>
+
+                                                            <span>TCS
+                                                                amount
+                                                                will
+                                                                be
+                                                                calculated
+                                                                post
+                                                                updating
+                                                                declaration</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bottom_block">
+                            <button @click="onAddTravellerClick()" 
+                            class="btn btn_primary finalAdd " 
+                            :class="selectedTraveller == travellersListForDisplay?.length ? 'add_traveller':''"
+                             >Add
+                                Traveller</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+
+
+    <!-- <script src="/js/commonLibrary/custom.js"></script> -->
+    <!------------ Page Wise JS files ------------->
+    <script src="/js/commonLibrary/reviewPage.js"></script>
+    <script src="/js/tcHolidays/tdp.js"></script>
+
+</body>
+</html>

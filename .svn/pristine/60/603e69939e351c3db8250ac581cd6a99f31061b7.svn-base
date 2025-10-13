@@ -1,0 +1,159 @@
+<!------Travel Consultation Section------->
+<div class="travel_consultation">
+    <div class="card_box">
+        <div class="container">
+            <div class="row gx-0 justify-content-center">
+                <div class="col-xxxl-9 col-xxl-10 col-xl-11">
+                    <div class="row gx-0 justify-content-between align-items-center">
+                        <div class="col-lg-5">
+                            <div class="left_block">
+                                <h2>Not sure where<br> to travel?</h2>
+                                <h6>Talk to our travel experts and get a package<br> based on your personal
+                                    preferences.
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card_form global_form">
+                                <div class="row gx-3" v-if="!showSuccessMessage">
+                                    <div class="col-12">
+                                        <div class="input_inr">
+                                            <input type="text" v-model="name" class="form-control"
+                                                @input="nameError = ''" placeholder="">
+                                            <label class="input_label">Enter Name</label>
+                                        </div>
+                                        <p v-if="nameError" class="text-danger error-message">{{ nameError }}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input_inr">
+                                            <input type="number" v-model="phoneNumber" class="form-control phone_number"
+                                                placeholder="">
+                                            <label class="input_label">Mobile No.</label>
+                                        </div>
+                                        <p v-if="phoneNumberError" class="text-danger error-message">{{ phoneNumberError
+                                            }}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input_inr">
+                                            <span class="icon">
+                                                <img src="/images/tcHolidays/email-icon.svg" alt="">
+                                            </span>
+                                            <input type="email" class="form-control" v-model="emailId"
+                                                @input="emailError = ''" placeholder="">
+                                            <label class="input_label">Enter Mail ID</label>
+                                        </div>
+                                        <p v-if="emailError" class="text-danger error-message">{{ emailError }}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="select_product">
+                                            <div class="input_inr">
+                                                <label>Select Product Type</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" value="Domestic"
+                                                        v-model="selectedProduct" name="selectProduct" id="domestic">
+                                                    <label class="form-check-label" for="domestic">Domestic</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" value="International"
+                                                        v-model="selectedProduct" name="selectProduct"
+                                                        id="international">
+                                                    <label class="form-check-label"
+                                                        for="international">International</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <div class="input_inr">
+                                            <div class="select_wrapper" :class="{ filled: selectedDestination !== '' }">
+                                               <select class="form-select  hide-select"
+                                                    v-if="selectedProduct === 'Domestic'" v-model="selectedDestination">
+                                                    <option disabled value="">Select Destination</option>
+                                                    <option>Andaman</option>
+                                                    <option>Kerala</option>
+                                                    <option>Himachal Pradesh</option>
+                                                    <option>Jammu & Kashmir</option>
+                                                    <option>Ladakh</option>
+													<option>Rajasthan</option>
+													<option>Sri Lanka</option>
+													<option>Nepal</option>
+													<option>Bhutan</option>
+													<option>North East</option>
+													<option>Kumbh Mela</option>
+													<option>Char Dham</option>
+													<option>Gujarat</option>
+													<option>Uttarakhand</option>
+													<option>Goa</option>
+													<option>Others</option>
+                                                </select>
+                                               <select class="form-select  hide-select"
+                                                    v-else="selectedProduct === 'International'"
+                                                    v-model="selectedDestination">
+                                                    <option disabled value="">Select Destination</option>
+                                                    <option>Europe</option>
+                                                    <option>Asia</option>
+                                                    <option>Australia & New Zealand</option>
+                                                    <option>Japan & Korea</option>
+													<option>Africa</option>
+													<option>America</option>
+													<option>Dubai</option>
+													<option>Maldives</option>
+													<option>Singapore</option>
+													<option>Thailand</option>
+													<option>Vietnam & Cambodia</option>
+													<option>Indonesia</option>
+													<option>Mauritius</option>
+													<option>Azerbaijan</option>
+													<option>South America</option>
+													<option>Others</option>
+                                                </select>
+                                                <label class="select_label">Select Destination</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input_inr">
+                                            <div class="terms_conditions">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        v-model="termCheckbox" id="termsConditions">
+                                                    <label class="form-check-label" for="termsConditions">
+                                                        I accept the <a href="">Privacy Policy</a> and authorize
+                                                        Thomas Cook and Group of Companies to contact me with
+                                                        details.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p v-if="termError" class="text-danger error-message">{{ termError }}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn_primary" @click="leadFormSubmit()">Get a Callback <img
+                                                src="/images/tcHolidays/arrow-narrow-up-right.svg" alt=""></button>
+                                    </div>
+                                </div>
+
+                                <div class="after_submission" v-if="showSuccessMessage">
+                                    <button class="btn btn_close"><img src="assets/img/x.svg" alt=""></button>
+                                    <div class="gif_blck">
+                                        <img src="/images/tcHolidays/successful.gif" alt="">
+                                    </div>
+                                    <h5>Thank you for your interest in our holiday package. Our expert will contact
+                                        you shortly</h5>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/tcHolidays/leadForm.js"></script>

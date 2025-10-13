@@ -1,0 +1,33 @@
+var holidayContextRoot = "/tcHolidayRS/";
+
+createApp({
+    setup() {
+
+        const packageDetailsResponse=ref();
+        
+        
+        async function getPackagedetails() {
+            
+        try {
+                let packageId = "PKG013000";
+                let url = holidayContextRoot + `pdp/package/${packageId}`;
+                 const response = await doAxios({ method: "get", url });
+                 packageDetailsResponse.value = response.data;
+                console.log("packageDetailsResponse on load ", packageDetailsResponse.value);
+              
+            } catch (err) {
+                console.error("getPackagedetails failed", err);
+            }
+        }
+
+        
+
+        onMounted(() => {
+            getPackagedetails();
+        });
+
+        return {
+           packageDetailsResponse
+        };
+    },
+}).mount("#holiday-pdp-page");

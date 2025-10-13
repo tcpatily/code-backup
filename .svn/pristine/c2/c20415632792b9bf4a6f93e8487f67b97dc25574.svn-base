@@ -1,0 +1,405 @@
+
+
+
+
+
+
+const tourType = ref();
+const hubCollection = ref([]);
+const hubCollectionHp = ref([]);
+const holidayPlusSubType = ref('');
+const selectedPackageClassId = ref(0);
+const ltHubCode = ref('');
+const hubCity = ref('');
+const subType = ref('');
+const productId = ref('');
+
+createApp({
+    setup() {
+        // Access the global packageDetailsResponse from holidayPdp.js
+        const packageDetailsResponse = window.packageDetailsResponse || ref([]);
+
+        // Sync with global variables from holidayPdp.js
+        const syncGlobalData = () => {
+            console.log('Calculate Price: Syncing global data...');
+            console.log('Global productId:', window.productId?.value);
+            console.log('Global holidayPlusSubType:', window.holidayPlusSubType?.value);
+            console.log('Global hubCollectionHp length:', window.hubCollectionHp?.value?.length);
+            console.log('Global hubCollection length:', window.hubCollection?.value?.length);
+            console.log('Global selectedPackageClassId:', window.selectedPackageClassId?.value);
+
+            if (window.holidayPlusSubType?.value !== undefined) {
+                holidayPlusSubType.value = window.holidayPlusSubType.value;
+            }
+            if (window.productId?.value !== undefined) {
+                productId.value = window.productId.value;
+            }
+            if (window.hubCollection?.value !== undefined) {
+                hubCollection.value = window.hubCollection.value;
+                console.log("Calculate Price: hubCollection synced:", hubCollection.value);
+            }
+            if (window.hubCollectionHp?.value !== undefined) {
+                hubCollectionHp.value = window.hubCollectionHp.value;
+                console.log("Calculate Price: hubCollectionHp synced:", hubCollectionHp.value);
+            }
+            // Sync selectedPackageClassId from global state
+            if (window.selectedPackageClassId?.value !== undefined) {
+                selectedPackageClassId.value = window.selectedPackageClassId.value;
+                console.log("Calculate Price: selectedPackageClassId synced:", selectedPackageClassId.value);
+            }
+            if (window.packageDetailsResponse?.value) {
+                // Update local reactive references
+                const pkgData = window.packageDetailsResponse.value[0]?.packageDetail;
+                if (pkgData) {
+                    holidayPlusSubType.value = pkgData.holidayPlusSubType;
+                    console.log("Calculate Price: Data synced - holidayPlusSubType:", holidayPlusSubType.value);
+                }
+            }
+
+            console.log('Calculate Price: Local values after sync:');
+            console.log('- productId:', productId.value);
+            console.log('- holidayPlusSubType:', holidayPlusSubType.value);
+            console.log('- selectedPackageClassId:', selectedPackageClassId.value);
+            console.log('- hubCollectionHp length:', hubCollectionHp.value?.length);
+            console.log('- hubCollection length:', hubCollection.value?.length);
+        };
+
+        // Initial sync
+        syncGlobalData();
+
+        // Watch for changes in the global packageDetailsResponse
+        const checkForGlobalData = setInterval(() => {
+            if (window.packageDetailsResponse?.value) {
+                syncGlobalData();
+                clearInterval(checkForGlobalData);
+            }
+        }, 100);
+
+        // Additional check for hub collections since they load via API calls
+        const checkForHubData = setInterval(() => {
+            if (window.hubCollectionHp?.value?.length > 0 || window.hubCollection?.value?.length > 0) {
+                syncGlobalData();
+                console.log('Calculate Price: Hub data detected, syncing...');
+                clearInterval(checkForHubData);
+            }
+        }, 200);
+
+        // Also watch for direct changes
+        watch(
+            () => window.packageDetailsResponse?.value,
+            (newVal) => {
+                if (newVal && newVal[0]?.packageDetail) {
+                    syncGlobalData();
+                }
+            },
+            { immediate: true, deep: true }
+        );
+
+        // Watch for hub collection changes
+        watch(
+            () => window.hubCollection?.value,
+            (newVal) => {
+                if (newVal) {
+                    hubCollection.value = newVal;
+                    console.log('Calculate Price: hubCollection updated from global:', newVal);
+                }
+            },
+            { immediate: true, deep: true }
+        );
+
+        watch(
+            () => window.hubCollectionHp?.value,
+            (newVal) => {
+                if (newVal) {
+                    hubCollectionHp.value = newVal;
+                    console.log('Calculate Price: hubCollectionHp updated from global:', newVal);
+                }
+            },
+            { immediate: true, deep: true }
+        );
+
+        watch(
+            () => window.productId?.value,
+            (newVal) => {
+                if (newVal !== undefined) {
+                    productId.value = newVal;
+                    console.log('Calculate Price: productId updated from global:', newVal);
+                }
+            },
+            { immediate: true }
+        );
+
+        // Watch for selectedPackageClassId changes from holidayPdp.js
+        watch(
+            () => window.selectedPackageClassId?.value,
+            (newVal) => {
+                if (newVal !== undefined) {
+                    selectedPackageClassId.value = newVal;
+                    console.log('Calculate Price: selectedPackageClassId updated from global:', newVal);
+                }
+            },
+            { immediate: true }
+        );
+
+        // Watch for local selectedPackageClassId changes and update global
+        watch(
+            selectedPackageClassId,
+            (newVal) => {
+                if (window.selectedPackageClassId) {
+                    window.selectedPackageClassId.value = newVal;
+                    console.log('Calculate Price: Updated global selectedPackageClassId:', newVal);
+                }
+            },
+            { immediate: true }
+        );
+
+        // Code Migration Start
+        const isCustomized = packageDetailsResponse?.value?.[0]?.packageDetail?.isCustomizedHolidaysPkg;
+        if ((isCustomized === true && subType.value === 'GIT') || subType.value !== 'GIT') {
+            tourType.value = 'Customized Tour';
+        } else {
+            tourType.value = 'Group Tour';
+        }
+
+
+        const sighSeeingDetailCollection = () => {
+            const list = packageDetailsResponse.value?.[0]?.packageDetail?.tcilHolidaySightseeingDetailsCollection;
+            if (!Array.isArray(list)) return null;
+
+            const filteredItems = list.filter(item => item.packageClassId === selectedPackageClassId.value);
+            return filteredItems.length > 0 ? filteredItems : null;
+        };
+
+        const filteredAccommodations = computed(() => {
+            if (!packageDetailsResponse.value?.[0]?.packageDetail?.tcilHolidayAccomodationDetailsCollection) {
+                return [];
+            }
+
+            return packageDetailsResponse.value[0]?.packageDetail?.tcilHolidayAccomodationDetailsCollection
+                .filter(acc => acc.packageClassId === parseInt(selectedPackageClassId.value))
+                .sort((a, b) => a.day - b.day); // Sort by day
+        });
+
+        // Code Migration End
+
+        // Room code start 
+        const rooms = ref([
+            { noOfAdults: 2, noOfCwb: 0, noOfCnb: 0, noOfInfant: 0 }
+        ]);
+
+        function addRoom() {
+            if (rooms.value.length < 4) {
+                rooms.value.push({ noOfAdults: 2, noOfCwb: 0, noOfCnb: 0, noOfInfant: 0 });
+            }
+        }
+
+        function increment(roomIndex, key) {
+            const room = rooms.value[roomIndex];
+            const total = totalTravellers(room);
+            const childInfant = childInfantCount(room);
+
+            // Max 4 travellers per room
+            if (total >= 4) return;
+
+            // Max 3 adults per room
+            if (key === "noOfAdults" && room.noOfAdults >= 3) return;
+
+            // Child/Infant cannot exceed adults
+            if (
+                (key === "noOfCwb" || key === "noOfCnb" || key === "noOfInfant") &&
+                (childInfant + 1) > room.noOfAdults
+            ) {
+                return;
+            }
+
+            room[key]++;
+        }
+
+        function decrement(roomIndex, key) {
+            const room = rooms.value[roomIndex];
+            if (room[key] > (key === "noOfAdults" ? 1 : 0)) {
+                room[key]--;
+            }
+        }
+
+        // Helper functions for template
+        function totalTravellers(room) {
+            return (
+                Number(room.noOfAdults) +
+                Number(room.noOfCwb) +
+                Number(room.noOfCnb) +
+                Number(room.noOfInfant)
+            );
+        }
+        function childInfantCount(room) {
+            return (
+                Number(room.noOfCwb) +
+                Number(room.noOfCnb) +
+                Number(room.noOfInfant)
+            );
+        }
+        // Room code end 
+
+        // Hub city change handler
+        const modifyLtHubCity = () => {
+            console.log('Hub city changed to:', ltHubCode.value);
+
+            // Update hub city name based on selected hub code
+            if (productId.value === 11) {
+                // Holiday+ product - find hub in hubCollectionHp
+                const selectedHub = hubCollectionHp.value.find(h => h.cityCode === ltHubCode.value);
+                if (selectedHub) {
+                    hubCity.value = selectedHub.cityName.split(' (')[0]; // Remove airport code part
+                    console.log('Hub city set to:', hubCity.value);
+                }
+            } else {
+                // Regular product - find hub in hubCollection  
+                const selectedHub = hubCollection.value.find(h => h.hubCode === ltHubCode.value);
+                if (selectedHub) {
+                    hubCity.value = selectedHub.hubName === 'Join' ? 'Joining Direct' : selectedHub.hubName;
+                    console.log('Hub city set to:', hubCity.value);
+                }
+            }
+
+            // Update session storage
+            sessionStorage.setItem('hubCityCode', ltHubCode.value);
+
+            // Check if current package class is available for selected hub
+            let classCheck = false;
+            let hubPkgClassId = '';
+
+            if (productId.value !== 11) {
+                // Regular holiday product validation
+                hubCollection.value.forEach(hubDetails => {
+                    if (hubDetails.pkgClass) {
+                        hubDetails.pkgClass.forEach(pkgClass => {
+                            if (pkgClass.pkgClassId == selectedPackageClassId.value) {
+                                if (hubDetails.hubCode == ltHubCode.value) {
+                                    classCheck = true;
+                                }
+                            }
+                        });
+                    }
+                });
+            } else {
+                // Holiday+ product validation
+                hubCollectionHp.value.forEach(hubDetails => {
+                    if (hubDetails.pkgClass) {
+                        hubDetails.pkgClass.forEach(pkgClass => {
+                            if (pkgClass.pkgClassId == selectedPackageClassId.value) {
+                                if (hubDetails.cityCode == ltHubCode.value) {
+                                    classCheck = true;
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            // If current class not available for selected hub, show confirmation popup
+            if (!classCheck && hubCity.value !== 'Please Select' && hubCity.value !== '') {
+                if (confirm('The mentioned class is not available for the selected hub.')) {
+                    console.log('User confirmed class change. Auto-selecting first available class.');
+
+                    if (productId.value !== 11) {
+                        // Regular product - find first available class for selected hub
+                        hubCollection.value.forEach(hubDetails => {
+                            if (hubDetails.hubName === hubCity.value && hubDetails.pkgClass && hubDetails.pkgClass.length > 0) {
+                                hubPkgClassId = hubDetails.pkgClass[0].pkgClassId;
+                                selectedPackageClassId.value = hubPkgClassId;
+                                console.log('Auto-selected package class:', hubPkgClassId);
+                            }
+                        });
+                    } else {
+                        // Holiday+ product - find first available class for selected hub
+                        hubCollectionHp.value.forEach(hubDetails => {
+                            if (hubDetails.cityName === hubCity.value && hubDetails.pkgClass && hubDetails.pkgClass.length > 0) {
+                                hubPkgClassId = hubDetails.pkgClass[0].pkgClassId;
+                                selectedPackageClassId.value = hubPkgClassId;
+                                console.log('Auto-selected package class:', hubPkgClassId);
+                            }
+                        });
+                    }
+                } else {
+                    // User cancelled - revert to previous hub selection or keep current selection
+                    console.log('User cancelled class change.');
+                }
+            }
+
+            // Reset price calculation flags
+            console.log('Hub city change complete. Package class:', selectedPackageClassId.value);
+        };
+
+        return {
+            rooms,
+            addRoom,
+            increment,
+            decrement,
+            totalTravellers,
+            childInfantCount,
+            tourType,
+            hubCollection,
+            hubCollectionHp,
+            holidayPlusSubType,
+            selectedPackageClassId,
+            ltHubCode,
+            hubCity,
+            productId,
+            modifyLtHubCity,
+            packageDetailsResponse,
+            sighSeeingDetailCollection,
+            filteredAccommodations,
+            // Tour Type related properties (sync with holidayPdp.js)
+            modifyPkgClass: () => {
+                console.log('Package class changed to:', selectedPackageClassId.value);
+                sessionStorage.setItem('pkgClassId', selectedPackageClassId.value);
+            },
+            getHubCollectionHpOptions: (hubCode) => {
+                if (!hubCode || !hubCollectionHp.value) return [];
+                const selectedHub = hubCollectionHp.value.find(h => h.cityCode === hubCode);
+                return selectedHub?.pkgClass || [];
+            },
+            getHubCollectionOptions: (hubCode) => {
+                if (!hubCode || !hubCollection.value) return [];
+                const selectedHub = hubCollection.value.find(h => h.hubCode === hubCode);
+                return selectedHub?.pkgClass || [];
+            },
+            isPackageClassStandard: computed(() => {
+                return packageDetailsResponse.value?.[0]?.packageDetail?.isPackageClassStandard === 'Y';
+            }),
+            isPackageClassDelux: computed(() => {
+                return packageDetailsResponse.value?.[0]?.packageDetail?.isPackageClassDelux === 'Y';
+            }),
+            isPackageClassPremium: computed(() => {
+                return packageDetailsResponse.value?.[0]?.packageDetail?.isPackageClassPremium === 'Y';
+            }),
+            hasValidTourType: computed(() => {
+                const value = selectedPackageClassId.value;
+                return value === '0' || value === '1' || value === '2' ||
+                    value === 0 || value === 1 || value === 2;
+            }),
+            handleSelectFocus: (event) => {
+                const label = event.target.previousElementSibling;
+                if (label && label.classList.contains('select_label')) {
+                    label.style.top = '0px';
+                    label.style.fontSize = '12px';
+                    label.style.color = '#0095da';
+                }
+            },
+            handleSelectBlur: (event) => {
+                const label = event.target.previousElementSibling;
+                const value = selectedPackageClassId.value;
+                const hasValid = value === '0' || value === '1' || value === '2' ||
+                    value === 0 || value === 1 || value === 2;
+
+                if (label && label.classList.contains('select_label') && !hasValid) {
+                    label.style.top = '50%';
+                    label.style.fontSize = '14px';
+                    label.style.color = '#999';
+                }
+            }
+        };
+    }
+}).mount(".calculate_price");
+
+

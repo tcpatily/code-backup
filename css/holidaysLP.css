@@ -1,0 +1,6316 @@
+.hero_section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 84.848vh;
+	margin-top: 12px;
+	object-fit: cover;
+	overflow: hidden
+}
+
+.hero_section .hero_wrapper {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	clip-path: inset(0 24px 0 24px round 24px);
+	animation-name: welcomeFadeIn, welcomeMoveIn;
+	animation-duration: calc(0.9 * 1s), calc(0.7 * 1s);
+	animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	animation-fill-mode: both;
+	position: relative;
+	height: 84.848vh
+}
+
+#holidaysLPMainBanner,
+#holidaysLPMainBannerIndia,
+#holidaysLPMainBannerInternational {
+	width: 100%;
+	height: 100%;
+	position: relative
+}
+
+.bnr_text.lpTopTextBanner {
+	top: 15%;
+	left: 0;
+	right: 0;
+	margin: auto
+}
+
+.hero_section .hero_wrapper.with_overlay::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(0, rgba(0, 0, 0, 0.28) 0, rgba(0, 0, 0, 0.28) 100%)
+}
+
+.hero_section .bnr_video,
+.hero_section .bnr_video video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
+}
+
+.hero_section:has(.bnr_img) {
+	padding: 0;
+	margin-top: 8px;
+	height: 350px;
+	position: relative
+}
+
+.hero_section:has(.bnr_img)::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(0, rgba(0, 0, 0, 0.6) 0, rgba(0, 0, 0, 0.6) 100%)
+}
+
+.hero_section .bnr_img {
+	width: 100%;
+	height: 100%
+}
+
+.hero_section .bnr_img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center
+}
+
+.hero_section:has(.bnr_img) .bnr_text {
+	padding: 72px 232px 56px 232px
+}
+
+.hero_section:has(.bnr_img) .bnr_text h1 {
+	font: normal normal 600 56px / 100% var(--font-heading)
+}
+
+.hero_section .bnr_text {
+	position: absolute;
+	z-index: 0;
+	transition: .3s all ease-out
+}
+
+.hero_section .bnr_text h1 {
+	color: var(--color-white);
+	text-align: center
+}
+
+.hero_section .bnr_text h4 {
+	font: normal normal 300 28px/100% var(--font-primary);
+	color: var(--color-white);
+	text-align: center;
+	text-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+	letter-spacing: .28px;
+	margin: 23px 0 48px
+}
+
+.hero_section .search_container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	gap: 12px
+}
+
+.hero_section .search_box {
+	position: relative;
+	width: 599px;
+	border-radius: 100px;
+	background: var(--color-white);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)
+}
+
+.hero_section .search_box .search_form {
+	position: relative;
+	border-bottom: 1px solid var(--Gray-Mode-100);
+	padding-bottom: 20px;
+	margin-bottom: 20px
+}
+
+.hero_section .search_form span {
+	position: absolute;
+	left: 0;
+	line-height: 1
+}
+
+.hero_section .search_form span img {
+	width: 24px;
+	height: auto
+}
+
+.hero_section .search_box .form-control {
+	font: normal normal 400 18px/144.44% var(--font-primary);
+	color: var(--Gray-Mode-950);
+	letter-spacing: .027px;
+	width: 100%;
+	border: 0;
+	padding: 20px 24px;
+	border-radius: 60px
+}
+
+.hero_section .search_box .form-control::placeholder {
+	color: #8a94a6
+}
+
+.hero_section .search_box .btn_search {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 6px;
+	margin: auto;
+	width: 56px;
+	height: 56px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--color-primary);
+	border-radius: 100px;
+	backdrop-filter: blur(3px)
+}
+
+.hero_section .search_box .btn_search img,
+.hero_section .search_box .btn_cross img,
+.hero_section .search_popup .btn_cross img {
+	width: 24px;
+	height: auto
+}
+
+.hero_section .search_box .btn_cross,
+.hero_section .search_popup .btn_cross {
+	position: absolute;
+	right: 78px;
+	top: 0;
+	bottom: 0;
+	padding: 0;
+	margin: auto;
+	width: 24px;
+	height: 24px;
+	display: none;
+	animation: scaleZoom .3s ease-out
+}
+
+@keyframes scaleZoom {
+	from {
+		opacity: 0;
+		transform: scale(0)
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1)
+	}
+}
+
+.hero_section .search_popup {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 148px;
+	width: 100%;
+	display: block;
+	max-width: 816px;
+	height: 483px;
+	margin: auto;
+	padding: 20px;
+	border-radius: 24px;
+	background: var(--color-white);
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	z-index: 999;
+	overflow: hidden;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-10px);
+	transition: opacity .3s ease-in-out, transform .3s ease-in-out, visibility .3s ease-in-out
+}
+
+.hero_section .search_popup.show {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0)
+}
+
+.hero_section .search_popup:has([data-type="domestic"]),
+.hero_section .search_popup:has([data-type="international"]) {
+	height: auto
+}
+
+.hero_section .search_popup .search_card {
+	height: 100%;
+	overflow: hidden
+}
+
+.hero_section .search_popup .search_form {
+	position: relative;
+	border-bottom: 1px solid var(--Gray-Mode-100);
+	padding-bottom: 20px;
+	margin-bottom: 20px
+}
+
+.hero_section .search_popup .search_form .form-control {
+	font: normal normal 400 18px/26px var(--font-primary);
+	color: var(--Gray-Mode-950);
+	letter-spacing: .027px;
+	width: 100%;
+	border: 0;
+	padding: 0 0 0 36px
+}
+
+.hero_section .search_popup .btn_cross {
+	right: 0;
+	bottom: unset
+}
+
+.hero_section .search_popup .result_box {
+	height: calc(100% - 67px);
+	overflow-x: hidden;
+	overflow-y: auto
+}
+
+.hero_section .search_popup .result_box::-webkit-scrollbar-track,
+.hero_section .search_popup .top_item::-webkit-scrollbar-track {
+	background-color: #fff
+}
+
+.hero_section .search_popup .result_box::-webkit-scrollbar,
+.hero_section .search_popup .top_item::-webkit-scrollbar {
+	width: 6px;
+	background-color: #fff
+}
+
+.hero_section .search_popup .result_box::-webkit-scrollbar-thumb,
+.hero_section .search_popup .top_item::-webkit-scrollbar-thumb {
+	background-color: #babac0
+}
+
+.hero_section .search_popup .search_result:not(:last-child) {
+	border-bottom: 1px solid var(--Gray-Mode-100);
+	margin-bottom: 20px;
+	padding-bottom: 20px
+}
+
+.hero_section .search_popup .top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px
+}
+
+.hero_section .search_popup .top span,
+.hero_section .search_popup .no-results {
+	letter-spacing: .035px;
+	font: normal normal 500 14px/142.857% var(--font-primary);
+	color: var(--Gray-Mode-950);
+	display: block
+}
+
+.hero_section .search_popup .top span a {
+	color: var(--color-primary);
+	text-decoration: none
+}
+
+.hero_section .search_popup .top_item {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	height: calc(100% - 67px);
+	overflow-x: hidden;
+	overflow-y: auto
+}
+
+.hero_section .search_item .thd_section .row {
+	row-gap: 16px;
+	--bs-gutter-x: 16px
+}
+
+.hero_section .search_item .thd_section .card_box {
+	padding: 7px;
+	border-radius: 16px;
+	border: 1px solid var(--Gray-Mode-100);
+	display: flex;
+	align-items: center;
+	gap: 12px
+}
+
+.hero_section .search_item .thd_section .img_box {
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	border: 1px solid #f2f0f1;
+	overflow: hidden
+}
+
+.hero_section .search_item .thd_section .img_box img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
+}
+
+.hero_section .search_item .thd_section .text_box {
+	display: flex;
+	flex-direction: column;
+	gap: 4px
+}
+
+.hero_section .search_item .thd_section .text_box span {
+	font: normal normal 400 14px/142.857% var(--font-primary);
+	letter-spacing: .035px;
+	color: var(--Gray-Mode-950);
+	display: block
+}
+
+.hero_section .search_item .thd_section .text_box a {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--color-primary);
+	text-decoration: none
+}
+
+.hero_section .search_result ul {
+	padding: 0;
+	margin: 0;
+	list-style: none
+}
+
+.hero_section .search_result ul li a {
+	font: normal normal 400 14px/142.857% var(--font-primary);
+	letter-spacing: .035px;
+	color: var(--Gray-Mode-700);
+	padding: 0 6px 0 16px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	letter-spacing: .14px;
+	text-decoration: none
+}
+
+.hero_section .search_result ul li img {
+	width: 32px;
+	height: auto
+}
+
+.hero_section .voice_assistance .btn {
+	width: 68px;
+	height: 68px;
+	border-radius: 100px;
+	padding: 22px;
+	background: var(--color-white);
+	backdrop-filter: blur(3px)
+}
+
+.hero_section .voice_assistance .btn img {
+	width: 100%;
+	height: auto
+}
+
+.recents_searches .owl-nav {
+	display: flex;
+	gap: 16px
+}
+
+.recents_searches .owl-nav button {
+	width: 44px;
+	height: 44px;
+	padding: 12px;
+	border-radius: 50px;
+	background: var(--color-primary);
+	box-shadow: 2px 0 10px 0 rgba(0, 0, 0, 0.15);
+	border: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: .5s all ease-out
+}
+
+.recents_searches .owl-nav button img {
+	width: 100%;
+	height: auto;
+	filter: brightness(0) invert(1);
+	transition: .5s all ease-out
+}
+
+.recents_searches .owl-nav button.disabled {
+	background-color: var(--color-white);
+	opacity: 1
+}
+
+.recents_searches .owl-nav button.disabled img {
+	filter: unset
+}
+
+.recents_searches .item_card {
+	padding: 2px;
+	border-radius: 20px;
+	background: linear-gradient(225deg, #2e90fa 0, #175cd3 100%);
+	transition: .5s all ease-out
+}
+
+.recents_searches .item_card:hover {
+	transform: scale(0.97)
+}
+
+.recents_searches .item_card .top_box {
+	padding: 16px;
+	border-radius: 18px;
+	background: #fff;
+	box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06)
+}
+
+.recents_searches .item_card .tp_lft {
+	display: flex;
+	align-items: center;
+	justify-content: space-between
+}
+
+.recents_searches .item_card .tp_lft .days {
+	font: normal normal 600 12px/133.33% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--color-primary);
+	text-align: center;
+	border-radius: 100px;
+	background: #eff8ff;
+	backdrop-filter: blur(2px);
+	padding: 4px 8px;
+	display: block
+}
+
+.recents_searches .item_card .tp_lft .top_blck {
+	display: flex;
+	align-items: center;
+	gap: 6px
+}
+
+.recents_searches .item_card .tp_lft .top_blck .icon {
+	line-height: 1
+}
+
+.recents_searches .item_card .tp_lft .top_blck span {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--Gray-Mode-500);
+	display: block
+}
+
+.recents_searches .item_card .tp_lft .icon img {
+	width: 16px;
+	height: auto
+}
+
+.recents_searches .item_card .top_box h6 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+	color: var(--Gray-Mode-950);
+	margin: 8px 0
+}
+
+.recents_searches .item_card .top_box .btm_blck {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px
+}
+
+.recents_searches .item_card .top_box .btm_blck span {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--Gray-Mode-700);
+	display: block
+}
+
+.recents_searches .item_card .top_box .btm_blck .dot {
+	width: 6px;
+	height: 6px;
+	background-color: #d4d4d4;
+	border-radius: 50%
+}
+
+.recents_searches .item_card .top_box .btm_blck .btn {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--Gray-Mode-950);
+	padding: 0
+}
+
+.recents_searches .item_card .bottom_box {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 16px 14px
+}
+
+.recents_searches .item_card .bottom_box h6 {
+	color: var(--color-white)
+}
+
+.recents_searches .item_card .bottom_box span {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--Gray-Mode-100);
+	display: block
+}
+
+.recents_searches .item_card .bottom_box .btn_withIcon img {
+	width: 16px !important;
+	height: auto
+}
+
+.trending_section .nav {
+	border-radius: 100px;
+	background: var(--Gray-Mode-50);
+	display: flex;
+	align-items: center;
+	padding: 2px;
+	gap: 2px
+}
+
+.trending_section .nav-pills .nav-link {
+	font: normal normal 400 16px/150% var(--font-primary);
+	color: var(--Gray-Mode-500);
+	letter-spacing: .024px;
+	background-color: transparent;
+	border-radius: 100px;
+	width: 152px;
+	padding: 8px 16px;
+	transition: .5s all ease-in-out
+}
+
+.trending_section .nav-pills .nav-link.active {
+	color: var(--color-white);
+	background-color: var(--color-primary)
+}
+
+.trending_section .tab-pane {
+	transition: opacity .3s ease, transform .3s ease;
+	transform: translateY(10px);
+	opacity: 0
+}
+
+.trending_section .tab-pane.active.show {
+	transform: translateY(0);
+	opacity: 1
+}
+
+.trending_section .td_slide {
+	display: flex
+}
+
+.trending_section .card_animation {
+	width: 100%;
+	height: 295px;
+	border-radius: 144.118px;
+	padding-top: 38px;
+	border: 2px solid #fff;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	z-index: 0;
+	transition: .5s all ease-out
+}
+
+.trending_section .card_animation:hover {
+	padding-top: 24px;
+	box-shadow: 0 12px 44px -18px rgba(35, 31, 26, 0.36)
+}
+
+.trending_section .card_animation.europe {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0, #fff 100.08%), #ca9339
+}
+
+.trending_section .card_animation::before,
+.trending_section .card_animation::after {
+	position: absolute;
+	content: "";
+	background-repeat: no-repeat;
+	transition: .5s all ease-out;
+	z-index: 1
+}
+
+.trending_section .card_animation.europe::before {
+	left: -9px;
+	bottom: -59px;
+	width: 156.097px;
+	height: 225px;
+	background-image: url(/images/tcHolidays/trending-destinations/europe-bg-before.png);
+	background-size: 112px
+}
+
+.trending_section .card_animation.europe:hover::before {
+	left: 0;
+	bottom: -30px;
+	background-size: 126px
+}
+
+.trending_section .card_animation.europe::after {
+	right: -33px;
+	bottom: -41px;
+	width: 83.438px;
+	height: 125px;
+	background-image: url(/images/tcHolidays/trending-destinations/europe-bg-after.png);
+	background-size: 51.438px;
+	z-index: -1
+}
+
+.trending_section .card_animation.europe:hover::after {
+	right: -20px;
+	bottom: -10px;
+	background-size: 64.438px
+}
+
+.trending_section .card_animation .text img {
+	width: 142px;
+	height: auto;
+	margin: auto;
+	display: block;
+	transition: .5s all ease-out
+}
+
+.trending_section .card_animation:hover .text img {
+	width: 110px
+}
+
+.trending_section .card_animation .bg_img {
+	position: absolute;
+	left: auto;
+	right: auto;
+	bottom: 0;
+	margin: auto;
+	width: 100%;
+	transition: .5s all ease-out
+}
+
+.trending_section .card_animation.europe:hover .bg_img {
+	width: 216px
+}
+
+.trending_section .inner__gapTop .tab-content {
+	margin-top: -30px
+}
+
+.trending_section .card_animation.australia {
+	background: linear-gradient(180deg, #014ab3 0, #93bde3 100.08%)
+}
+
+.trending_section .card_animation.australia:hover .bg_img {
+	width: 240px
+}
+
+.trending_section .card_animation.singapore {
+	background: linear-gradient(175deg, rgba(132, 202, 255, 0.6) -15.73%, rgba(245, 250, 255, 0.6) 95.97%)
+}
+
+.trending_section .card_animation.singapore .bg_img {
+	width: 102px
+}
+
+.trending_section .card_animation.singapore:hover .bg_img {
+	width: 112px
+}
+
+.trending_section .card_animation.singapore::before {
+	left: auto;
+	right: auto;
+	bottom: 0;
+	width: 100%;
+	height: 117px;
+	background-image: url(/images/tcHolidays/trending-destinations/singapore-bg-before.png);
+	background-size: 100%;
+	z-index: -1
+}
+
+.trending_section .card_animation.singapore:hover::before {
+	width: 230px;
+	height: 140px
+}
+
+.trending_section .card_animation.singapore::after {
+	display: none
+}
+
+.trending_section .card_animation.vietnam {
+	background: linear-gradient(180deg, #ffdcba 0, #fff9f3 100%)
+}
+
+.trending_section .card_animation.vietnam:hover .bg_img {
+	width: 232px
+}
+
+.trending_section .card_animation.vietnam::before,
+.trending_section .card_animation.vietnam::after {
+	display: none
+}
+
+.trending_section .card_animation.mauritius {
+	background: linear-gradient(0, #fffef0 0, #d1e9ff 100%)
+}
+
+.trending_section .card_animation.mauritius .bg_img {
+	width: 160px;
+	left: 0;
+	bottom: 8px
+}
+
+.trending_section .card_animation.mauritius:hover .bg_img {
+	width: 183px
+}
+
+.trending_section .card_animation.mauritius::before {
+	left: auto;
+	right: 0;
+	bottom: 0;
+	width: 70px;
+	height: 90px;
+	background-image: url(/images/tcHolidays/trending-destinations/mauritius-bg-before.png);
+	background-size: 70px;
+	z-index: -1
+}
+
+.trending_section .card_animation.mauritius:hover::before {
+	bottom: 10px;
+	width: 80px;
+	background-size: 80px
+}
+
+.trending_section .card_animation.bali::after {
+	display: none
+}
+
+.trending_section .card_animation.south-africa {
+	background: linear-gradient(180deg, #fede17 0, #ea3d0e 100%)
+}
+
+.trending_section .card_animation.south-africa .bg_img {
+	width: 165px;
+	left: 0
+}
+
+.trending_section .card_animation.south-africa:hover .bg_img {
+	width: 190px;
+	left: -12px
+}
+
+.trending_section .card_animation.south-africa::before {
+	left: auto;
+	right: 0;
+	bottom: 0;
+	width: 105px;
+	height: 90px;
+	background-image: url(/images/tcHolidays/trending-destinations/south-africa-bg-before.png);
+	background-size: 105px
+}
+
+.trending_section .card_animation.south-africa:hover::before {
+	bottom: 6px;
+	right: -15px;
+	background-size: 105px
+}
+
+.trending_section .card_animation.south-africa::after {
+	display: none
+}
+
+.trending_section .card_animation .bg_img img {
+	width: 100%;
+	height: auto
+}
+
+.trending_section .card_animation .package,
+.trending_section .card_india .package {
+	background: linear-gradient(180deg, rgba(151, 151, 151, 0) 0, rgba(0, 0, 0, 0.5) 50.36%, rgba(0, 0, 0, 0.8) 100%);
+	padding: 32px 16px 16px 16px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	transform: translateY(150px);
+	transition: .5s all ease-out;
+	z-index: 2
+}
+
+.trending_section .card_animation:hover .package,
+.trending_section .card_india:hover .package {
+	transform: translateY(0)
+}
+
+.trending_section .card_animation .package h6,
+.trending_section .card_india .package h6 {
+	color: var(--color-white);
+	text-align: center;
+	letter-spacing: .027px;
+	margin-top: -4px;
+	margin-bottom: 12px
+}
+
+.trending_section .card_animation .package p,
+.trending_section .card_india .package p {
+	font-weight: 400;
+	color: #f8f9fa;
+	letter-spacing: .024px;
+	text-align: center
+}
+
+.trending_section .card_animation .package .btn,
+.trending_section .card_india .package .btn {
+	width: fit-content;
+	margin: auto;
+	padding: 6px 12px
+}
+
+.trending_section .card_india {
+	width: 100%;
+	height: 295px;
+	padding-top: 38px;
+	border-radius: 144.118px;
+	border: 2px solid #fff;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	z-index: 0;
+	transition: .5s all ease-out
+}
+
+.trending_section .card_india:hover {
+	padding-top: 24px;
+	box-shadow: 0 12px 44px -18px rgba(35, 31, 26, 0.36)
+}
+
+.trending_section .card_india .text img {
+	width: 142px;
+	height: auto;
+	display: block;
+	margin: auto;
+	transition: .5s all ease-out
+}
+
+.trending_section .card_india:hover .text img {
+	width: 110px
+}
+
+.trending_section .card_india .bg_img {
+	position: absolute;
+	left: auto;
+	right: auto;
+	bottom: 0;
+	margin: auto;
+	width: 100%;
+	transition: .5s all ease-out;
+	z-index: -1
+}
+
+.trending_section .card_india .bg_img img {
+	width: 100%;
+	height: auto
+}
+
+.trending_section .card_india.kerala {
+	background: #fff
+}
+
+.trending_section .card_india.kerala:hover .bg_img {
+	width: 210px
+}
+
+.trending_section .card_india.bhutan {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0, #fff 100%), linear-gradient(0, #264a58 0, #264a58 100%)
+}
+
+.trending_section .card_india.bhutan:hover .bg_img {
+	width: 225px
+}
+
+.trending_section .card_india.sri-lanka {
+	background: linear-gradient(180deg, #fad7ad 0, #fffaf3 100%)
+}
+
+.trending_section .card_india.sri-lanka:hover .bg_img {
+	width: 230px
+}
+
+.trending_section .card_india.uttrakhand {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0, #fff 66.39%), #b9c9d0
+}
+
+.trending_section .card_india.uttrakhand:hover .bg_img {
+	width: 226px
+}
+
+.trending_section .card_india.kashmir {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0, #fff 66.39%), #bbdfdf
+}
+
+.trending_section .card_india.kashmir:hover .bg_img {
+	width: 235px
+}
+
+.trending_section .card_india.north-east {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0, #fff 66.39%), #b9c9d0
+}
+
+.trending_section .card_india.north-east:hover .bg_img {
+	width: 230px
+}
+
+.trending_section .owl-nav button {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto
+}
+
+.trending_section .owl-nav .owl-prev {
+	left: -22px
+}
+
+.trending_section .owl-nav .owl-next {
+	right: -22px
+}
+
+.tc_specials {
+	background: var(--Blue-blue-1);
+	overflow: hidden;
+	position: relative;
+	z-index: 0
+}
+
+.tc_specials::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-image: url(/images/tcHolidays/tc-special.svg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	z-index: -1
+}
+
+.tc_specials .inner__gapTop {
+	display: flex;
+	flex-direction: column;
+	gap: 24px
+}
+
+.tc_specials .top_section {
+	display: grid;
+	grid-template-columns: 416px 856px;
+	gap: 24px
+}
+
+.tc_specials .festival_blck {
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative;
+	z-index: 0;
+	transition: .5s all ease-out
+}
+
+.tc_specials .festival_blck:hover {
+	transform: translateY(-6px)
+}
+
+.tc_specials .festival_blck .bg_img {
+	width: 100%;
+	height: 100%
+}
+
+.tc_specials .festival_blck .bg_img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
+}
+
+.tc_specials .festival_blck .text_box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 24px
+}
+
+.tc_specials .top_section h4,
+.tc_specials .festival_blck h4 {
+	color: var(--color-white)
+}
+
+.tc_specials .top_section h6,
+.tc_specials .festival_blck h6 {
+	font-weight: 400;
+	line-height: 142.857%;
+	letter-spacing: .035px;
+	color: var(--color-white);
+	margin: 4px 0
+}
+
+.tc_specials .festival_blck .text_box span,
+.tc_specials .top_section .item_slide .content_blk .price,
+.tc_specials .bottom_section .card_box span {
+	font: normal normal 400 14px / 142.857% var(--font-primary);
+	color: var(--color-white);
+	letter-spacing: .035px;
+	display: block
+}
+
+.tc_specials .top_section h6 span,
+.tc_specials .top_section .price b,
+.tc_specials .festival_blck .text_box span b,
+.tc_specials .bottom_section .card_box span b {
+	font-weight: 600
+}
+
+.tc_specials .top_section .btn,
+.tc_specials .festival_blck .btn {
+	font: normal normal 500 12px / 133.333% var(--font-primary);
+	color: var(--color-black);
+	padding: 8px 14px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	border-radius: 100px;
+	background: var(--color-white);
+	width: fit-content;
+	margin-top: 16px;
+	transition: .5s all ease-out
+}
+
+.tc_specials .top_section .btn:hover,
+.tc_specials .festival_blck .btn:hover {
+	background-color: var(--color-secondary)
+}
+
+.tc_specials .top_section .btn img,
+.tc_specials .festival_blck .btn img {
+	width: 16px;
+	height: auto
+}
+
+.tc_specials .top_section .wildlife_slide {
+	border-radius: 20px;
+	overflow: hidden
+}
+
+.tc_specials .top_section .item_slide {
+	position: relative
+}
+
+.tc_specials .top_section .item_slide .img_box img {
+	width: 100%;
+	height: 348px;
+	object-fit: cover
+}
+
+.tc_specials .top_section .item_slide .content_blk {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	padding: 24px
+}
+
+.tc_specials .top_section .owl-dots {
+	position: absolute;
+	bottom: 24px;
+	left: 24px;
+	display: flex;
+	align-items: center;
+	gap: 4px
+}
+
+.tc_specials .top_section .owl-dots .owl-dot.active {
+	width: 17px;
+	margin-left: 10px;
+	background: var(--color-secondary)
+}
+
+.tc_specials .bottom_section {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	gap: 24px
+}
+
+.tc_specials .bottom_section .video_container {
+	position: relative;
+	width: 100%;
+	border-radius: 20px;
+	overflow: hidden;
+	background: #000
+}
+
+.tc_specials .bottom_section .video_container div {
+	height: 100%
+}
+
+.tc_specials .bottom_section .video_container iframe {
+	width: 100%;
+	height: 100%
+}
+
+.tc_specials .bottom_section video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 20px;
+	display: block
+}
+
+.tc_specials .bottom_section .controls,
+.tc_specials .bottom_section .bottom-controls,
+.tc_specials .bottom_section .fullscreen {
+	position: absolute
+}
+
+.tc_specials .bottom_section .controls {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 100px;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(4px);
+	width: 60px;
+	height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border: 0
+}
+
+.tc_specials .bottom_section .controls img {
+	width: 28px;
+	height: auto
+}
+
+.tc_specials .bottom_section .bottom-controls {
+	bottom: 10px;
+	left: 10px;
+	display: flex;
+	gap: 10px
+}
+
+.tc_specials .bottom_section .fullscreen {
+	width: 32px;
+	height: 32px;
+	top: 10px;
+	right: 10px;
+	border-radius: 100px;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(4px);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 0
+}
+
+.tc_specials .bottom_section .fullscreen img {
+	width: 16px;
+	height: auto
+}
+
+.tc_specials .bottom_section .bottom-controls .volume {
+	width: 32px;
+	height: 32px;
+	border-radius: 100px;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(4px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 0
+}
+
+.tc_specials .bottom_section .bottom-controls .volume img {
+	width: 16px;
+	height: auto
+}
+
+.tc_specials .bottom_section .bottom-controls .time {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--color-white);
+	padding: 8px 12px;
+	border-radius: 100px;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(4px);
+	letter-spacing: .12px
+}
+
+.tc_specials .bottom_section .card_box {
+	border-radius: 20px;
+	background: linear-gradient(180deg, #a5d8ff 0, #fff 100%), #fff;
+	overflow: hidden;
+	position: relative;
+	transition: .5s all ease-out
+}
+
+.tc_specials .bottom_section .card_box:hover {
+	transform: translateY(-6px)
+}
+
+.tc_specials .bottom_section .card_box .bg_img img {
+	width: 100%;
+	height: auto;
+	max-height: 351px
+}
+
+.tc_specials .bottom_section .card_box .text_box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 16px
+}
+
+.tc_specials .bottom_section .card_box h6 {
+	font-family: var(--font-primary);
+	font-weight: 600;
+	line-height: 25px;
+	color: var(--color-black);
+	margin-bottom: 4px
+}
+
+.tc_specials .bottom_section .card_box span {
+	color: var(--color-black)
+}
+
+.tc_specials .bottom_section .btn_withIcon {
+	background-color: var(--color-primary);
+	padding: 6px 12px;
+	width: fit-content;
+	margin-top: 12px;
+	overflow: hidden;
+	gap: 0
+}
+
+.tc_specials .bottom_section .btn_withIcon img {
+	width: 20px !important;
+	filter: brightness(0) invert(1)
+}
+
+.tc_specials .bottom_section .card_box .btn_withIcon span {
+	font: normal normal 500 12px / 133.333% var(--font-primary);
+	letter-spacing: .035px;
+	color: var(--color-white);
+	white-space: nowrap;
+	display: inline-block;
+	max-width: 0;
+	opacity: 0;
+	padding: 0;
+	transition: max-width .6s ease, opacity .6s ease, padding .6s ease
+}
+
+.tc_specials .bottom_section .card_box:hover .btn_withIcon span {
+	max-width: 100px;
+	opacity: 1;
+	padding-right: 4px
+}
+
+.selling_packages .item_card {
+	position: relative;
+	z-index: 0
+}
+
+.selling_packages .item_card::before {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	content: "";
+	border-radius: 16px;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 53.12%, rgba(0, 0, 0, 0.65) 76.74%, rgba(0, 0, 0, 0.9) 99.96%);
+	z-index: 1
+}
+
+.selling_packages .item_card .img_block img {
+	width: 100%;
+	height: 260px;
+	border-radius: 16px;
+	object-fit: cover
+}
+
+.selling_packages .item_card .content_blk {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 16px;
+	z-index: 2;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between
+}
+
+.selling_packages .item_card .content_blk h5 {
+	font-weight: 600;
+	line-height: 140%;
+	letter-spacing: .02px;
+	color: var(--color-white);
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden
+}
+
+.selling_packages .item_card .content_blk span {
+	font: normal normal 400 14px / 142.857% var(--font-primary);
+	color: var(--color-white);
+	letter-spacing: .035px;
+	display: block
+}
+
+.selling_packages .item_card .content_blk span b {
+	font-weight: 600
+}
+
+.selling_packages .item_card .content_blk .lft_blk {
+	display: flex;
+	flex-direction: column;
+	gap: 4px
+}
+
+.selling_packages .item_card .content_blk .rating {
+	display: flex;
+	align-items: center;
+	gap: 4px
+}
+
+.selling_packages .item_card .content_blk .stars {
+	line-height: 1
+}
+
+.selling_packages .item_card .content_blk .rating img {
+	width: 16px;
+	height: auto
+}
+
+.selling_packages .item_card .content_blk .rating span {
+	line-height: 1;
+	font-weight: 600;
+	margin: 0
+}
+
+.selling_packages .item_card .content_blk .rating span:last-child {
+	font-weight: 400;
+	color: var(--Gray-Mode-100)
+}
+
+.selling_packages .owl-nav button {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto
+}
+
+.selling_packages .owl-nav .owl-prev {
+	left: -22px
+}
+
+.selling_packages .owl-nav .owl-next {
+	right: -22px
+}
+
+.selling_packages .carousel-caption-overlay h3 {
+	font-size: 16px
+}
+
+.selling_packages .carousel-caption-overlay p {
+	color: #fff;
+	font-size: 12px
+}
+
+.travel_consultation {
+	position: relative;
+	background-image: url(/images/tcHolidays/holidaysLP/TravelConsultation/cta-form-bg.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 104px 0;
+	z-index: 0;
+	overflow: hidden;
+	clip-path: inset(0 round 0);
+	animation-name: welcomeFadeIn, welcomeMoveIn;
+	animation-duration: calc(0.9 * 1s), calc(0.7 * 1s);
+	animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	animation-fill-mode: both;
+	z-index: 1
+}
+
+.travel_consultation .bg_img {
+	border-radius: 20px;
+	padding: 104px 0
+}
+
+.travel_consultation::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	border-radius: 20px;
+	background: linear-gradient(270deg, rgba(0, 0, 0, 0) .01%, rgba(0, 0, 0, 0.58) 99.99%);
+	z-index: -1
+}
+
+.travel_consultation .card_box .left_block h2 {
+	line-height: 133%;
+	color: var(--color-white)
+}
+
+.travel_consultation .card_box .left_block h6 {
+	font-weight: 400;
+	color: var(--color-white);
+	margin-top: 20px
+}
+
+.travel_consultation .card_box .card_form {
+	width: 488px;
+	padding: 40px 32px;
+	border-radius: 20px;
+	border: 1px solid var(--Gray-Mode-100);
+	background: var(--color-white);
+	margin-left: auto
+}
+
+.travel_consultation .card_box .card_form h4 {
+	color: var(--Gray-Mode-950);
+	font-family: var(--font-primary)
+}
+
+.travel_consultation .card_box .card_form .row {
+	row-gap: 20px
+}
+
+.travel_consultation .card_box .card_form .select_product {
+	display: flex;
+	flex-direction: column;
+	gap: 8px
+}
+
+.travel_consultation .card_box .card_form .select_product .checkbox {
+	display: flex;
+	align-items: center;
+	gap: 20px
+}
+
+.travel_consultation .card_box .card_form .select_product .input_inr label {
+	font: normal normal 400 12px / 16px var(--font-primary);
+	color: var(--Gray-Mode-950);
+	letter-spacing: .06px
+}
+
+.travel_consultation .card_box .card_form .select_product .form-check {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 1px
+}
+
+.travel_consultation .card_box .card_form .select_product .form-check-input {
+	width: 20px;
+	height: 20px;
+	border: 1px solid var(--Gray-Mode-400);
+	background-color: transparent;
+	margin: 0
+}
+
+.travel_consultation .card_box .card_form .select_product .form-check-input:checked {
+	background-image: url(/images/tcHolidays/check-circle.svg);
+	background-size: 8px
+}
+
+.travel_consultation .card_box .card_form .select_product .form-check-input:checked {
+	border-color: var(--color-primary)
+}
+
+.travel_consultation .card_box .card_form .select_product .form-check-label {
+	font: normal normal 500 14px/20px var(--font-primary);
+	color: var(--Gray-Mode-950);
+	letter-spacing: .035px
+}
+
+.travel_consultation .card_box .card_form .btn {
+	width: 100%;
+	margin-top: 8px
+}
+
+.holiday_theme .image_grid {
+	display: flex;
+	gap: 24px
+}
+
+.holiday_theme .image_grid .card_block {
+	width: 17.212%;
+	height: 55.825vh;
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative
+}
+
+.holiday_theme .image_grid .card_block::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(185deg, rgba(0, 0, 0, 0) 50.56%, rgba(0, 0, 0, 0.31) 65.29%, rgba(0, 0, 0, 0.9) 95.8%)
+}
+
+.holiday_theme .image_grid .card_block img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
+}
+
+.holiday_theme .image_grid .card_block .text_block {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	min-width: 391px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	opacity: 0;
+	visibility: hidden;
+	transition: .8s all;
+	z-index: 0
+}
+
+.holiday_theme .image_grid .card_block.active .text_block {
+	opacity: 1;
+	visibility: visible
+}
+
+.holiday_theme .image_grid .card_block .without_hover {
+	position: absolute;
+	left: 84px;
+	bottom: 0;
+	padding: 24px 32px;
+	transform: rotate(-90deg);
+	transform-origin: left bottom;
+	height: auto;
+	width: auto;
+	transition: .8s all
+}
+
+.holiday_theme .image_grid .card_block .without_hover h3 {
+	font: normal normal 500 30px / 132% var(--font-primary);
+	letter-spacing: -0.075px;
+	color: var(--color-white);
+	transition: .8s all ease
+}
+
+.holiday_theme .image_grid .card_block.active .without_hover h3 {
+	transform: translateY(-300px)
+}
+
+.holiday_theme .image_grid .card_block .top_blk {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: 16px
+}
+
+.holiday_theme .image_grid .card_block .left {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px;
+	max-width: 82%
+}
+
+.holiday_theme .image_grid .card_block .left span {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--color-white);
+	border-radius: 100px;
+	background: rgba(0, 0, 0, 0.38);
+	padding: 6px 10px
+}
+
+.holiday_theme .image_grid .card_block .text_block .btm_blk {
+	padding: 32px 24px;
+	min-width: 391.75px
+}
+
+.holiday_theme .image_grid .card_block .text_block h3 {
+	line-height: 111.111%;
+	font-weight: 600;
+	color: var(--color-white)
+}
+
+.holiday_theme .image_grid .card_block .btm_blk span {
+	font: normal normal 400 14px / 142.857% var(--font-primary);
+	letter-spacing: .035px;
+	color: var(--color-white);
+	display: block;
+	margin-top: 8px;
+	max-width: 74%
+}
+
+.holiday_theme .image_grid .card_block .right .btn_withIcon {
+	width: 48px;
+	height: 48px;
+	padding: 14px;
+	gap: 0;
+	justify-content: center
+}
+
+.offers_section {
+	overflow: hidden
+}
+
+.offers_section .comn_filterTab .btn {
+	color: var(--Gray-Mode-300);
+	position: relative
+}
+
+.offers_section .comn_filterTab .btn.active {
+	color: var(--color-primary)
+}
+
+.offers_section .comn_filterTab .btn.active:after {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 2px;
+	background: var(--color-primary);
+	position: absolute;
+	bottom: -5px;
+	left: 0
+}
+
+.offers_section .owl-carousel .owl-stage-outer {
+	overflow: visible
+}
+
+.offers_section .owl-item .item_card {
+	opacity: .4;
+	transition: .3s all ease-in-out
+}
+
+.offers_section .owl-item.active .item_card {
+	opacity: 1
+}
+
+.offers_section .item_card {
+	border-radius: 18px;
+	border: 1px solid var(--Gray-Mode-100);
+	background: var(--color-white);
+	padding: 8px 8px 0;
+	transition: .5s all ease-out
+}
+
+.offers_section .item_card:hover {
+	transform: scale(0.97)
+}
+
+.offers_section .item_card .img_block {
+	position: relative
+}
+
+.offers_section .item_card .img_block img {
+	width: 100%;
+	height: auto;
+	border-radius: 12px
+}
+
+.offers_section .item_card .img_block .coupon {
+	padding: 6px 12px;
+	border-radius: 100px;
+	background: #f8f9fa;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	position: absolute;
+	right: 12px;
+	bottom: 12px;
+	cursor: pointer
+}
+
+.offers_section .item_card .img_block .coupon img {
+	width: 18px;
+	height: 18px
+}
+
+.offers_section .item_card .img_block .coupon span {
+	font: normal normal 400 10px / 140% var(--font-primary);
+	letter-spacing: .05px;
+	color: var(--Gray-Mode-950)
+}
+
+.offers_section .item_card .img_block .coupon .copy-feedback {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-secondary);
+	color: var(--Gray-Mode-950);
+	padding: 6px 12px;
+	border-radius: 100px;
+	font: normal normal 500 10px / 14px var(--font-primary);
+	letter-spacing: .05px;
+	animation: fadein .4s ease;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center
+}
+
+.offers_section .item_card .text_box {
+	padding: 20px 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px
+}
+
+.offers_section .item_card .text_box .top_blk {
+	display: flex;
+	align-items: center;
+	justify-content: space-between
+}
+
+.offers_section .item_card .text_box .top_blk .lft {
+	display: flex;
+	align-items: center;
+	gap: 8px
+}
+
+.offers_section .item_card .text_box .top_blk .lft .brdr {
+	width: 1px;
+	height: 12px;
+	background: #b3b9c6
+}
+
+.offers_section .item_card .text_box span {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--color-primary);
+	display: block
+}
+
+.offers_section .item_card .text_box span span {
+	color: var(--Gray-Mode-700)
+}
+
+.offers_section .item_card .text_box .right span span {
+	font-weight: 400
+}
+
+.offers_section .item_card .text_box p {
+	min-height: 48px;
+	font-weight: 600;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden
+}
+
+.offers_section .item_card .text_box p a {
+	color: var(--Gray-Mode-950);
+	text-decoration: none
+}
+
+.offers_section .owl-nav button {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto
+}
+
+.offers_section .owl-nav button.owl-prev,
+.offers_section .owl-nav button.owl-next {
+	background-color: var(--color-primary)
+}
+
+.offers_section .owl-nav button.owl-prev img,
+.offers_section .owl-nav button.owl-next img {
+	filter: brightness(0) invert(1)
+}
+
+.offers_section .owl-nav .owl-prev {
+	left: -22px
+}
+
+.offers_section .owl-nav .owl-next {
+	right: -22px
+}
+
+.international_package {
+	background: #fff7f2
+}
+
+.international_package .filters_tab {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	border-bottom: 2px solid #ffc591;
+	padding-bottom: 4px;
+	position: relative
+}
+
+.international_package .filters_tab .btn {
+	font: normal normal 500 20px/140% var(--font-primary);
+	letter-spacing: .02px;
+	color: var(--Gray-Mode-400);
+	padding: 0;
+	position: relative;
+	transition: .4s all ease
+}
+
+.international_package .filters_tab .btn:hover,
+.international_package .filters_tab .btn.active {
+	color: #f70
+}
+
+.international_package .item_card {
+	position: relative;
+	z-index: 0;
+	transition: .5s all ease-out
+}
+
+.international_package .item_card:hover {
+	transform: scale(0.97)
+}
+
+.international_package .item_card::before {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	border-radius: 16px;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 53.12%, rgba(0, 0, 0, 0.65) 76.74%, rgba(0, 0, 0, 0.9) 99.96%);
+	z-index: 0
+}
+
+.international_package .item_card img {
+	width: 100%;
+	height: auto;
+	border-radius: 16px
+}
+
+.international_package .item_card .text_box {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 16px;
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px;
+	z-index: 1
+}
+
+.international_package .item_card .text_box h5 {
+	letter-spacing: .02px;
+	line-height: 140%;
+	font-weight: 600;
+	color: var(--color-white)
+}
+
+.international_package .item_card .text_box span {
+	font: normal normal 400 14px/142.857% var(--font-primary);
+	color: var(--color-white);
+	letter-spacing: .035px;
+	display: block;
+	margin-top: 4px
+}
+
+.international_package .item_card .text_box span b {
+	font-weight: 600;
+	margin: 0
+}
+
+.international_package .owl-carousel .owl-nav button {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto
+}
+
+.international_package .owl-nav .owl-prev {
+	left: -22px
+}
+
+.international_package .owl-nav .owl-next {
+	right: -22px
+}
+
+.international_package .owl-carousel .owl-nav button img {
+	filter: brightness(0) invert(1)
+}
+
+.comn_package {
+	background: linear-gradient(180deg, #f5faff 50.04%, #fff 100%), #fff;
+	padding-bottom: 40px
+}
+
+.comn_package .item_card {
+	border-radius: 16px;
+	background: #46bfee;
+	position: relative;
+	transition: .5s all ease-out
+}
+
+.visa_package .item:hover {
+	transform: scale(0.97)
+}
+
+.visa_package .item {
+	transition: .5s all ease-out
+}
+
+.comn_package .item_card img {
+	width: 100%;
+	height: auto;
+	border-radius: 16px
+}
+
+.comn_package .item_card .text_box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between
+}
+
+.comn_package .item_card .text_box>div {
+	padding: 16px;
+	display: flex;
+	flex-direction: column
+}
+
+.comn_package .item_card .text_box h5 {
+	letter-spacing: .02px;
+	line-height: 140%;
+	font-weight: 600;
+	color: var(--color-white);
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical
+}
+
+.comn_package .item_card .text_box span {
+	font: normal normal 400 14px/142.857% var(--font-primary);
+	color: var(--color-white);
+	letter-spacing: .035px;
+	display: block;
+	margin-top: 4px
+}
+
+.comn_package .item_card .text_box span b {
+	font-weight: 600;
+	margin: 0
+}
+
+.comn_package .item_card .text_box .btn_withIcon {
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center
+}
+
+.comn_package .owl-nav button {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto
+}
+
+.comn_package .owl-nav .owl-prev {
+	left: -22px
+}
+
+.comn_package .owl-nav .owl-next {
+	right: -22px
+}
+
+.spiritual_package {
+	background: var(--Gradient-Orange, linear-gradient(225deg, #fd853a 0, #ec4a0a 100%));
+	position: relative;
+	z-index: 0;
+	padding-bottom: 64px
+}
+
+.spiritual_package::before,
+.spiritual_package::after {
+	position: absolute;
+	content: "";
+	z-index: -1
+}
+
+.spiritual_package::before {
+	left: 0;
+	bottom: 0;
+	width: 460px;
+	height: 420px;
+	background: url(/images//tcHolidays/IndiaLP/SpiritualJourneys//sj-bg-1.svg) no-repeat center/100% 100%
+}
+
+.spiritual_package::after {
+	right: 24px;
+	top: 0;
+	width: 200px;
+	height: 275px;
+	background: url(/images/tcHolidays/spiritual-journeys/sj-bg-2.svg) no-repeat center/100% 100%
+}
+
+.main_heading h4,
+.main_heading h2,
+.headline h2 {
+	font-family: var(--font-primary) !important
+}
+
+.spiritual_package .main_heading h4 {
+	color: var(--color-white)
+}
+
+.spiritual_package .comn_filterTab {
+	border-bottom: 2px solid #ffdec2
+}
+
+.spiritual_package .comn_filterTab .btn {
+	color: #ffdec2
+}
+
+.spiritual_package .comn_filterTab .btn:hover,
+.spiritual_package .comn_filterTab .btn.active {
+	color: var(--color-secondary)
+}
+
+.spiritual_package .comn_filterTab .slider {
+	background-color: var(--color-secondary)
+}
+
+.visa_package {
+	background: #fff7f2
+}
+
+.honeymoon_package {
+	background-image: url(/images/tcHolidays/holidaysLP/HoneymoonPackages/escape-paradise-bg.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	min-height: 81.848vh;
+	position: relative;
+	z-index: 0;
+	padding-bottom: 208px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	clip-path: inset(4% round 44px);
+	animation-name: welcomeFadeIn, welcomeMoveIn;
+	animation-duration: calc(0.9 * 1s), calc(0.7 * 1s);
+	animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	animation-fill-mode: both
+}
+
+@keyframes welcomeFadeIn {
+	0%{
+		opacity: 0
+	}
+
+	100% {
+		opacity: 1
+	}
+}
+
+@keyframes welcomeMoveIn {
+	0%{
+		transform: translateY(var(--global-staggered-translate-y))
+	}
+
+	100% {
+		transform: translateY(0)
+	}
+}
+
+.honeymoon_package::before {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 14.04%, rgba(0, 0, 0, 0.32) 48.14%, rgba(0, 0, 0, 0.74) 100%);
+	z-index: -1
+}
+
+.honeymoon_package .bnr_text {
+	transition: .3s all ease-out
+}
+
+.honeymoon_package h2 {
+	color: var(--color-white);
+	text-align: center;
+	margin-bottom: 40px
+}
+
+.why_thomascook .card_bg {
+	background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/why-thomas-ccok-bg.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	min-height: 69.255vh;
+	padding: 54px 24px 24px 24px;
+	border-radius: 32px;
+	display: flex;
+	flex-direction: column;
+	justify-content: end
+}
+
+.why_thomascook .card_bg .card_grids {
+	display: grid;
+	grid-template-columns: 216px auto auto auto 216px;
+	align-items: end;
+	gap: 24px
+}
+
+.why_thomascook .card_bg .card_grids .card_box {
+	border-radius: 20px;
+	padding: 16px;
+	min-width: 100px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	position: relative;
+	overflow: hidden;
+	transition: .5s all ease-out;
+	z-index: 0
+}
+
+.why_thomascook .card_bg .card_grids .card_box:hover {
+	transform: translateY(-6px)
+}
+
+.why_thomascook .card_bg .card_grids .card_box::before {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	z-index: -1
+}
+
+.why_thomascook .card_bg .card_grids .card_box h5 {
+	color: var(--color-white);
+	font-weight: 600;
+	line-height: 140%;
+	letter-spacing: .02px
+}
+
+.why_thomascook .card_bg .card_grids .card_box p {
+	font-weight: 300;
+	color: var(--color-white)
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01 {
+	background: #fff6ed;
+	height: 340px
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01::before {
+	background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-01.png);
+	background-size: 216px 239px
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01 h4 {
+	color: #f70
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_01 p {
+	color: #914400
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_02 {
+	background: linear-gradient(225deg, #fd853a 0, #ec4a0a 100%);
+	backdrop-filter: blur(39px);
+	height: 240px
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_02::before {
+	background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-02.png);
+	background-size: 240px 239px
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_02 h5 {
+	white-space: nowrap
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_03 {
+	background: linear-gradient(225deg, #2e90fa 0, #175cd3 100%);
+	height: 192px
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04 {
+	background: #eff8ff;
+	height: 240px
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04 h5 {
+	color: var(--color-primary)
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04 p {
+	color: #07224a
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_04::before {
+	background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-03.png);
+	background-size: 100%
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05 {
+	background: #fffcd9;
+	height: 340px
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05 h4 {
+	color: #e3b100
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05 p {
+	color: #af8b0c
+}
+
+.why_thomascook .card_bg .card_grids .card_box.card_05::before {
+	background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-04.png);
+	background-size: 100%
+}
+
+.tourism_boards .tourism_slide .owl-item .item_slide::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: '';
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	transition: .6s all ease-out
+}
+
+.tourism_boards .tourism_slide .owl-item.active .item_slide::before {
+	background-color: transparent
+}
+
+.tourism_slide .item_slide img {
+	width: 100%;
+	height: auto
+}
+
+.tourism_slide.owl-carousel .owl-nav button.owl-prev,
+.tourism_slide.owl-carousel .owl-nav button.owl-next {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	width: 58px;
+	height: 58px;
+	background-color: #fff;
+	font-size: 0;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 26px
+}
+
+.tourism_slide.owl-carousel .owl-nav button.owl-prev {
+	left: 120px;
+	background-image: url(/images/tcHolidays/holidaysLP/TourismBoardPartners/chevron-left-p.svg)
+}
+
+.tourism_slide.owl-carousel .owl-nav button.owl-next {
+	right: 120px;
+	background-image: url(/images/tcHolidays/holidaysLP/TourismBoardPartners/chevron-right-p.svg)
+}
+
+.our_blogs {
+	background: linear-gradient(180deg, #f5faff 50.04%, #fff 100%);
+	overflow: hidden
+}
+
+.our_blogs .comn_filterTab .btn {
+	color: var(--Gray-Mode-300)
+}
+
+.our_blogs .comn_filterTab .btn.active {
+	color: var(--color-primary)
+}
+
+.our_blogs .owl-carousel .owl-stage-outer {
+	overflow: visible
+}
+
+.our_blogs .owl-item {
+	opacity: .4;
+	transition: .3s all ease-in-out
+}
+
+.our_blogs .owl-item.active {
+	opacity: 1
+}
+
+.our_blogs .item_card {
+	border-radius: 18px;
+	border: 1px solid var(--Gray-Mode-100);
+	background: var(--color-white);
+	padding: 8px 8px 0;
+	transition: .5s all ease-out
+}
+
+.our_blogs .item_card:hover {
+	background: #eff8ff;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+}
+
+.our_blogs .item_card .img_box {
+	border-radius: 12px;
+	overflow: hidden
+}
+
+.our_blogs .item_card .img_box img {
+	width: 100%;
+	height: auto;
+	transition: .5s all;
+	max-height: 250px
+}
+
+.our_blogs .item_card:hover .img_box img {
+	transform: scale(1.05)
+}
+
+.our_blogs .item_card .text_box {
+	padding: 20px 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px
+}
+
+.our_blogs .item_card .text_box .top_blk {
+	display: flex;
+	align-items: center;
+	justify-content: space-between
+}
+
+.our_blogs .item_card .text_box span {
+	font: normal normal 600 12px/133.333% var(--font-primary);
+	color: var(--color-primary);
+	display: block
+}
+
+.our_blogs .item_card .text_box span span {
+	color: var(--Gray-Mode-700)
+}
+
+.our_blogs .item_card .text_box p {
+	font-weight: 600
+}
+
+.our_blogs .item_card .text_box p a {
+	color: var(--Gray-Mode-950);
+	text-decoration: none
+}
+
+.our_blogs .item_card .text_box .btm_blk {
+	display: flex;
+	align-items: center;
+	justify-content: space-between
+}
+
+.our_blogs .item_card .text_box .btm_blk span {
+	color: var(--Gray-Mode-700)
+}
+
+.our_blogs .item_card .text_box .btm_blk .btn_withIcon {
+	gap: 0;
+	overflow: hidden
+}
+
+.our_blogs .item_card .text_box .btm_blk .btn_withIcon {
+	padding: 6px 12px
+}
+
+.our_blogs .item_card .text_box .btm_blk .btn_withIcon span {
+	font: normal normal 600 14px / 142.857% var(--font-primary);
+	letter-spacing: .035px;
+	color: var(--Gray-Mode-950);
+	white-space: nowrap;
+	display: inline-block;
+	max-width: 0;
+	opacity: 0;
+	padding: 0;
+	transition: max-width .6s ease, opacity .6s ease, transform .6s ease, padding .6s ease;
+	transform: translateX(-10px)
+}
+
+.our_blogs .item_card:hover .text_box .btm_blk .btn_withIcon span {
+	max-width: 100px;
+	opacity: 1;
+	transform: translateX(0);
+	padding-right: 4px
+}
+
+.our_blogs .owl-nav button {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto
+}
+
+.our_blogs .owl-nav button.owl-prev,
+.our_blogs .owl-nav button.owl-next {
+	background-color: var(--color-primary)
+}
+
+.our_blogs .owl-nav button.owl-prev img,
+.our_blogs .owl-nav button.owl-next img {
+	filter: brightness(0) invert(1)
+}
+
+.our_blogs .owl-nav .owl-prev {
+	left: -22px
+}
+
+.our_blogs .owl-nav .owl-next {
+	right: -22px
+}
+
+.customer_love {
+	background: #fff7f2
+}
+
+.customer_love .heading h2 {
+	font-weight: 400;
+	line-height: 137.5%;
+	text-align: center;
+	color: #733600
+}
+
+.customer_love .statistics_blk {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 48px;
+	margin-top: 48px
+}
+
+.customer_love .statistics_blk h3 {
+	font: normal normal 500 48px/100% var(--font-primary);
+	color: var(--Orange-orange-10, #733600);
+	text-align: center;
+	letter-spacing: -0.24px
+}
+
+.customer_love .statistics_blk h6 {
+	text-align: center;
+	font-weight: 500;
+	line-height: 144.444%;
+	letter-spacing: .027px;
+	margin-top: 8px
+}
+
+.customer_love .statistics_blk .brdr {
+	width: 2px;
+	height: 72px;
+	background-color: #733600
+}
+
+.customer_love .customer_slide {
+	margin-top: 56px
+}
+
+.customer_love .customer_slide .owl-stage-outer {
+	padding-bottom: 20px
+}
+
+.customer_love .item_slide {
+	padding: 24px;
+	border-radius: 14px;
+	background: #fff;
+	transition: .5s all ease-in-out
+}
+
+.customer_love .center .item_slide {
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+}
+
+.customer_love .item_slide .quotes {
+	margin-bottom: 20px
+}
+
+.customer_love .item_slide .quotes img {
+	width: auto;
+	height: 24px
+}
+
+.customer_love .content_blk {
+	min-height: 168px;
+	max-height: 168px;
+	overflow: auto
+}
+
+.customer_love .content_blk::-webkit-scrollbar {
+	-webkit-appearance: none
+}
+
+.customer_love .content_blk::-webkit-scrollbar:vertical {
+	width: 4px
+}
+
+.customer_love .content_blk::-webkit-scrollbar:horizontal {
+	height: 4px
+}
+
+.customer_love .content_blk::-webkit-scrollbar-thumb {
+	border-radius: 8px;
+	background-color: var(--Gray-Mode-200)
+}
+
+.customer_love .item_slide .content_blk p {
+	font-weight: 400;
+	margin-bottom: 24px;
+	color: var(--Gray-Mode-800)
+}
+
+.customer_love .item_slide .content_blk p:last-child {
+	margin-bottom: 0
+}
+
+.customer_love .cust_profile {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-top: 24px
+}
+
+.customer_love .cust_profile .pro_img {
+	width: 51px;
+	height: 51px;
+	border-radius: 50%;
+	border: 3px solid var(--Gray-Mode-50);
+	overflow: hidden
+}
+
+.customer_love .cust_profile .pro_img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
+}
+
+.customer_love .cust_profile .info p {
+	font-weight: 600;
+	color: var(--Gray-Mode-950)
+}
+
+.customer_love .cust_profile .info span {
+	font: normal normal 500 12px/133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--Gray-Mode-700);
+	margin-top: 2px;
+	display: block
+}
+
+.customer_love .customer_slide .owl-nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	margin-top: 28px
+}
+
+.customer_love .customer_slide .owl-nav button.owl-prev,
+.customer_love .customer_slide .owl-nav button.owl-next {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 24px;
+	font-size: 0
+}
+
+.customer_love .customer_slide .owl-nav button.owl-prev {
+	background-image: url(/images/tcHolidays/chevron-left-02.svg)
+}
+
+.customer_love .customer_slide .owl-nav button.owl-next {
+	background-image: url(/images/tcHolidays/chevron-right-02.svg)
+}
+
+.insta_section .heading .btn_ig {
+	font: normal normal 600 16px/150% var(--font-primary);
+	letter-spacing: .024px;
+	color: #0f4ca4;
+	padding: 12px 20px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	border-radius: 64px;
+	background: linear-gradient(135deg, #ffd521 -45.59%, #ffd521 -36.75%, #f50000 43.04%, #b900b4 122.44%);
+	width: fit-content
+}
+
+.insta_section .ig_inner {
+	display: grid;
+	grid-template-columns: 344px 1fr;
+	gap: 48px;
+	width: 100%;
+	overflow: hidden
+}
+
+.insta_section .heading .btn_ig img {
+	width: auto;
+	height: 32px
+}
+
+.insta_section .heading h3 {
+	font: normal normal 500 48px/120% var(--font-heading);
+	color: var(--color-primary);
+	margin-top: 40px
+}
+
+.insta_section .item_card {
+	width: 100%;
+	height: 428px
+}
+
+.insta_section .item_card .video-container {
+	position: relative;
+	border-radius: 20px;
+	width: 100%;
+	height: 100%
+}
+
+.insta_section .item_card .video-container .overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: .5s all
+}
+
+.insta_section .item_card:hover .video-container .overlay,
+.insta_section .item_card:hover .play-pause-btn {
+	opacity: 1
+}
+
+.insta_section .item_card .video-container .overlay img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
+}
+
+.insta_section .item_card video {
+	width: 100%;
+	height: 100%;
+	border-radius: 14px;
+	object-fit: cover
+}
+
+.insta_section .item_card .play-pause-btn {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: rgba(0, 0, 0, 0.6);
+	border: 0;
+	border-radius: 50%;
+	width: 42px;
+	height: 42px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	opacity: 0;
+	transition: .5s all
+}
+
+.insta_section .item_card .play-pause-btn img {
+	width: 20px;
+	height: auto
+}
+
+.insta_section .item_card .control-hide .play-pause-btn {
+	opacity: 0;
+	pointer-events: none
+}
+
+.insta_section .item_card .overlay {
+	transition: opacity .3s ease-in-out
+}
+
+.insta_section .owl-nav-custom {
+	display: flex;
+	gap: 16px;
+	margin-top: 56px
+}
+
+.insta_section .owl-nav-custom button {
+	width: 44px;
+	height: 44px;
+	padding: 12px;
+	border-radius: 50px;
+	background: var(--color-primary);
+	box-shadow: 2px 0 10px 0 rgba(0, 0, 0, 0.15);
+	border: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: .4s all ease-in-out
+}
+
+.insta_section .owl-nav-custom button img {
+	width: 100%;
+	height: auto;
+	filter: brightness(0) invert(1);
+	transition: .4s all ease-in-out
+}
+
+.insta_section .owl-nav-custom button.disabled {
+	background-color: var(--color-white);
+	opacity: 1
+}
+
+.insta_section .owl-nav-custom button.disabled img {
+	filter: unset
+}
+
+.download_app {
+	background: var(--Blue-blue-2)
+}
+
+.download_app .card_box {
+	position: relative;
+	padding: 0 56px;
+	border-radius: 20px;
+	background: linear-gradient(0, #fff 0, #fff 100%), linear-gradient(225deg, #2e90fa 0, #175cd3 100%);
+	z-index: 0;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: space-between
+}
+
+.download_app .card_box::before {
+	position: absolute;
+	right: 0;
+	top: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background-image: url(/images/tcHolidays/holidaysLP/DownloadApp/download-tc-bg.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: right;
+	z-index: -1
+}
+
+.download_app .card_box h3 {
+	font: normal normal 600 32px / 120% var(--font-primary);
+	letter-spacing: -1px;
+	color: var(--Gray-Mode-950)
+}
+
+.download_app .card_box h3 span {
+	color: var(--color-primary)
+}
+
+.download_app .card_box p {
+	color: var(--Gray-Mode-600);
+	margin: 12px 0 42px;
+	max-width: 450px
+}
+
+.download_app .card_box .right_block img {
+	width: 520px;
+	height: auto
+}
+
+.download_app .card_box .app_store {
+	display: flex;
+	align-items: flex-start;
+	gap: 15px
+}
+
+.download_app .card_box .app_store .btn {
+	padding: 0;
+	display: block
+}
+
+.download_app .card_box .app_store .btn img {
+	width: 145px;
+	height: auto
+}
+
+.download_app .card_box .app_store .qr img {
+	width: 48px;
+	height: auto
+}
+
+.faq_section .main_heading {
+	justify-content: center
+}
+
+.faq_section .btn_loadFaq {
+	font: normal normal 500 16px/150% var(--font-primary);
+	color: var(--Gray-Mode-950);
+	letter-spacing: .024px;
+	padding: 12px 24px;
+	border-radius: 64px;
+	border: 1px solid var(--Gray-Mode-600);
+	background-color: var(--color-white);
+	display: block
+}
+
+.faq_section .btn_loadFaq:hover {
+	border: 1px solid var(--color-primary);
+	background-color: var(--color-primary);
+	color: var(--color-white)
+}
+
+.faq_section .accordion {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 0 38px
+}
+
+.faq_section .accordion-item {
+	background-color: var(--color-white);
+	border: 1px solid transparent;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	padding: 16px;
+	transition: .5s all ease-out
+}
+
+.faq_section .accordion-item:hover {
+	border: 1px solid #2e90fa;
+	background: var(--Blue-blue-1)
+}
+
+.faq_section .accordion-item.active {
+	background: linear-gradient(225deg, #2e90fa 0, #175cd3 100%);
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+}
+
+.faq_section .accordion-button {
+	font: normal normal 500 18px/26px var(--font-primary);
+	letter-spacing: .027px;
+	color: var(--Gray-Mode-950);
+	background-color: transparent;
+	border-radius: 8px;
+	box-shadow: unset;
+	padding: 0
+}
+
+.faq_section .accordion-item.active .accordion-button {
+	color: var(--color-white);
+	transition: unset
+}
+
+.faq_section .accordion-item.active .accordion-body p {
+	font-weight: 400;
+	color: var(--color-white)
+}
+
+.faq_section .accordion-body {
+	padding: 10px 0 0
+}
+
+.faq_section .accordion-button::after {
+	width: 20px;
+	height: 20px;
+	background-image: url(/images/tcHolidays/chevron-down.svg);
+	background-size: 100%;
+	background-repeat: no-repeat
+}
+
+.faq_section .accordion-button:not(.collapsed)::after {
+	filter: brightness(0) invert(1)
+}
+
+.tour_agency {
+	background: var(--Blue-blue-1)
+}
+
+.tour_agency .agency_content {
+	margin-top: 16px
+}
+
+.tour_agency .agency_content p {
+	font-weight: 300;
+	color: var(--Gray-Mode-900);
+	margin-bottom: 16px
+}
+
+.tour_agency .agency_content .read-more {
+	font: normal normal 600 14px/142.857% var(--font-primary);
+	letter-spacing: .035px;
+	padding: 0;
+	color: var(--color-primary);
+	display: flex;
+	align-items: center;
+	gap: 4px
+}
+
+.tour_agency .agency_content .read-more img {
+	width: 16px;
+	height: auto;
+	transition: .5s all ease-out
+}
+
+.tour_agency .agency_tabs {
+	margin-top: 40px;
+	display: flex;
+	align-items: stretch;
+	gap: 32px
+}
+
+.tour_agency .agency_tabs .brdr_line {
+	width: 1px;
+	min-width: 1px;
+	background: #d7dae0
+}
+
+.tour_agency .agency_tabs .nav-pills {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	gap: 8px;
+	min-width: 305px;
+	max-width: 305px;
+	max-height: 338px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	scrollbar-width: none;
+	-ms-overflow-style: none
+}
+
+.tour_agency .agency_tabs .nav-pills::-webkit-scrollbar {
+	width: 0;
+	height: 0
+}
+
+.tour_agency .agency_tabs .nav-pills:hover {
+	scrollbar-width: thin
+}
+
+.tour_agency .agency_tabs .nav-pills:hover::-webkit-scrollbar {
+	width: 8px
+}
+
+.tour_agency .agency_tabs .nav-pills:hover::-webkit-scrollbar-thumb {
+	background: #999;
+	border-radius: 4px
+}
+
+.tour_agency .agency_tabs .nav-pills .nav-link {
+	font: normal normal 400 18px/144.444% var(--font-primary);
+	color: var(--Gray-Mode-600);
+	letter-spacing: .027px;
+	text-align: left;
+	padding: 4px 4px 4px 16px;
+	border: 0;
+	border-left: 2px solid transparent;
+	border-radius: 0;
+	transition: .4s all ease-in-out
+}
+
+.tour_agency .agency_tabs .nav-pills .nav-link.active {
+	color: var(--color-primary);
+	background-color: transparent;
+	border-left: 2px solid var(--color-primary)
+}
+
+.tour_agency .agency_tabs .nav-pills .nav-link.active:hover {
+	border-radius: 0
+}
+
+.tour_agency .tags_btns {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px
+}
+
+.tour_agency .tags_btns .btn {
+	font: normal normal 400 14px/142.857% var(--font-primary);
+	color: var(--color-primary);
+	letter-spacing: .035px;
+	border-radius: 8px;
+	border: 1px solid var(--color-primary);
+	padding: 12px 16px
+}
+
+.tour_agency .tags_btns .btn:hover {
+	background-color: var(--color-primary);
+	color: var(--color-white)
+}
+
+#holidaysLPExploreHolidaysByTheme .carousel-caption-overlay {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	background: transparent
+}
+
+#holidaysLPExploreHolidaysByTheme .caption-wrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	min-width: 391px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	opacity: 0;
+	visibility: hidden;
+	transition: .8s all;
+	z-index: 9;
+	min-width: 333px;
+	padding: 14px
+}
+
+#holidaysLPExploreHolidaysByTheme img {
+	height: 426px;
+	object-fit: cover
+}
+
+#holidaysLPExploreHolidaysByTheme .owl-carousel {
+	display: flex;
+	gap: 24px
+}
+
+#holidaysLPExploreHolidaysByTheme .owl-dots,
+#holidaysLPExploreHolidaysByTheme .owl-nav {
+	display: none
+}
+
+#holidaysLPExploreHolidaysByTheme .item {
+	width: 17.212%;
+	height: 55.825vh;
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative;
+	height: 426px;
+	border-radius: 20px
+}
+
+#holidaysLPExploreHolidaysByTheme .subtext span {
+	font: normal normal 500 12px / 133.333% var(--font-primary);
+	letter-spacing: .06px;
+	color: var(--color-white);
+	border-radius: 100px;
+	background: rgba(0, 0, 0, 0.38);
+	padding: 6px 10px
+}
+
+#holidaysLPExploreHolidaysByTheme p.subtext {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px;
+	max-width: 82%
+}
+
+#holidaysLPExploreHolidaysByTheme .carousel-wrapper button {
+	display: none
+}
+
+#holidaysLPExploreHolidaysByTheme h3 {
+	position: absolute;
+	left: 84px;
+	bottom: 0;
+	padding: 24px 32px;
+	transform: rotate(-90deg);
+	transform-origin: left bottom;
+	height: auto;
+	width: auto;
+	transition: .4s all;
+	font: normal normal 500 30px / 132% var(--font-primary)
+}
+
+#holidaysLPExploreHolidaysByTheme .item.active .caption-wrapper {
+	opacity: 1;
+	visibility: visible
+}
+
+#holidaysLPExploreHolidaysByTheme .item.active h3 {
+	transform: none;
+	position: static;
+	padding: 0;
+	font: normal normal 600 32px / 111.111% var(--font-primary)
+}
+
+#holidaysLPExploreHolidaysByTheme .carousel-image-wrapper:before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(185deg, rgba(0, 0, 0, 0) 50.56%, rgba(0, 0, 0, 0.31) 65.29%, rgba(0, 0, 0, 0.9) 95.8%)
+}
+
+#holidaysLPExploreHolidaysByTheme .item.active p.text {
+	opacity: 1;
+	color: #fff
+}
+
+#holidaysLPExploreHolidaysByTheme p.text {
+	opacity: 0
+}
+
+#holidaysLPExploreHolidaysByTheme a.carousel-image-link {
+	font: normal normal 500 12px / 133.333% var(--font-primary);
+	letter-spacing: .06px;
+	align-items: center;
+	gap: 4px;
+	background-repeat: no-repeat;
+	width: 100%
+}
+
+#holidaysLPExploreHolidaysByTheme .item.active img {
+	object-fit: cover
+}
+
+#holidaysLPExploreHolidaysByTheme .carousel-image-wrapper {
+	position: relative;
+	border-radius: 20px;
+	overflow: hidden
+}
+
+#holidaysLPExploreHolidaysByTheme p.subtext:after {
+	content: "";
+	display: flex;
+	background: url(/images/tcHolidays/arrow-up-right-dark.svg) 8px 6px no-repeat var(--color-secondary);
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 17px;
+	top: 21px;
+	border-radius: 100px;
+	padding: 10px;
+	width: 36px;
+	height: 36px;
+	justify-content: center;
+	align-items: center
+}
+
+.holidaysLPBestOffersIndiaPackagesTab.tabOffersTabIndaAround.activeTab {
+	display: flex !important
+}
+
+.holidaysLPBestOffersInternationalPackagesTab.tabOffersTabInternational.activeTab {
+	display: flex !Important
+}
+
+#vitra-lang-select {
+	display: none !important
+}
+
+.holidaysLPTourismBoardPartners .carousel-card,
+.holidaysLPTourismBoardPartners .carousel-image-wrapper img {
+	border-radius: 0
+}
+
+.holidaysLPTourismBoardPartners .owl-carousel .owl-item .item {
+	position: relative;
+	overflow: hidden
+}
+
+.holidaysLPTourismBoardPartners .owl-carousel .owl-item .item::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 2;
+	transition: background-color .4s ease
+}
+
+.holidaysLPTourismBoardPartners .owl-carousel .owl-item.center .item::before {
+	background-color: rgba(0, 0, 0, 0)
+}
+
+.wildlife_slide .owl-prev,
+.wildlife_slide .owl-next {
+	display: none !important
+}
+
+.spiritual_package .carousel-caption-overlay {
+	top: 0;
+	bottom: auto;
+	background: transparent
+}
+
+.spiritual_package .carousel-caption-overlay h3 {
+	font-size: 16px;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical
+}
+
+.spiritual_package .carousel-caption-overlay .subtext {
+	margin-top: 0;
+	color: #fff
+}
+
+.spiritual_package h2 {
+	color: #fff
+}
+
+.international_package .carousel-caption-overlay {
+	bottom: 0
+}
+
+.international_package .carousel-caption-overlay h3 {
+	font-size: 16px;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical
+}
+
+.international_package .carousel-caption-overlay .subtext {
+	margin-top: 0;
+	color: #fff
+}
+
+.offers_section .owl-carousel .owl-nav button.owl-prev {
+	margin-left: 6px;
+	z-index: 1
+}
+
+.offers_section .owl-carousel .owl-nav button.owl-next {
+	margin-right: 6px
+}
+
+.wildlife_slideData .owl-nav.disabled {
+	display: none
+}
+
+.item_card.international2 .img_block img,
+.item_card.india-around2 .img_block img {
+	max-height: 175px;
+	object-fit: cover
+}
+
+#tabLPJyotirlinga .owl-carousel .owl-dots.disabled,
+#tabLPJyotirlinga .owl-carousel .owl-nav.disabled {
+	display: none
+}
+
+.spiritual_package .owl-dots.disabled,
+.spiritual_package .owl-carousel .owl-nav.disabled {
+	display: none !important
+}
+
+.travel_consultation .card_box .after_submission h5 {
+	color: var(--Gray-Mode-950);
+	text-align: center;
+	font-weight: 500;
+	line-height: 32px;
+	letter-spacing: .02px;
+	max-width: 78%;
+	margin: -24px auto 0
+}
+
+.travel_consultation .card_box .after_submission .gif_blck {
+	display: flex;
+	align-items: center;
+	justify-content: center
+}
+
+.after_submission .btn_close {
+	display: flex;
+	justify-content: flex-end
+}
+
+.blogs_slide:not(.owl-loaded) {
+	display: none !important
+}
+
+.india_package .carousel-caption-overlay {
+	background: 0
+}
+
+.spiritual_package.rn__section__gapTop .carousel-image-wrapper:after {
+	content: "";
+	display: flex;
+	background: url(/images/tcHolidays/arrow-up-right-dark.svg) 8px 6px no-repeat var(--color-secondary);
+	position: absolute;
+	right: 17px;
+	bottom: 15px;
+	border-radius: 100px;
+	padding: 10px;
+	width: 36px;
+	height: 36px;
+	justify-content: center;
+	align-items: center
+}
+
+.visa_package.rn__section__gapTop .carousel-image-wrapper:after {
+	content: "";
+	display: flex;
+	background: url(/images/tcHolidays/arrow-up-right-dark.svg) 8px 6px no-repeat var(--color-secondary);
+	position: absolute;
+	right: 17px;
+	bottom: 15px;
+	border-radius: 100px;
+	padding: 10px;
+	width: 36px;
+	height: 36px;
+	justify-content: center;
+	align-items: center
+}
+
+.package-for-int-page {
+	background: 0
+}
+
+.international_package.rn__section__gapTop a img:after,
+.india_package.comn_package.rn__section__gapTop a img:after {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height: 15px;
+	background: url(/images/tcHolidays/arrow-narrow-up-right.svg) no-repeat
+}
+
+span.read-more,
+.read-less {
+	display: block;
+	text-transform: capitalize;
+	font: normal normal 600 12px / 133.333% var(--font-primary);
+	gap: 4px;
+	margin-top: 10px
+}
+
+span.read-more a,
+.read-less a {
+	text-decoration: none;
+	color: var(--color-primary);
+	font: normal normal 600 12px / 133.333% var(--font-primary)
+}
+
+.tagging_srp_tc h3 {
+	font: normal normal 400 15px / 144.444% var(--font-primary);
+	padding: 3px 3px 3px 12px;
+	color: var(--Gray-Mode-600);
+	letter-spacing: .027px;
+	text-align: left;
+	padding: 4px 4px 4px 16px;
+	border: 0;
+	border-left: 2px solid transparent;
+	border-radius: 0;
+	transition: .4s all ease-in-out;
+	text-transform: capitalize
+}
+
+.agency_content .more_all_big .read-more a:after,
+.agency_content .more_all_big .read-less a:after {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height: 17px;
+	background: url(/images/tcHolidays/chevron-down-primary.svg) 2px 4px no-repeat;
+	transition: .5s
+}
+
+.agency_content .less-link::after {
+	transform: rotate(180deg);
+	background-position: -2px -4px !important;
+	transition: .5s
+}
+
+.agency_content .more_all_big a {
+	display: inline;
+	border: 0;
+	padding: 0
+}
+
+.agency_content .more_all_big .more-link {
+	padding: 0
+}
+
+.tagging_srp_tc .srpcountry_tab h3,
+.tagging_srp_tc .srpcountry_tab h4 {
+	font: normal normal 400 15px / 144.444% var(--font-primary);
+	padding: 3px 3px 3px 12px
+}
+
+.tagging_srp_tc .srpcountry_tab.active {
+	color: var(--color-primary);
+	background-color: transparent;
+	border-left: 2px solid var(--color-primary)
+}
+
+.more_all_big a.less-link {
+	padding: 0
+}
+
+@media only screen and (min-width:1440px) and (max-width:1799px) {
+	.insta_section .heading h3 {
+		font: normal normal 400 44px / 120% var(--font-heading)
+	}
+
+	.insta_section .heading .btn_ig {
+		font: normal normal 700 14px / 150% var(--font-primary);
+		padding: 8px 16px;
+		gap: 8px
+	}
+
+	.insta_section .heading .btn_ig img {
+		width: 28px;
+		height: auto
+	}
+}
+
+@media only screen and (min-width:1200px) and (max-width:1439px) {
+	#holidaysLPExploreHolidaysByTheme .subtext span {
+		font: normal normal 500 10px / 133.333% var(--font-primary);
+		padding: 4px 8px
+	}
+
+	.holiday_theme .image_grid .card_block .text_block {
+		min-width: 333px
+	}
+	.hero_section:has(.bnr_img) {
+		height: 270px
+	}
+
+	.hero_section:has(.bnr_img) .bnr_text {
+		padding: 62px 200px 46px 200px
+	}
+
+	.hero_section:has(.bnr_img) .bnr_text h1 {
+		font: normal normal 600 42px / 100% var(--font-heading)
+	}
+
+	.hero_section .bnr_text h4 {
+		font: normal normal 300 20px / 100% var(--font-primary);
+		margin: 16px 0 32px
+	}
+
+	.hero_section .search_box {
+		width: 499px
+	}
+
+	.hero_section .search_container {
+		gap: 8px
+	}
+
+	.hero_section .search_box .form-control {
+		font: normal normal 400 14px/144.44% var(--font-primary);
+		padding: 16px 20px
+	}
+
+	.hero_section .search_box .btn_search {
+		right: 5px;
+		width: 44px;
+		height: 44px
+	}
+
+	.hero_section .search_box .btn_search img,
+	.hero_section .search_box .btn_cross img,
+	.hero_section .search_popup .btn_cross img {
+		width: 20px
+	}
+
+	.hero_section .voice_assistance .btn {
+		width: 52px;
+		height: 52px;
+		padding: 0
+	}
+
+	.hero_section .voice_assistance .btn img {
+		width: 20px
+	}
+
+	.hero_section .search_popup {
+		top: 100px;
+		max-width: 680px;
+		height: 383px;
+		padding: 16px;
+		border-radius: 18px
+	}
+
+	.hero_section .search_popup .search_form {
+		padding-bottom: 12px;
+		margin-bottom: 12px
+	}
+
+	.hero_section .search_form span img {
+		width: 20px
+	}
+
+	.hero_section .search_popup .top_item {
+		gap: 18px;
+		height: calc(100% - 45px)
+	}
+
+	.hero_section .search_popup .top span,
+	.hero_section .search_popup .no-results {
+		font: normal normal 500 12px/133.333% var(--font-primary)
+	}
+
+	.hero_section .search_popup .search_form .form-control {
+		font: normal normal 400 14px/20px var(--font-primary);
+		padding: 0 0 0 30px
+	}
+
+	.hero_section .search_popup .top {
+		margin-bottom: 8px
+	}
+
+	.hero_section .search_item .thd_section .card_box {
+		padding: 5px;
+		border-radius: 10px;
+		gap: 8px
+	}
+
+	.hero_section .search_item .thd_section .img_box {
+		width: 42px;
+		height: 42px;
+		border-radius: 8px
+	}
+
+	.hero_section .search_item .thd_section .text_box {
+		gap: 3px
+	}
+
+	.hero_section .search_item .thd_section .text_box span {
+		font: normal normal 400 12px / 133.333% var(--font-primary)
+	}
+
+	.hero_section .search_item .thd_section .text_box a {
+		font: normal normal 500 11px / 133.333% var(--font-primary)
+	}
+
+	.hero_section .search_item .thd_section .row {
+		row-gap: 12px;
+		--bs-gutter-x: 12px
+	}
+
+	.hero_section .search_result ul li a {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		padding: 0 4px 0 12px;
+		gap: 12px
+	}
+
+	.hero_section .search_result ul li img {
+		width: 28px
+	}
+
+	.hero_section .search_popup .search_result:not(:last-child) {
+		margin-bottom: 12px;
+		padding-bottom: 12px
+	}
+
+	.recents_searches .owl-nav button {
+		width: 36px;
+		height: 36px;
+		padding: 10px
+	}
+
+	.recents_searches .item_card {
+		padding: 2px;
+		border-radius: 14px
+	}
+
+	.recents_searches .item_card .top_box {
+		padding: 10px;
+		border-radius: 12px
+	}
+
+	.recents_searches .item_card .tp_lft .top_blck {
+		gap: 4px
+	}
+
+	.recents_searches .item_card .tp_lft .top_blck span,
+	.recents_searches .item_card .top_box .btm_blck span,
+	.recents_searches .item_card .bottom_box span {
+		font: normal normal 500 11px / 133.333% var(--font-primary)
+	}
+
+	.recents_searches .item_card .tp_lft .icon img {
+		width: 14px
+	}
+
+	.recents_searches .item_card .top_box h6 {
+		margin: 6px 0
+	}
+
+	.recents_searches .item_card .bottom_box {
+		padding: 8px 12px 10px
+	}
+
+	.recents_searches .item_card .top_box .btm_blck {
+		gap: 4px
+	}
+
+	.recents_searches .item_card .bottom_box .btn_withIcon img {
+		width: 13px !important
+	}
+
+	.trending_section .nav-pills .nav-link {
+		font: normal normal 400 14px / 150% var(--font-primary);
+		width: 136px;
+		padding: 6px 12px
+	}
+
+	.trending_section .card_animation,
+	.trending_section .card_india {
+		height: 260px;
+		padding-top: 28px
+	}
+
+	.trending_section .card_animation:hover,
+	.trending_section .card_india:hover {
+		padding-top: 20px
+	}
+
+	.trending_section .card_animation .text img,
+	.trending_section .card_india .text img {
+		width: 110px
+	}
+
+	.trending_section .card_animation:hover .text img,
+	.trending_section .card_india .text:hover img {
+		width: 90px
+	}
+
+	.trending_section .card_animation.australia:hover .bg_img {
+		width: 200px
+	}
+
+	.trending_section .card_animation.europe:hover .bg_img {
+		width: 192px
+	}
+
+	.trending_section .card_animation.europe:hover::before {
+		bottom: -50px;
+		background-size: 100px
+	}
+
+	.trending_section .card_animation.europe:hover::after {
+		right: -32px;
+		background-size: 52.438px
+	}
+
+	.trending_section .card_animation.mauritius .bg_img {
+		width: 150px;
+		bottom: 4px
+	}
+
+	.trending_section .card_animation.mauritius:hover .bg_img {
+		width: 164px
+	}
+
+	.trending_section .card_animation.mauritius::before {
+		width: 60px;
+		height: 80px;
+		background-size: 60px
+	}
+
+	.trending_section .card_animation.mauritius:hover::before {
+		bottom: 0;
+		width: 74px;
+		background-size: 74px
+	}
+
+	.trending_section .card_animation.singapore .bg_img {
+		width: 90px
+	}
+
+	.trending_section .card_animation.singapore:hover .bg_img {
+		width: 100px
+	}
+
+	.trending_section .card_animation.singapore::before {
+		height: 103px
+	}
+
+	.trending_section .card_animation.singapore:hover::before {
+		width: 205px;
+		height: 125px
+	}
+
+	.trending_section .card_animation.south-africa .bg_img {
+		width: 145px
+	}
+
+	.trending_section .card_animation.south-africa::before {
+		width: 86px;
+		height: 76px;
+		background-size: 86px
+	}
+
+	.trending_section .card_animation.south-africa:hover .bg_img {
+		width: 164px;
+		left: -10px
+	}
+
+	.trending_section .card_animation.south-africa:hover::before {
+		bottom: 8px;
+		right: -10px;
+		background-size: 90px
+	}
+
+	.trending_section .card_animation.vietnam:hover .bg_img {
+		width: 185px
+	}
+
+	.trending_section .card_animation .package,
+	.trending_section .card_india .package {
+		padding: 26px 12px 12px 12px
+	}
+
+	.trending_section .card_animation .package h6,
+	.trending_section .card_india .package h6 {
+		margin-top: -2px;
+		margin-bottom: 8px
+	}
+
+	.trending_section .card_animation .package .btn,
+	.trending_section .card_india .package .btn {
+		padding: 4px 10px
+	}
+
+	.trending_section .card_india.kerala:hover .bg_img {
+		width: 180px
+	}
+
+	.trending_section .card_india.bhutan:hover .bg_img,
+	.trending_section .card_india.sri-lanka:hover .bg_img {
+		width: 185px
+	}
+
+	.trending_section .card_india.uttrakhand:hover .bg_img,
+	.trending_section .card_india.kashmir:hover .bg_img,
+	.trending_section .card_india.north-east:hover .bg_img {
+		width: 195px
+	}
+
+	.tc_specials .top_section {
+		grid-template-columns: 357px 735px
+	}
+
+	.tc_specials .festival_blck {
+		border-radius: 16px
+	}
+
+	.tc_specials .festival_blck .text_box {
+		padding: 18px
+	}
+
+	.tc_specials .top_section h6,
+	.tc_specials .festival_blck h6 {
+		line-height: 133.333%;
+		margin: 3px 0
+	}
+
+	.tc_specials .festival_blck .text_box span,
+	.tc_specials .top_section .item_slide .content_blk .price,
+	.tc_specials .bottom_section .card_box span {
+		font: normal normal 400 12px / 142.857% var(--font-primary)
+	}
+
+	.tc_specials .top_section .btn,
+	.tc_specials .festival_blck .btn {
+		font: normal normal 500 11px / 133.333% var(--font-primary);
+		padding: 6px 12px;
+		gap: 3px;
+		margin-top: 12px
+	}
+
+	.tc_specials .top_section .btn img,
+	.tc_specials .festival_blck .btn img {
+		width: 14px
+	}
+
+	.tc_specials .top_section .item_slide .content_blk {
+		padding: 18px
+	}
+
+	.tc_specials .top_section .item_slide .img_box img {
+		height: 299px
+	}
+
+	.tc_specials .top_section .owl-dots {
+		bottom: 18px;
+		left: 18px;
+		gap: 3px
+	}
+
+	.tc_specials .bottom_section .card_box h6 {
+		line-height: 20px;
+		margin-bottom: 3px
+	}
+
+	.tc_specials .bottom_section .card_box .text_box {
+		padding: 14px
+	}
+
+	.tc_specials .bottom_section .btn_withIcon {
+		padding: 5px 10px;
+		margin-top: 8px
+	}
+
+	.tc_specials .bottom_section .card_box .btn_withIcon span {
+		font: normal normal 500 11px / 133.333% var(--font-primary)
+	}
+
+	.tc_specials .bottom_section .card_box:hover .btn_withIcon span {
+		padding-right: 3px
+	}
+
+	.tc_specials .bottom_section .btn_withIcon img {
+		width: 16px !important
+	}
+
+	.selling_packages .item_card .img_block img {
+		height: 226px;
+		border-radius: 12px
+	}
+
+	.selling_packages .item_card .content_blk {
+		padding: 12px
+	}
+
+	.selling_packages .item_card .content_blk h5 {
+		font-weight: 500;
+		line-height: 130%
+	}
+
+	.selling_packages .item_card .content_blk span {
+		font: normal normal 400 12px / 123.857% var(--font-primary)
+	}
+
+	.selling_packages .item_card .content_blk .rating img {
+		width: 14px
+	}
+
+	.selling_packages .owl-nav .owl-prev {
+		left: -18px
+	}
+
+	.selling_packages .owl-nav .owl-next {
+		right: -18px
+	}
+
+	.travel_consultation {
+		padding: 52px 0
+	}
+
+	.travel_consultation .card_box .left_block h6 {
+		margin-top: 12px
+	}
+
+	.travel_consultation .card_box .card_form {
+		width: 450px;
+		padding: 32px 25px;
+		border-radius: 16px
+	}
+
+	.travel_consultation .card_box .card_form .row {
+		row-gap: 16px
+	}
+
+	.travel_consultation .card_box .card_form .btn img {
+		width: 18px
+	}
+
+	.holiday_theme .image_grid .card_block {
+		height: 426px;
+		border-radius: 20px
+	}
+
+	.holiday_theme .image_grid .card_block .text_block {
+		min-width: 333px
+	}
+
+	.holiday_theme .image_grid .card_block .top_blk {
+		padding: 14px
+	}
+
+	.holiday_theme .image_grid .card_block .left span {
+		font: normal normal 500 10px / 133.333% var(--font-primary);
+		padding: 4px 8px
+	}
+
+	.holiday_theme .image_grid .card_block .right .btn_withIcon {
+		width: 36px;
+		height: 36px;
+		padding: 10px
+	}
+
+	.holiday_theme .image_grid .card_block .text_block .btm_blk {
+		padding: 24px 16px;
+		min-width: 333px
+	}
+
+	.holiday_theme .image_grid .card_block .text_block h3 {
+		font: normal normal 600 28px / 111.111% var(--font-primary)
+	}
+
+	.holiday_theme .image_grid .card_block .btm_blk span {
+		font: normal normal 400 12px / 142.857% var(--font-primary);
+		margin-top: 6px;
+		max-width: 85%
+	}
+
+	.holiday_theme .image_grid .card_block .without_hover {
+		left: 64px;
+		padding: 16px 24px
+	}
+
+	.holiday_theme .image_grid .card_block .without_hover h3 {
+		font: normal normal 500 24px / 132% var(--font-primary)
+	}
+
+	.offers_section .item_card {
+		border-radius: 14px;
+		padding: 6px 6px 0
+	}
+
+	.offers_section .item_card .img_block .coupon {
+		padding: 5px 10px;
+		gap: 3px;
+		right: 10px;
+		bottom: 10px
+	}
+
+	.offers_section .item_card .img_block .coupon span {
+		font: normal normal 400 9px / 140% var(--font-primary)
+	}
+
+	.offers_section .item_card .img_block .coupon img {
+		width: 15px;
+		height: 15px
+	}
+
+	.offers_section .item_card .text_box {
+		padding: 16px 6px;
+		gap: 6px
+	}
+
+	.offers_section .item_card .text_box .top_blk .lft {
+		gap: 6px
+	}
+
+	.offers_section .item_card .text_box span {
+		font: normal normal 500 11px / 133.333% var(--font-primary)
+	}
+
+	.offers_section .item_card .text_box .top_blk .lft .brdr {
+		height: 10px
+	}
+
+	.offers_section .item_card .text_box p {
+		min-height: 36px
+	}
+
+	.offers_section .owl-nav .owl-prev {
+		left: -18px
+	}
+
+	.offers_section .owl-nav .owl-next {
+		right: -18px
+	}
+
+	.international_package .owl-nav .owl-prev {
+		left: -18px
+	}
+
+	.international_package .owl-nav .owl-next {
+		right: -18px
+	}
+
+	.international_package .filters_tab .btn {
+		font: normal normal 500 16px / 140% var(--font-primary)
+	}
+
+	.international_package .filters_tab {
+		gap: 14px;
+		padding-bottom: 3px
+	}
+
+	.international_package .item_card .text_box {
+		padding: 12px;
+		gap: 10px
+	}
+
+	.international_package .item_card .text_box h5 {
+		line-height: 128%
+	}
+
+	.international_package .item_card .text_box span {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		margin-top: 3px
+	}
+
+	.comn_package .item_card {
+		border-radius: 12px
+	}
+
+	.comn_package .item_card img {
+		border-radius: 12px
+	}
+
+	.comn_package .item_card .text_box>div {
+		padding: 12px
+	}
+
+	.comn_package .item_card .text_box h5 {
+		line-height: 123%
+	}
+
+	.comn_package .item_card .text_box span {
+		font: normal normal 400 12px / 123.857% var(--font-primary);
+		margin-top: 3px
+	}
+
+	.comn_package .item_card .text_box .btn_withIcon {
+		width: 36px;
+		height: 36px
+	}
+
+	.comn_package .owl-nav .owl-prev {
+		left: -18px
+	}
+
+	.comn_package .owl-nav .owl-next {
+		right: -18px
+	}
+
+	.honeymoon_package {
+		min-height: 520px;
+		padding-bottom: 120px
+	}
+
+	.honeymoon_package .bnr_text {
+		max-width: 60%;
+		margin: auto
+	}
+
+	.honeymoon_package h2 {
+		margin-bottom: 28px
+	}
+
+	.why_thomascook .card_bg {
+		min-height: 66.255vh;
+		padding: 46px 20px 20px 20px;
+		border-radius: 24px
+	}
+
+	.why_thomascook .card_bg .card_grids {
+		grid-template-columns: 186px auto auto auto 186px;
+		gap: 16px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box {
+		border-radius: 16px;
+		padding: 14px;
+		gap: 6px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_01,
+	.why_thomascook .card_bg .card_grids .card_box.card_05 {
+		height: 290px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_02,
+	.why_thomascook .card_bg .card_grids .card_box.card_04 {
+		height: 200px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_03 {
+		height: 150px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_02::before,
+	.why_thomascook .card_bg .card_grids .card_box.card_01::before {
+		background-size: 100%
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_01 h4 {
+		max-width: 90%
+	}
+
+	.tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-prev,
+	.tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-next {
+		width: 42px;
+		height: 42px;
+		background-size: 20px
+	}
+
+	.tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-prev {
+		left: 195px
+	}
+
+	.tourism_boards .tourism_slide.owl-carousel .owl-nav button.owl-next {
+		right: 195px
+	}
+
+	.our_blogs .item_card {
+		border-radius: 14px;
+		padding: 6px 6px 0;
+		height: 340px
+	}
+
+	.our_blogs .item_card .img_box {
+		border-radius: 10px;
+		height: 228px
+	}
+
+	.our_blogs .item_card .text_box {
+		padding: 16px 6px;
+		gap: 4px
+	}
+
+	.our_blogs .item_card .text_box span {
+		font: normal normal 600 11px / 133.333% var(--font-primary)
+	}
+
+	.our_blogs .item_card .text_box .btm_blk .btn_withIcon span {
+		font: normal normal 600 12px / 142.857% var(--font-primary)
+	}
+
+	.our_blogs .item_card:hover .text_box .btm_blk .btn_withIcon span {
+		padding-right: 3px
+	}
+
+	.our_blogs .owl-nav .owl-prev {
+		left: -18px
+	}
+
+	.our_blogs .owl-nav .owl-next {
+		right: -18px
+	}
+
+	.customer_love .statistics_blk {
+		gap: 36px;
+		margin-top: 36px
+	}
+
+	.customer_love .statistics_blk h3 {
+		font: normal normal 500 36px / 100% var(--font-primary)
+	}
+
+	.customer_love .statistics_blk h6 {
+		margin-top: 6px
+	}
+
+	.customer_love .statistics_blk .brdr {
+		height: 62px
+	}
+
+	.customer_love .customer_slide {
+		margin-top: 36px
+	}
+
+	.customer_love .item_slide {
+		padding: 16px;
+		border-radius: 12px
+	}
+
+	.customer_love .item_slide .quotes {
+		margin-bottom: 16px
+	}
+
+	.customer_love .item_slide .quotes img {
+		height: 20px
+	}
+
+	.customer_love .item_slide .content_blk p {
+		margin-bottom: 16px
+	}
+
+	.customer_love .content_blk {
+		min-height: 124px;
+		max-height: 124px
+	}
+
+	.customer_love .cust_profile {
+		gap: 12px;
+		margin-top: 16px
+	}
+
+	.customer_love .cust_profile .pro_img {
+		width: 45px;
+		height: 45px
+	}
+
+	.customer_love .cust_profile .info span {
+		font: normal normal 500 11px / 133.333% var(--font-primary);
+		margin-top: 1px
+	}
+
+	.customer_love .customer_slide .owl-stage-outer {
+		padding-bottom: 16px
+	}
+
+	.customer_love .customer_slide .owl-nav {
+		gap: 12px;
+		margin-top: 16px
+	}
+
+	.customer_love .customer_slide .owl-nav button.owl-prev,
+	.customer_love .customer_slide .owl-nav button.owl-next {
+		background-size: 18px
+	}
+
+	.insta_section .ig_inner {
+		grid-template-columns: 228px 1fr;
+		gap: 32px
+	}
+
+	.insta_section .heading h3 {
+		font: normal normal 400 30px / 120% var(--font-heading);
+		margin-top: 28px
+	}
+
+	.insta_section .owl-nav-custom {
+		gap: 12px;
+		margin-top: 36px
+	}
+
+	.insta_section .owl-nav-custom button {
+		width: 36px;
+		height: 36px;
+		padding: 10px
+	}
+
+	.insta_section .heading .btn_ig {
+		font: normal normal 600 12px / 150% var(--font-primary);
+		padding: 6px 14px;
+		gap: 6px
+	}
+
+	.insta_section .heading .btn_ig img {
+		height: 24px
+	}
+
+	.insta_section .item_card {
+		height: 415px
+	}
+
+	.insta_section .item_card video {
+		border-radius: 12px
+	}
+
+	.faq_section .accordion-item {
+		padding: 12px
+	}
+
+	.faq_section .accordion-button {
+		font: normal normal 500 16px / 133.333% var(--font-primary);
+		border-radius: 8px
+	}
+
+	.faq_section .accordion-body {
+		padding: 8px 0 0
+	}
+
+	.faq_section .accordion {
+		gap: 12px;
+		padding: 0 52px
+	}
+
+	.tour_agency .agency_content p {
+		margin-bottom: 12px
+	}
+
+	.tour_agency .agency_content .read-more {
+		font: normal normal 600 12px / 133.333% var(--font-primary);
+		gap: 4px
+	}
+
+	.tour_agency .agency_content .read-more img {
+		width: 14px
+	}
+
+	.tour_agency .agency_tabs {
+		margin-top: 26px;
+		gap: 24px
+	}
+
+	.tour_agency .agency_tabs .nav-pills {
+		gap: 6px;
+		min-width: 250px;
+		max-width: 250px;
+		max-height: 272px
+	}
+
+	.tour_agency .agency_tabs .nav-pills .nav-link,
+	.vertical_tabs_section .srpcountry_tab h3,
+	.vertical_tabs_section .srpcountry_tab h4 {
+		font: normal normal 400 15px / 144.444% var(--font-primary);
+		padding: 3px 3px 3px 12px
+	}
+
+	.tour_agency .agency_tabs .brdr_line {
+		height: 272px
+	}
+
+	.tour_agency .tags_btns .btn,
+	.vertical_tabs_section .tabs_content a {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		padding: 8px 12px
+	}
+
+	#holidaysLPExploreHolidaysByTheme p.text {
+		min-width: 290px;
+		transition: .3s all;
+		transition-delay: .3s
+	}
+}
+
+@media screen and (min-width:1024px) {
+	.partner-title {
+		font: normal normal 600 24px / 120% var(--font-primary);
+		margin-left: 120px;
+		padding-bottom: 20px
+	}
+	.owl-dots .owl-dot:nth-child(n+3) {
+		display: none
+	}
+
+	.tc_specials .top_section .owl-dots .owl-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 100px;
+		background: var(--Gray-Mode-200);
+		transition: .5s all ease-in-out;
+		border: 0
+	}
+	.hero_section .bnr_text {
+		margin-top: 117px
+	}
+
+	.hero_section .search_container {
+		margin-top: 22px
+	}
+
+	.insta_section .heading .btn_ig span {
+		border-radius: 64px;
+		padding: 10px 18px;
+		background-color: var(--color-white);
+		display: flex;
+		align-items: center;
+		gap: 12px
+	}
+}
+
+@media only screen and (max-width:767px) {
+	.wildlife_slideData .carousel-caption-overlay {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: 0;
+		color: white;
+		padding: 16px;
+		box-sizing: border-box;
+		border-bottom-left-radius: 12px;
+		border-bottom-right-radius: 12px
+	}
+
+	.tc_specials .top_section .owl-dots .owl-dot.active {
+		width: 10px;
+		margin-left: 2px;
+		background: var(--color-secondary)
+	}
+
+	#holidaysLPExploreHolidaysByTheme .owl-carousel {
+		display: block;
+		gap: 24px
+	}
+
+	.bnr_text.lpTopTextBanner {
+		position: absolute;
+		top: 45px
+	}
+
+	#holidaysLPExploreHolidaysByTheme .item {
+		width: 100%;
+		margin-bottom: 15px
+	}
+
+	#holidaysLPExploreHolidaysByTheme .item:not(.active) .carousel-caption-overlay h3 {
+		position: absolute;
+		left: 0;
+		bottom: 312px;
+		padding: 16px;
+		transform: rotate(0) !important;
+		width: 100%;
+		font: normal normal 600 20px / 140% var(--font-primary);
+		letter-spacing: .02px
+	}
+
+	#holidaysLPTourismBoardPartners .carousel-image-wrapper {
+		height: 400px;
+		width: 100%;
+		overflow: hidden;
+		position: relative
+	}
+
+	#holidaysLPTourismBoardPartners .carousel-image-wrapper img {
+		border-radius: 19px;
+		height: 100%;
+		width: 100%;
+		object-position: center;
+		display: block;
+		padding: 0 10px 0 10px
+	}
+
+	.trending_section .carousel-card {
+		width: 100%;
+		height: 240px
+	}
+
+	.partner-title {
+		font: normal normal 700 16px / 144.444% var(--font-primary);
+		letter-spacing: .027px;
+		padding: 0 0 10px 18px
+	}
+
+	.trending_section .carousel-card {
+		height: auto;
+		border: 0
+	}
+
+	.trending_section .carousel-card::before,
+	.trending_section .carousel-card::after {
+		display: none
+	}
+
+	.trending_section.rn__section__gapTop .carousel-card .carousel-caption-overlay {
+		transform: translateY(0);
+		border-radius: 0 0 100px 100px
+	}
+
+	.trending_section .owl-item.center .carousel-card {
+		transform: scale(1.15)
+	}
+
+	.trending_section .carousel-card,
+	.trending_section .carousel-card:hover {
+		padding-top: 0
+	}
+
+	.trending_section .owl-item:not(.center) .carousel-card {
+		opacity: .54
+	}
+
+	.holidaysLPThomasCookSpecialsSlider img {
+		object-fit: cover
+	}
+
+	.holidaysLPThomasCookSpecialsSlider .carousel-caption-overlay {
+		top: 0
+	}
+
+	.holidaysLPThomasCookSpecialsSlider .carousel-caption-overlay h3 {
+		font-size: 16px
+	}
+
+	.holidaysLPThomasCookSpecialsSlider p.package-id {
+		position: relative;
+		color: var(--color-black);
+		padding: 8px 14px;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		border-radius: 100px;
+		background: var(--color-white);
+		width: fit-content;
+		margin-top: 16px;
+		transition: .5s all ease-out;
+		min-width: 111px
+	}
+
+	.holidaysLPThomasCookSpecialsSlider p.package-id:after {
+		content: "";
+		display: flex;
+		background: url(/images/tcHolidays/arrow-up-right.svg) 5px 8px no-repeat var(--color-white);
+		width: 25px;
+		height: 20px;
+		position: absolute;
+		right: 13px;
+		top: 0;
+		border-radius: 100px;
+		padding: 10px;
+		justify-content: center;
+		align-items: center
+	}
+
+	#holidaysLPExploreHolidaysByTheme img {
+		height: 100%
+	}
+
+	.holiday_theme .carousel-image-link {
+		height: 100%;
+		display: flex
+	}
+
+	.holiday_theme .carousel-card,
+	.holiday_theme .carousel-card>a,
+	.holiday_theme .carousel-image-wrapper {
+		width: 100%;
+		height: 100%
+	}
+
+	.holiday_theme .item:not(.active) .carousel-caption-overlay h3 {
+		position: static !important;
+		padding: 0 !important
+	}
+
+	.holiday_theme .item:not(.active) .carousel-caption-overlay p {
+		display: none
+	}
+
+	.trending_section .inner__gapTop .tab-content {
+		margin-top: 0
+	}
+
+	.spiritual_package .comn_filterTab .btn {
+		flex: 1
+	}
+
+	.selling_packages .owl-carousel .carousel-image-wrapper,
+	.selling_packages .owl-carousel .carousel-image-wrapper img {
+		min-height: 184px;
+		object-fit: cover
+	}
+	#tabLPJyotirlinga .owl-carousel .owl-dots.disabled,
+	#tabLPJyotirlinga.owl-carousel .owl-nav.disabled {
+		display: none !important
+    }
+
+	.hero_section {
+		height: 240px;
+		margin: 0
+	}
+
+	.hero_section .hero_wrapper {
+		clip-path: inset(0 round 0)
+	}
+
+	.hero_section .hero_wrapper.with_overlay::before,
+	.hero_section .bnr_video video {
+		border-radius: 0
+	}
+
+	.hero_section .bnr_video video {
+		height: 240px
+	}
+
+	.hero_section:has(.bnr_img) .bnr_text {
+		padding: 32px 48px
+	}
+
+	.hero_section:has(.bnr_img) {
+		margin-top: 0;
+		height: 178px
+	}
+
+	.hero_section:has(.bnr_img) .bnr_text h1 {
+		font: normal normal 400 20px / 100% var(--font-heading)
+	}
+
+	.hero_section .bnr_text h4 {
+		margin: 8px 0 20px
+	}
+
+	.hero_section .bnr_text h4 {
+		font: normal normal 300 12px / 150% var(--font-primary);
+		letter-spacing: .12px
+	}
+
+	.hero_section .voice_assistance {
+		position: absolute;
+		right: 4px
+	}
+
+	.hero_section .voice_assistance .btn {
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		background: #e7edf6;
+		backdrop-filter: blur(3px)
+	}
+
+	.hero_section .voice_assistance .btn img {
+		width: 18px;
+		height: auto
+	}
+
+	.hero_section .search_container {
+		gap: 0;
+		width: 270px;
+		margin: auto;
+		margin-top: 55px
+	}
+
+	.hero_section .search_box {
+		width: 100%
+	}
+
+	.hero_section .search_box .btn_search {
+		right: 4px;
+		width: 36px;
+		height: 36px;
+		display: none
+	}
+
+	.hero_section .search_box .search_icon {
+		position: absolute;
+		left: 16px;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		display: flex;
+		align-items: center
+	}
+
+	.hero_section .search_box .search_icon img {
+		width: 18px;
+		height: auto
+	}
+
+	.hero_section .search_box .form-control {
+		font: normal normal 300 14px/142.857% var(--font-primary);
+		letter-spacing: .035px;
+		padding: 12px 16px;
+		padding-left: 42px
+	}
+
+	.hero_section .search_box .btn_cross {
+		right: 40px
+	}
+
+	.hero_section .search_popup {
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100vh;
+		margin-top: 0;
+		padding: 8px 16px;
+		border-radius: 0;
+		z-index: 9999;
+		overflow-x: hidden;
+		overflow-y: auto;
+		transform: translateX(500px)
+	}
+
+	.hero_section .search_popup.show {
+		transform: translateX(0)
+	}
+
+	.hero_section .search_popup:has([data-type="domestic"]),
+	.hero_section .search_popup:has([data-type="international"]) {
+		height: 100vh
+	}
+
+	.hero_section .search_popup .search_card {
+		height: auto;
+		overflow: unset
+	}
+
+	.hero_section .search_popup .search_card .for_mobile {
+		position: sticky;
+		top: 0;
+		background-color: #fff
+	}
+
+	.hero_section .search_item .recent_searches {
+		gap: 16px
+	}
+
+	.hero_section .search_popup .top span,
+	.hero_section .search_popup .no-results {
+		letter-spacing: .06px;
+		font: normal normal 500 12px / 133.333% var(--font-primary)
+	}
+
+	.hero_section .search_item .recent_searches li {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		padding: 6px 12px;
+		gap: 8px;
+		letter-spacing: .12px
+	}
+
+	.hero_section .search_box .top_item,
+	.hero_section .search_box .result_box {
+		height: auto
+	}
+
+	.hero_section .search_item .thd_section .row {
+		--bs-gutter-x: 12px;
+		--bs-gutter-y: 12px
+	}
+
+	.hero_section .search_item .thd_section .card_box {
+		border-radius: 12px;
+		gap: 6px
+	}
+
+	.hero_section .search_item .thd_section .img_box {
+		width: 40px;
+		min-width: 40px;
+		height: 40px
+	}
+
+	.hero_section .search_item .thd_section .text_box span {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		letter-spacing: .06px;
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden
+	}
+
+	.hero_section .search_item .thd_section .text_box a {
+		font: normal normal 500 10px / 133.333% var(--font-primary);
+		letter-spacing: .05px
+	}
+
+	.hero_section .search_result ul li a {
+		padding: 0 6px 0 0
+	}
+
+	.hero_section .search_card .search_form {
+		border-bottom: 0;
+		padding-bottom: 0;
+		margin: 12px 0 24px
+	}
+
+	.hero_section .search_form {
+		position: relative;
+		margin: 16px 0 24px
+	}
+
+	.hero_section .search_popup .search_form .form-control {
+		font: normal normal 400 16px / 24px var(--font-primary);
+		letter-spacing: .024px;
+		padding: 6px 14px;
+		border: 2px solid var(--Gray-Mode-100);
+		background: var(--color-white);
+		border-radius: 100px
+	}
+
+	.hero_section .search_popup .btn_cross {
+		right: 60px
+	}
+
+	.hero_section .search_popup .search_form .btn_cross {
+		right: 40px;
+		bottom: 0
+	}
+
+	.hero_section .search_popup .btn_search {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 4px;
+		margin: auto;
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--color-primary);
+		border-radius: 100px;
+		backdrop-filter: blur(3px)
+	}
+
+	.hero_section .search_box .btn_search img,
+	.hero_section .search_box .btn_cross img,
+	.hero_section .search_popup .btn_cross img {
+		width: 18px;
+		height: auto
+	}
+
+	.hero_section .nav_heading {
+		display: flex;
+		align-items: center;
+		gap: 34px
+	}
+
+	.hero_section .nav_heading .btn {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0
+	}
+
+	.hero_section .nav_heading .btn img {
+		width: 24px;
+		height: auto
+	}
+
+	.hero_section .nav_heading span {
+		font: normal normal 600 14px / 142.857% var(--font-primary);
+		letter-spacing: .035px;
+		color: var(--color-black);
+		display: block
+	}
+
+	.recents_searches {
+		overflow: hidden
+	}
+
+	.recents_searches .owl-nav {
+		display: none
+	}
+
+	.recents_searches .owl-stage-outer {
+		overflow: unset
+	}
+
+	.recents_searches .item_card {
+		padding: 2px;
+		border-radius: 12px
+	}
+
+	.recents_searches .item_card .top_box {
+		padding: 12px;
+		border-radius: 10px;
+		box-shadow: 0 1.659px 3.318px -0.829px rgba(0, 0, 0, 0.06)
+	}
+
+	.recents_searches .item_card .top_box h6 {
+		margin: 8px 0 6px;
+		line-height: 142.857%;
+		font-weight: 700
+	}
+
+	.recents_searches .item_card .tp_lft .days {
+		font: normal normal 600 10px / 140% var(--font-primary);
+		letter-spacing: .05px;
+		padding: 2px 4px
+	}
+
+	.recents_searches .item_card .tp_lft .top_blck span {
+		font: normal normal 600 10px / 140% var(--font-primary);
+		letter-spacing: .05px
+	}
+
+	.recents_searches .item_card .top_box .btm_blck {
+		gap: 4px
+	}
+
+	.recents_searches .item_card .top_box .btm_blck span {
+		font: normal normal 500 10px / 140% var(--font-primary);
+		letter-spacing: .05px
+	}
+
+	.recents_searches .item_card .bottom_box {
+		padding: 6px 14px 8px
+	}
+
+	.recents_searches .item_card .bottom_box h6 {
+		font-weight: 600;
+		line-height: 150%;
+		letter-spacing: .024px
+	}
+
+	.recents_searches .item_card .bottom_box h5 span,
+	.recents_searches .item_card .top_box .btm_blck .btn {
+		font: normal normal 400 10px / 140% var(--font-primary);
+		letter-spacing: .05px
+	}
+
+	.recents_searches .item_card .bottom_box .btn_withIcon {
+		font: normal normal 500 10px / 140% var(--font-primary);
+		letter-spacing: .05px;
+		padding: 7px 12px;
+		gap: 4px
+	}
+
+	.recents_searches .item_card .bottom_box .btn_withIcon img {
+		width: 14px !important;
+		height: auto
+	}
+
+	.trending_section {
+		overflow: hidden
+	}
+
+	.trending_section .destinations_slide {
+		padding: 14px 0
+	}
+
+	.trending_section .nav {
+		width: 100%;
+		gap: 0
+	}
+
+	.trending_section .nav .nav-item {
+		width: 50%
+	}
+
+	.trending_section .nav-pills .nav-link {
+		font: normal normal 500 12px / 133.333% var(--font-primary);
+		letter-spacing: .06px;
+		width: 100%
+	}
+
+	.trending_section .owl-carousel .owl-stage-outer {
+		overflow: unset
+	}
+
+	.trending_section .owl-item .card_animation,
+	.trending_section .owl-item .card_india {
+		transition: .5s all ease
+	}
+
+	.trending_section .owl-item.center .card_animation,
+	.trending_section .owl-item.center .card_india {
+		transform: scale(1.15)
+	}
+
+	.trending_section .card_animation,
+	.trending_section .card_india {
+		height: 214px;
+		opacity: .54;
+		transition: .5s all ease
+	}
+
+	.trending_section .owl-item.center .card_animation,
+	.trending_section .owl-item.center .card_india {
+		opacity: 1
+	}
+
+	.trending_section .card_animation.australia {
+		padding-top: 24px
+	}
+
+	.trending_section .card_animation.australia .text img,
+	.trending_section .card_animation.australia:hover .text img {
+		width: 70px
+	}
+
+	.trending_section .card_animation.australia .bg_img,
+	.trending_section .card_animation.australia:hover .bg_img {
+		width: 170px
+	}
+
+	.trending_section .card_animation.europe {
+		padding-top: 27px
+	}
+
+	.trending_section .card_animation.europe .text img,
+	.trending_section .card_animation.europe:hover .text img {
+		width: 50px
+	}
+
+	.trending_section .card_animation.europe:hover .bg_img,
+	.trending_section .card_animation.europe .bg_img {
+		width: 145px
+	}
+
+	.trending_section .card_animation.europe::before,
+	.trending_section .card_animation.europe:hover::before {
+		left: -9px;
+		bottom: -59px;
+		background-size: 112px
+	}
+
+	.trending_section .card_animation.europe::after,
+	.trending_section .card_animation.europe:hover::after {
+		right: -33px;
+		bottom: -41px;
+		background-size: 51.438px
+	}
+
+	.trending_section .card_animation.mauritius {
+		padding-top: 26px
+	}
+
+	.trending_section .card_animation.mauritius .text img,
+	.trending_section .card_animation.mauritius:hover .text img {
+		width: 71px
+	}
+
+	.trending_section .card_animation.mauritius .bg_img,
+	.trending_section .card_animation.mauritius:hover .bg_img {
+		width: 138px
+	}
+
+	.trending_section .card_animation.mauritius::before,
+	.trending_section .card_animation.mauritius:hover::before {
+		bottom: 0;
+		width: 70px;
+		background-size: 70px
+	}
+
+	.trending_section .card_animation.singapore {
+		padding-top: 23px
+	}
+
+	.trending_section .card_animation.singapore .text img,
+	.trending_section .card_animation.singapore:hover .text img {
+		width: 75px
+	}
+
+	.trending_section .card_animation.singapore .bg_img,
+	.trending_section .card_animation.singapore:hover .bg_img {
+		width: 72px
+	}
+
+	.trending_section .card_animation.singapore::before,
+	.trending_section .card_animation.singapore:hover::before {
+		width: 145px;
+		height: 90px
+	}
+
+	.trending_section .card_animation.south-africa {
+		padding-top: 20px
+	}
+
+	.trending_section .card_animation.south-africa .text img,
+	.trending_section .card_animation.south-africa:hover .text img {
+		width: 64px
+	}
+
+	.trending_section .card_animation.south-africa .bg_img,
+	.trending_section .card_animation.south-africa:hover .bg_img {
+		width: 140px;
+		left: 0
+	}
+
+	.trending_section .card_animation.south-africa::before,
+	.trending_section .card_animation.south-africa:hover::before {
+		bottom: -10px;
+		right: -28px;
+		background-size: 86px
+	}
+
+	.trending_section .card_animation.vietnam {
+		padding-top: 21px
+	}
+
+	.trending_section .card_animation.vietnam .text img,
+	.trending_section .card_animation.vietnam:hover .text img {
+		width: 80px
+	}
+
+	.trending_section .card_animation.vietnam .bg_img,
+	.trending_section .card_animation.vietnam:hover .bg_img {
+		width: 160px
+	}
+
+	.trending_section .card_animation .package,
+	.trending_section .card_india .package {
+		padding: 24px 12px 12px 12px;
+		transform: translateY(0)
+	}
+
+	.trending_section .card_animation .package h6,
+	.trending_section .card_india .package h6 {
+		font: normal normal 600 14px / 142.857% var(--font-primary);
+		letter-spacing: .035px;
+		margin: 0 0 8px
+	}
+
+	.trending_section .card_animation .package p,
+	.trending_section .card_india .package p {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		margin-bottom: 2px;
+		letter-spacing: .06px
+	}
+
+	.trending_section .card_animation .package .btn,
+	.trending_section .card_india .package .btn {
+		padding: 8px;
+		gap: 0;
+		justify-content: center
+	}
+
+	.trending_section .card_animation .package .btn img,
+	.trending_section .card_india .package .btn img {
+		height: 11px
+	}
+
+	.trending_section .card_india.kerala {
+		padding-top: 17px
+	}
+
+	.trending_section .card_india.kerala .text img,
+	.trending_section .card_india.kerala:hover .text img {
+		width: 45px
+	}
+
+	.trending_section .card_india.kerala .bg_img,
+	.trending_section .card_india.kerala:hover .bg_img {
+		width: 165px
+	}
+
+	.trending_section .card_india.bhutan {
+		padding-top: 21px
+	}
+
+	.trending_section .card_india.bhutan .text img,
+	.trending_section .card_india.bhutan:hover .text img {
+		width: 64px
+	}
+
+	.trending_section .card_india.bhutan .bg_img,
+	.trending_section .card_india.bhutan:hover .bg_img {
+		width: 160px
+	}
+
+	.trending_section .card_india.sri-lanka,
+	.trending_section .card_india.sri-lanka:hover {
+		padding-top: 21px
+	}
+
+	.trending_section .card_india.sri-lanka .text img,
+	.trending_section .card_india.sri-lanka:hover .text img {
+		width: 69px
+	}
+
+	.trending_section .card_india.sri-lanka .bg_img,
+	.trending_section .card_india.sri-lanka:hover .bg_img {
+		width: 162px
+	}
+
+	.trending_section .card_india.uttrakhand,
+	.trending_section .card_india.uttrakhand:hover {
+		padding-top: 27px
+	}
+
+	.trending_section .card_india.uttrakhand .text img,
+	.trending_section .card_india.uttrakhand:hover .text img {
+		width: 60px
+	}
+
+	.trending_section .card_india.uttrakhand .bg_img,
+	.trending_section .card_india.uttrakhand:hover .bg_img {
+		width: 164px
+	}
+
+	.trending_section .card_india.kashmir,
+	.trending_section .card_india.kashmir:hover {
+		padding-top: 23px
+	}
+
+	.trending_section .card_india.kashmir .text img,
+	.trending_section .card_india.kashmir:hover .text img {
+		width: 62px
+	}
+
+	.trending_section .card_india.kashmir .bg_img,
+	.trending_section .card_india.kashmir:hover .bg_img {
+		width: 170px
+	}
+
+	.trending_section .card_india.north-east,
+	.trending_section .card_india.north-east:hover {
+		padding-top: 27px
+	}
+
+	.trending_section .card_india.north-east .text img,
+	.trending_section .card_india.north-east:hover .text img {
+		width: 71px
+	}
+
+	.trending_section .card_india.north-east .bg_img,
+	.trending_section .card_india.north-east:hover .bg_img {
+		width: 160px
+	}
+
+	.tc_specials .inner__gapTop {
+		gap: 16px
+	}
+
+	.tc_specials .top_section {
+		display: flex;
+		flex-direction: column;
+		gap: 16px
+	}
+
+	.tc_specials .top_section .char_dham,
+	.tc_specials .top_section .adventure {
+		padding: 18px;
+		border-radius: 14px;
+		min-height: 200px
+	}
+
+	.tc_specials .top_section .char_dham:hover {
+		transform: translateY(0)
+	}
+
+	.tc_specials .top_section .adventure::before {
+		background-image: url(../img/adventure-bg-mobile.png);
+		background-size: 100%
+	}
+
+	.tc_specials .top_section .char_dham::before {
+		width: 300px;
+		height: 200px
+	}
+
+	.tc_specials .top_section .owl-dots {
+		position: absolute;
+		bottom: 18px;
+		left: 18px;
+		display: flex;
+		justify-content: center;
+		gap: 4px
+	}
+
+	.tc_specials .top_section .owl-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 100px;
+		background-color: var(--Gray-Mode-200);
+		transition: width .4s ease
+	}
+
+	.tc_specials .top_section .owl-dot.active {
+		width: 20px;
+		background-color: var(--color-secondary)
+	}
+
+	.tc_specials .top_section .item_slide .img_box {
+		border-radius: 14px
+	}
+
+	.tc_specials .wildlife_slide .festival_blck {
+		border-radius: 0
+	}
+
+	.tc_specials .festival_blck:hover {
+		transform: translateY(0)
+	}
+
+	.tc_specials .owl-carousel .owl-item img,
+	.tc_specials .top_section .item_slide .img_box img,
+	.tc_specials .festival_blck .bg_img {
+		height: 200px
+	}
+
+	.tc_specials .top_section .item_slide .content_blk,
+	.tc_specials .festival_blck .text_box {
+		padding: 18px
+	}
+
+	.tc_specials .top_section h4,
+	.tc_specials .festival_blck h4 {
+		font: normal normal 600 14px / 142.857% var(--font-primary);
+		letter-spacing: .035px
+	}
+
+	.tc_specials .top_section h6,
+	.tc_specials .festival_blck h6 {
+		font: normal normal 400 10px / 140% var(--font-primary);
+		letter-spacing: .05px;
+		margin: 2px 0 6px
+	}
+
+	.tc_specials .festival_blck .text_box span,
+	.tc_specials .top_section .item_slide .content_blk .price,
+	.tc_specials .bottom_section .card_box span {
+		font: normal normal 500 10px / 140% var(--font-primary);
+		letter-spacing: .5px
+	}
+
+	.tc_specials .top_section .btn,
+	.tc_specials .festival_blck .btn {
+		font: normal normal 500 10px / 140% var(--font-primary);
+		letter-spacing: .05px;
+		padding: 7px 12px;
+		margin-top: 14px
+	}
+
+	.tc_specials .top_section .btn img,
+	.tc_specials .festival_blck .btn img {
+		width: 14px
+	}
+
+	.tc_specials .top_section .btn img {
+		width: auto;
+		height: 14px
+	}
+
+	.tc_specials .bottom_section {
+		grid-template-columns: 1fr 1fr;
+		gap: 16px
+	}
+
+	.tc_specials .bottom_section>:first-child {
+		grid-column: span 2
+	}
+
+	.tc_specials .bottom_section .card_box {
+		border-radius: 14px
+	}
+
+	.tc_specials .bottom_section .card_box .text_box {
+		padding: 12px
+	}
+
+	.tc_specials .bottom_section .card_box h5 {
+		font: normal normal 700 14px / 142.857% var(--font-primary)
+	}
+
+	.tc_specials .bottom_section .card_box h6 {
+		font: normal normal 600 12px / 144.444% var(--font-primary)
+	}
+
+	.tc_specials .bottom_section .card_box h6 br {
+		display: none
+	}
+
+	.tc_specials .bottom_section .card_box span {
+		font: normal normal 500 10px / 140.857% var(--font-primary);
+		letter-spacing: .1px
+	}
+
+	.tc_specials .bottom_section .card_box span br {
+		display: none
+	}
+
+	.tc_specials .bottom_section .btn_withIcon {
+		margin-top: 8px;
+		padding: 6px 8px
+	}
+
+	.tc_specials .bottom_section .card_box .btn_withIcon span {
+		font: normal normal 700 12px / 133.857% var(--font-primary)
+	}
+
+	.tc_specials .bottom_section .card_box:hover .btn_withIcon {
+		padding: 6px 12px
+	}
+
+	.tc_specials .bottom_section .video_container {
+		height: 226px
+	}
+
+	.tc_specials .bottom_section .video_container,
+	.tc_specials .bottom_section video {
+		border-radius: 14px
+	}
+
+	.tc_specials .bottom_section .fullscreen {
+		width: 18px;
+		height: 18px;
+		top: 8px;
+		right: 8px
+	}
+
+	.tc_specials .bottom_section .fullscreen img {
+		width: 8px
+	}
+
+	.tc_specials .bottom_section .video_container .controls,
+	.tc_specials .bottom_section .video_container .bottom-controls,
+	.tc_specials .bottom_section .video_container .fullscreen {
+		opacity: 1;
+		visibility: visible
+	}
+
+	.tc_specials .bottom_section .controls {
+		width: 34px;
+		height: 34px
+	}
+
+	.tc_specials .bottom_section .controls img {
+		width: 16px
+	}
+
+	.tc_specials .bottom_section .bottom-controls {
+		bottom: 8px;
+		left: 8px;
+		gap: 7px
+	}
+
+	.tc_specials .bottom_section .bottom-controls .volume {
+		width: 18px;
+		height: 18px
+	}
+
+	.tc_specials .bottom_section .bottom-controls .volume img {
+		width: 10px
+	}
+
+	.tc_specials .bottom_section .bottom-controls .time {
+		font: normal normal 500 8px/125.333% var(--font-primary);
+		padding: 4px 7px;
+		letter-spacing: .065px
+	}
+
+	.selling_packages {
+		overflow: hidden
+	}
+
+	.selling_packages .owl-stage-outer {
+		overflow: unset
+	}
+
+	.selling_packages .item_card .img_block img {
+		height: 184px;
+		border-radius: 12px
+	}
+
+	.selling_packages .item_card .content_blk h5 {
+		font: normal normal 600 16px / 100% var(--font-primary);
+		letter-spacing: .024px
+	}
+
+	.selling_packages .item_card .content_blk .lft_blk,
+	.selling_packages .item_card .content_blk .rating {
+		gap: 3px
+	}
+
+	.selling_packages .item_card .content_blk span {
+		font: normal normal 400 12px / 121.394% var(--font-primary);
+		letter-spacing: .12px
+	}
+
+	.selling_packages .item_card .content_blk .btn_withIcon {
+		padding: 6px 10px
+	}
+
+	.travel_consultation {
+		margin: 0;
+		background-image: url(/images/tcHolidays/holidaysLP/TravelConsultation/cta-form-bg-mobile.png);
+		padding: 32px 0;
+		clip-path: unset;
+		overflow: unset
+	}
+
+	.travel_consultation::before {
+		border-radius: 0
+	}
+
+	.travel_consultation .row {
+		row-gap: 24px
+	}
+
+	.travel_consultation .card_box .left_block h2 {
+		font: normal normal 600 24px / 133% var(--font-heading);
+		text-align: center
+	}
+
+	.travel_consultation .card_box .left_block h2 br {
+		display: none
+	}
+
+	.travel_consultation .card_box .left_block h6 {
+		margin-top: 8px;
+		font: normal normal 400 10px / 160% var(--font-primary);
+		letter-spacing: .1px;
+		text-align: center
+	}
+
+	.travel_consultation .card_box .card_form {
+		width: 100%;
+		padding: 20px 16px;
+		border-radius: 16px
+	}
+
+	.travel_consultation .card_box .card_form .row {
+		row-gap: 20px
+	}
+
+	.travel_consultation .card_box .card_form .btn {
+		font: normal normal 400 16px/24px var(--font-primary);
+		letter-spacing: .024px;
+		margin-top: 0;
+		padding: 10px 18px
+	}
+
+	.travel_consultation .card_box .card_form .btn img {
+		width: 20px
+	}
+
+	.holiday_theme .image_grid {
+		flex-direction: column;
+		gap: 16px
+	}
+
+	.holiday_theme .image_grid .card_block {
+		width: 100%;
+		height: auto;
+		border-radius: 14px
+	}
+
+	.holiday_theme .image_grid .card_block .text_block {
+		min-width: 100%;
+		min-height: 438px
+	}
+
+	.holiday_theme .image_grid .card_block .text_block .btm_blk {
+		padding: 16px;
+		min-width: 100%
+	}
+
+	.holiday_theme .image_grid .card_block .without_hover {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		padding: 16px;
+		transform: unset;
+		width: 100%
+	}
+
+	.holiday_theme .image_grid .card_block .without_hover h3 {
+		font: normal normal 600 20px / 140% var(--font-primary);
+		letter-spacing: .02px
+	}
+
+	.holiday_theme .image_grid .card_block.active .without_hover h3 {
+		transform: translateY(300px)
+	}
+
+	.holiday_theme .image_grid .card_block .text_block h3 {
+		font: normal normal 600 24px / 133.333% var(--font-primary)
+	}
+
+	.holiday_theme .image_grid .card_block .btm_blk span {
+		font: normal normal 400 12px / 133.33% var(--font-primary);
+		letter-spacing: .06px;
+		margin-top: 6px
+	}
+
+	.holiday_theme .image_grid .card_block .left span {
+		font: normal normal 500 10px / 140.333% var(--font-primary);
+		letter-spacing: .1px;
+		padding: 5px 10px
+	}
+
+	.holiday_theme .image_grid .card_block .right .btn_withIcon {
+		width: 40px;
+		height: 40px;
+		padding: 10px
+	}
+
+	.offers_section .main_heading {
+		gap: 10px
+	}
+
+	.offers_section .item_card {
+		border-radius: 14px;
+		padding: 4px 4px 0
+	}
+
+	.offers_section .item_card .img_block .coupon {
+		padding: 4px 8px;
+		right: 8px;
+		bottom: 8px
+	}
+
+	.offers_section .item_card .img_block .coupon img {
+		width: 14px;
+		height: 14px
+	}
+
+	.offers_section .item_card .text_box .top_blk .lft {
+		gap: 6px
+	}
+
+	.offers_section .item_card .text_box .top_blk .lft .brdr {
+		height: 8px
+	}
+
+	.offers_section .item_card .text_box {
+		padding: 12px;
+		gap: 6px
+	}
+
+	.offers_section .item_card .text_box span {
+		font: normal normal 600 10px / 140.333% var(--font-primary)
+	}
+
+	.offers_section .item_card .text_box p {
+		min-height: 32px
+	}
+
+	.international_package {
+		overflow: hidden
+	}
+
+	.international_package .main_heading {
+		gap: 10px
+	}
+
+	.international_package .filters_tab,
+	.comn_filterTab {
+		width: 100%;
+		gap: 0;
+		padding-bottom: 4px;
+		justify-content: space-between
+	}
+
+	.international_package .filters_tab {
+		width: max-content
+	}
+
+	.international_package .filters_tab .btn {
+		font: normal normal 500 16px / 150% var(--font-primary);
+		letter-spacing: .024px;
+		padding: 0 8px;
+		height: 40px
+	}
+
+	.international_package .owl-stage-outer {
+		overflow: unset
+	}
+
+	.international_package .item_card img,
+	.international_package .item_card::before {
+		border-radius: 14px
+	}
+
+	.international_package .item_card .text_box h5 {
+		font: normal normal 600 16px / 150% var(--font-primary);
+		letter-spacing: .024px
+	}
+
+	.international_package .item_card .text_box span {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		letter-spacing: .06px;
+		margin-top: 3px
+	}
+
+	.comn_package {
+		overflow: hidden
+	}
+
+	.comn_package .main_heading {
+		gap: 10px
+	}
+
+	.comn_package .comn_filterTab {
+		width: 100%
+	}
+
+	.comn_package .owl-stage-outer {
+		overflow: unset
+	}
+
+	.comn_package .item_card,
+	.comn_package .item_card img {
+		border-radius: 12px
+	}
+
+	.comn_package .item_card .text_box>div {
+		padding: 14px
+	}
+
+	.comn_package .item_card .text_box h5 {
+		font: normal normal 600 16px / 150% var(--font-primary);
+		letter-spacing: .024px
+	}
+
+	.comn_package .item_card .text_box span {
+		font: normal normal 400 12px / 133.333% var(--font-primary)
+	}
+
+	.comn_package .item_card .text_box .btn_withIcon {
+		width: 40px;
+		height: 40px;
+		padding: 0
+	}
+
+	.spiritual_package {
+		overflow: hidden
+	}
+
+	.spiritual_package::before {
+		left: -102px;
+		bottom: -55px;
+		width: 350px;
+		height: 310px
+	}
+
+	.spiritual_package::after {
+		right: -64px;
+		top: -48px;
+		width: 148px;
+		height: 175px
+	}
+
+	.honeymoon_package {
+		min-height: 262px;
+		padding-bottom: 60px;
+		clip-path: inset(0 round 0)
+	}
+
+	.honeymoon_package h2 {
+		font: normal normal 500 18px var(--font-heading);
+		margin-bottom: 16px
+	}
+
+	.why_thomascook .card_bg {
+		min-height: 408px;
+		padding: 16px;
+		border-radius: 14px;
+		position: relative;
+		z-index: 0
+	}
+
+	.why_thomascook .card_bg::before {
+		position: absolute;
+		left: 0;
+		top: 0;
+		content: "";
+		width: 100%;
+		height: 100%;
+		border-radius: 14px;
+		background: linear-gradient(0, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.2) 100%);
+		z-index: -1
+	}
+
+	.why_thomascook .card_bg .card_grids {
+		display: block;
+		position: unset
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box {
+		border-radius: 14px;
+		width: 100%
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box:hover {
+		transform: translateY(0)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_01 {
+		background: #fff6ed;
+		height: 252px
+	}
+
+	.why_thomascook .card_bg .card_grids .owl-item .card_box::before {
+		background-size: 100%
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_01::before {
+		background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-img-01-mob.png)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_02 {
+		background: linear-gradient(225deg, #fd853a 0, #ec4a0a 100%);
+		backdrop-filter: blur(39px);
+		height: 240px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_02::before {
+		background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-img-02-mob.png)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_03 {
+		background: linear-gradient(225deg, #2e90fa 0, #175cd3 100%);
+		height: 170px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_03 p {
+		color: var(--color-white)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_04 {
+		background: #eff8ff;
+		height: 240px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_04::before {
+		background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-img-04-mob.png)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_04 h5 {
+		color: var(--color-primary)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_04 p {
+		color: var(--Blue-blue-10)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_05 {
+		background: #fffcd9;
+		height: 252px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_05::before {
+		background-image: url(/images/tcHolidays/holidaysLP/WhyThomasCook/tc-bg-img-05-mob.png)
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_05 h4 {
+		color: #e3b100
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_05 p {
+		color: #af8b0c
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box h5 br,
+	.why_thomascook .card_bg .card_grids .card_box p br {
+		display: none
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box h4,
+	.why_thomascook .card_bg .card_grids .card_box h5 {
+		font: normal normal 600 20px/140% var(--font-primary);
+		letter-spacing: .02px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box p {
+		font: normal normal 300 16px / 150% var(--font-primary);
+		letter-spacing: .024px
+	}
+
+	.why_thomascook .card_bg .card_grids .card_box.card_01 p,
+	.why_thomascook .card_bg .card_grids .card_box.card_05 p {
+		font: normal normal 400 14px / 142.857% var(--font-primary);
+		letter-spacing: .035px
+	}
+
+	.why_thomascook .card_bg .owl-carousel .owl-stage {
+		display: flex;
+		align-items: flex-end;
+		justify-content: center
+	}
+
+	.why_thomascook .card_bg .owl-dots {
+		position: absolute;
+		top: 16px;
+		left: 16px;
+		display: flex;
+		gap: 4px
+	}
+
+	.why_thomascook .card_bg .owl-carousel .owl-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 100px;
+		background-color: var(--Gray-Mode-200);
+		transition: width .4s ease
+	}
+
+	.why_thomascook .card_bg .owl-carousel .owl-dot.active {
+		width: 20px;
+		background-color: var(--color-secondary)
+	}
+
+	.tourism_boards {
+		padding: 24px 0
+	}
+
+	.tourism_boards .tourism_slide {
+		padding: 0 12px
+	}
+
+	.tourism_boards .tourism_slide .owl-item .item_slide::before,
+	.tourism_boards .tourism_slide.owl-carousel .item_slide img {
+		border-radius: 16px
+	}
+
+	.tourism_boards .tourism_slide.owl-carousel .owl-dots {
+		position: absolute;
+		top: -31px;
+		right: 16px;
+		display: flex;
+		align-items: center;
+		gap: 4px
+	}
+
+	.tourism_boards .tourism_slide.owl-carousel button.owl-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 100px;
+		background: var(--Gray-Mode-200)
+	}
+
+	.tourism_boards .tourism_slide.owl-carousel button.owl-dot.active {
+		width: 20px;
+		background-color: var(--color-primary)
+	}
+
+	.our_blogs .main_heading {
+		flex-direction: row
+	}
+
+	.our_blogs .item_card .text_box {
+		padding: 12px 4px;
+		display: flex;
+		flex-direction: column;
+		gap: 4px
+	}
+
+	.our_blogs .item_card .text_box .btm_blk .btn_withIcon span {
+		font: normal normal 700 12px / 133.857% var(--font-primary)
+	}
+
+	.our_blogs .item_card .text_box span {
+		font: normal normal 600 10px / 140.333% var(--font-primary)
+	}
+
+	.our_blogs .item_card .text_box .btm_blk {
+		margin-top: 4px
+	}
+
+	.customer_love {
+		padding: 40px 24px
+	}
+
+	.customer_love .heading h2 {
+		font: normal normal 700 24px / 133.333% var(--font-heading);
+		letter-spacing: .036px;
+		max-width: 80%;
+		margin: auto
+	}
+
+	.customer_love .statistics_blk {
+		gap: 16px;
+		margin-top: 16px
+	}
+
+	.customer_love .statistics_blk h3 {
+		font: normal normal 500 18px / 144.444% var(--font-primary);
+		letter-spacing: .027px
+	}
+
+	.customer_love .statistics_blk h6 {
+		font: normal normal 500 10px / 140% var(--font-primary);
+		margin-top: 0
+	}
+
+	.customer_love .statistics_blk .brdr {
+		width: 1px;
+		height: 46px
+	}
+
+	.customer_love .customer_slide {
+		margin-top: 20px
+	}
+
+	.customer_love .item_slide {
+		padding: 20px 16px 16px 16px;
+		border-radius: 12px
+	}
+
+	.customer_love .item_slide .quotes img {
+		height: 16px;
+		margin: auto;
+		display: block
+	}
+
+	.customer_love .item_slide .quotes {
+		margin-bottom: 16px
+	}
+
+	.customer_love .item_slide .content_blk p {
+		font: normal normal 400 14px/142.857% var(--font-primary);
+		letter-spacing: .035px;
+		margin-bottom: 16px;
+		text-align: center
+	}
+
+	.customer_love .cust_profile {
+		flex-direction: column;
+		gap: 12px;
+		margin-top: 16px
+	}
+
+	.customer_love .cust_profile .pro_img {
+		width: 48px;
+		height: 48px;
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+	}
+
+	.customer_love .cust_profile .info p {
+		text-align: center
+	}
+
+	.customer_love .cust_profile .info span {
+		font: normal normal 500 10px/140% var(--font-primary);
+		letter-spacing: .05px;
+		margin-top: 4px;
+		text-align: center
+	}
+
+	.customer_love .customer_slide .owl-nav {
+		margin-top: 0
+	}
+
+	.insta_section {
+		overflow: hidden
+	}
+
+	.insta_section .owl-nav-custom {
+		display: none
+	}
+
+	.insta_section .container {
+		padding-right: 0;
+		padding-left: 0
+	}
+
+	.insta_section .ig_inner {
+		display: flex;
+		flex-direction: column;
+		gap: 24px
+	}
+
+	.insta_section .heading {
+		display: flex;
+		align-items: center;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		gap: 16px;
+		width: calc(100% - 24px);
+		padding-right: var(--bs-gutter-x, 0.75rem);
+		padding-left: var(--bs-gutter-x, 0.75rem);
+		margin-right: auto;
+		margin-left: auto
+	}
+
+	.insta_section .heading h3 {
+		font: normal normal 600 24px / 134% var(--font-heading);
+		margin-top: 0;
+		max-width: 54%
+	}
+
+	.insta_section .heading .btn_ig img {
+		width: 23.29px;
+		height: auto
+	}
+
+	.insta_section .heading .btn_ig {
+		font: normal normal 600 14px / 20px var(--font-primary);
+		letter-spacing: .035px;
+		padding: 1px;
+		gap: 12px;
+		border: 0
+	}
+
+	.insta_section .heading .btn_ig span {
+		padding: 7px 15px;
+		background: #fff;
+		border-radius: 64px;
+		display: flex;
+		align-items: center;
+		gap: 6px
+	}
+
+	.insta_section .owl-carousel .owl-stage-outer {
+		overflow: unset
+	}
+
+	.insta_section .item_card {
+		width: 100%;
+		height: 485px
+	}
+
+	.insta_section .item_card video {
+		border-radius: 14px
+	}
+
+	.insta_section .item_card .video-container .overlay,
+	.insta_section .item_card .play-pause-btn {
+		opacity: 1
+	}
+
+	.insta_section .item_card .play-pause-btn {
+		width: 44px;
+		height: 44px
+	}
+
+	.insta_section .owl-dots {
+		display: flex;
+		justify-content: center;
+		gap: 4px;
+		margin: 24px auto 0
+	}
+
+	.insta_section .owl-dots .owl-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 100px;
+		background: var(--Gray-Mode-200);
+		transition: width .4s ease
+	}
+
+	.insta_section .owl-dots .owl-dot.active {
+		width: 20px;
+		background: var(--color-primary)
+	}
+
+	.faq_section .main_heading {
+		align-items: center
+	}
+
+	.faq_section .accordion {
+		gap: 8px;
+		padding: 0
+	}
+
+	.faq_section .accordion-item {
+		padding: 16px
+	}
+
+	.faq_section .accordion-button::after {
+		width: 16px;
+		height: 16px
+	}
+
+	.faq_section .accordion-body {
+		padding: 12px 0 0
+	}
+
+	.faq_section .accordion-button {
+		font: normal normal 400 14px / 142.857% var(--font-primary);
+		letter-spacing: .035px
+	}
+
+	.faq_section .accordion-item.active .accordion-button {
+		font-weight: 600
+	}
+
+	.tour_agency .main_heading {
+		align-items: flex-start
+	}
+
+	.tour_agency .main_heading h4 {
+		font: normal normal 700 14px / 142.857% var(--font-primary);
+		letter-spacing: .035px
+	}
+
+	.tour_agency .agency_content {
+		margin-top: 12px
+	}
+
+	.tour_agency .agency_content p {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		letter-spacing: .06px
+	}
+
+	.tour_agency .agency_content .read-more img {
+		width: 20px
+	}
+
+	.tour_agency .agency_accordian {
+		margin-top: 24px;
+		flex-direction: column;
+		gap: 8px
+	}
+
+	.tour_agency .agency_accordian .accordion {
+		display: flex;
+		flex-direction: column;
+		gap: 8px
+	}
+
+	.tour_agency .agency_accordian .accordion-item {
+		border-radius: 8px;
+		border: 1px solid var(--Blue-blue-2)
+	}
+
+	.tour_agency .agency_accordian .accordion-button {
+		background: var(--Blue-blue-2);
+		border-radius: 8px;
+		box-shadow: none;
+		padding: 12px 16px;
+		font: normal normal 500 12px/133.333% var(--font-primary);
+		letter-spacing: .06px;
+		color: var(--Gray-Mode-700)
+	}
+
+	.tour_agency .accordion-button:not(.collapsed) {
+		background: var(--color-primary);
+		color: var(--color-white)
+	}
+
+	.tour_agency .accordion-item .accordion-body {
+		padding: 16px 8px
+	}
+
+	.tour_agency .tags_btns {
+		gap: 8px
+	}
+
+	.tour_agency .tags_btns .btn {
+		font: normal normal 400 12px / 133.333% var(--font-primary);
+		letter-spacing: .06px;
+		border: 1px solid rgba(15, 76, 164, 0.2);
+		padding: 8px
+	}
+
+	.tour_agency .accordion-button::after {
+		width: 20px;
+		height: 20px;
+		background-image: url(/images/tcHolidays/plus.svg);
+		background-size: 100%
+	}
+
+	.tour_agency .accordion-button:not(.collapsed)::after {
+		background-image: url(/images/tcHolidays/minus.svg)
+	}
+
+	.holidaysLPTourismBoardPartners .item .carousel-caption-overlay {
+		opacity: 0
+	}
+
+	#holidaysLPExploreHolidaysByTheme .item:not(.active) a.carousel-image-link {
+		pointer-events: none
+	}
+
+	#holidaysLPExploreHolidaysByTheme .item.active h3 {
+		font: normal normal 600 24px / 133.333% var(--font-primary)
+	}
+
+	#holidaysLPExploreHolidaysByTheme p.text {
+		font: normal normal 400 12px / 133.33% var(--font-primary);
+		letter-spacing: .06px;
+		margin-top: 6px
+	}
+
+	.our_blogs .item_card .img_box img {
+		height: 160px
+	}
+}

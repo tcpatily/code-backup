@@ -1,0 +1,138 @@
+createApp({
+    setup() {
+        const leadForm = ref("lead");
+        const name = ref("");
+        const selectedProduct = ref("Domestic");
+        const phoneNumber = ref("");
+        const emailId = ref("");
+        const selectedDestination = ref("");
+        const termCheckbox = ref("");
+        const nameError = ref('');
+        const phoneNumberError = ref('');
+        const emailError = ref('');
+        const termError = ref(false);
+        const showSuccessMessage = ref(false);
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const phoneNumberRegex = /^\d{10}$/;
+        // const countryCode = ref('91');const selectedProduct = ref("Domestic");
+
+        async function leadFormSubmit() {
+            if (validateForm()) {
+                var leadFormData = {
+                    "assistType": "Contact Centre",
+                    "campaignId": getUrlParameter('hsaFor') || "",
+                    "device": sessionStorage.getItem('deviceType'),
+                    "firstName": name.value,
+                    "email": emailId.value,
+                    "mobile": phoneNumber.value,
+                    "city": selectedDestination.value,
+                    "url": window.location.origin + '/' + window.location.pathname.split('/')[1],
+                    // "packageId": "packageId",
+                    "isHsaForParamPresent": false,
+                    "pkgSubType": selectedProduct.value === 'Domestic' ? '1' : selectedProduct.value === 'International' ? '3' : '', // 1 for Domestic, 3 for International
+                    "queryForAd": "",
+                    "utmParameters": getGACampaignCodesnew(),
+                    "utmcsr": "",
+                    "utmccn": "",
+                    "utmcmd": "",
+                    "utmcct": "",
+                    "utmctr": "",
+                    "utmgclid": "",
+                };
+
+                console.log("leadFormData: ", leadFormData);
+                try {
+                    const response = await doAxios({
+                        method: "post",
+                        data: leadFormData,
+                        headers: { "Content-Type": "application/json" },
+                        url: `/tcHolidayRS/crm/wantUsToCall`,
+                    });
+
+                    if (response.status === 204) {
+                        name.value = '';
+                        selectedProduct.value = '';
+                        phoneNumber.value = '';
+                        emailId.value = '';
+                        selectedDestination.value = '';
+                        nameError.value = '';
+                        phoneNumberError.value = '';
+                        emailError.value = '';
+                        termError.value = '';
+                        showSuccessMessage.value = true;
+                    }
+                } catch (err) {
+                    console.error("CRM CALL   failed:", err);
+                }
+            } else {
+                console.log("Form validation is failed");
+            }
+        }
+
+        // Function to validate the form
+        const validateForm = () => {
+            nameError.value = '';
+            emailError.value = '';
+            phoneNumberError.value = '';
+            termError.value = '';
+
+            let isValid = true;
+            const nameRegex = /^[A-Za-z\s]+$/;
+
+            if (!name.value.trim()) {
+                nameError.value = 'Name is required.';
+                isValid = false;
+            } else if (!nameRegex.test(name.value.trim())) {
+                nameError.value = 'Name should not contain numbers or special characters.';
+                isValid = false;
+            }
+
+            const phoneNumberAsString = String(phoneNumber.value);
+            if (!phoneNumberAsString.trim()) {
+                phoneNumberError.value = 'Mobile No. is required.';
+                isValid = false;
+            } else if (!phoneNumberRegex.test(phoneNumberAsString)) {
+                if ($(".travel_consultation .iti__selected-dial-code").text() == "+91") {
+                    phoneNumberError.value = 'Please enter a valid 10-digit mobile number.';
+                    isValid = false;
+                }
+            }
+
+            if (!emailId.value.trim()) {
+                emailError.value = 'Email ID is required.';
+                isValid = false;
+            } else if (!emailRegex.test(emailId.value)) {
+                emailError.value = 'Please enter a valid email ID.';
+                isValid = false;
+            }
+
+            if (!termCheckbox.value) {
+                termError.value = 'Please accept the terms and conditions.';
+                console.log('termCheckbox:', termCheckbox.value);
+                isValid = false;
+            }
+
+            return isValid;
+        };
+
+        onMounted(() => {
+        });
+
+        return {
+            leadForm,
+            name,
+            selectedProduct,
+            phoneNumber,
+            emailId,
+            selectedDestination,
+            termCheckbox,
+            nameError,
+            phoneNumberError,
+            emailError,
+            termError,
+            leadFormSubmit,
+            showSuccessMessage,
+        };
+    },
+}).mount(".travel_consultation");

@@ -1,0 +1,657 @@
+createApp({
+    setup() {
+        const destination = ref("");
+        const suggestions = ref([]);
+        const internationalDestinations = ref([]);
+        const domesticDestinations = ref([]);
+        const showMSD = ref(true);
+        const { baseImageURL } = getBaseConfig(); // from common.js
+
+        //Banner Image  
+        const searchObj = ref("");
+        const bannerImageResponse = ref('');
+        const finalImagePath = ref(''); 
+       
+
+        async function handleInput() {
+            const query = destination.value.trim();
+            if (query.length < 3) {
+                suggestions.value = [];
+                return;
+            }
+            try {
+                const response = await doAxios({
+                    method: "get",
+                    url: `/tcHolidayRS/autosuggest?searchAutoSuggest=${encodeURIComponent(query)}`
+                });
+                const data = response.data;
+                suggestions.value = formatSuggestions(data);
+            } catch (err) {
+                console.error("Suggestion fetch failed:", err);
+            }
+        }
+
+        function formatSuggestions(response) {
+            const data = [];
+            const destinationItems = [];
+            const packageGroupByCity = {};
+            const zNamePackages = [];
+            const themeItems = [];
+            const packageGroupByTheme = {};
+
+            for (const item of response) {
+                const displayText = item.searchString || item.cityName || item.continentName || item.countryName;
+
+                if (item.searchType === "THEME") {
+                    // push to Themes section
+                    if (displayText) {
+                        themeItems.push({
+                            text: displayText,
+                            attrs: {
+                                "data-type": "THEME",
+                                "data-searchstring": displayText,
+                                "data-country-code": item.countryCode || "",
+                            },
+                        });
+                    }
+
+                    // group packages under theme
+                    if (Array.isArray(item.pkgnameIdMappingList) && item.pkgnameIdMappingList.length > 0) {
+                        const groupTitle = `Top ${displayText} Packages`;
+                        if (!packageGroupByTheme[groupTitle]) packageGroupByTheme[groupTitle] = [];
+
+                        for (const pkg of item.pkgnameIdMappingList.slice(0, 5)) {
+                            packageGroupByTheme[groupTitle].push({
+                                text: pkg.packageName,
+                                attrs: {
+                                    "data-value": pkg.packageId,
+                                    "data-name": pkg.packageName,
+                                    "data-dynamicpkg": pkg.isDynamicPackage,
+                                    "data-pdpurl": pkg.pdpSeoUrl || "undefined",
+                                    "data-type": item.searchType || "",
+                                    "data-searchstring": item.searchString || "",
+                                    "data-country-code": item.countryCode || "",
+                                }
+                            });
+                        }
+                    }
+                } else if (item.searchType === "Z_NAME") {
+                    // Z_NAME Packages
+                    for (const pkg of item.pkgnameIdMappingList.slice(0, 5)) {
+                        zNamePackages.push({
+                            text: pkg.packageName,
+                            attrs: {
+                                "data-value": pkg.packageId,
+                                "data-name": pkg.packageName,
+                                "data-dynamicpkg": pkg.isDynamicPackage,
+                                "data-pdpurl": pkg.pdpSeoUrl || "undefined",
+                                "data-type": item.searchType || "",
+                                "data-searchstring": item.searchString || "",
+                                "data-country-code": item.countryCode || "",
+                            }
+                        });
+                    }
+                } else {
+                    // logic for CITY, STATE, COUNTRY, CONTINENT
+                    destinationItems.push({
+                        text: displayText,
+                        attrs: {
+                            "data-country-code": item.countryCode || "",
+                            "data-city-code": item.locationCode || "",
+                            "data-search-lng": item.searchLongitude || "",
+                            "data-search-lat": item.searchLatitude || "",
+                            "data-continent-name": item.continentName || "",
+                            "data-country-name": item.countryName || "",
+                            "data-state-name": item.stateName || "",
+                            "data-city-name": item.cityName || "",
+                            "data-type": item.searchType || "CITY",
+                            "data-searchstring": item.searchString || "",
+                        },
+                    });
+
+                    if (item.pkgnameIdMappingList?.length > 0) {
+                        //const city = item.cityName || item.searchString;
+                        //const groupTitle = `Top ${city} Holiday Packages`;
+                        let groupTitle = '';
+                        if (["COUNTRY", "STATE", "CONTINENT"].includes(item.searchType)) {
+                            groupTitle = `Top ${item.searchString} Holiday Packages`;
+                        } else {
+                            const city = item.cityName || item.searchString;
+                            groupTitle = `Top ${city} Holiday Packages`;
+                        }
+                        if (!packageGroupByCity[groupTitle]) packageGroupByCity[groupTitle] = [];
+
+                        for (const pkg of item.pkgnameIdMappingList.slice(0, 5)) {
+                            packageGroupByCity[groupTitle].push({
+                                text: pkg.packageName,
+                                attrs: {
+                                    "data-value": pkg.packageId,
+                                    "data-name": pkg.packageName,
+                                    "data-dynamicpkg": pkg.isDynamicPackage,
+                                    "data-pdpurl": pkg.pdpSeoUrl || "undefined",
+                                    "data-type": item.searchType || "",
+                                    "data-searchstring": item.searchString || "",
+                                    "data-country-code": item.countryCode || "",
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            // destination section
+            if (destinationItems.length > 0) {
+                data.push({ title: "Destination", items: destinationItems });
+            }
+
+            // themes section should come right after Destination
+            if (themeItems.length > 0) {
+                data.push({ title: "Themes", items: themeItems });
+            }
+
+            // packages grouped by City (like "Top Europe Holiday Packages")
+            let isFirstPackageGroup = true;
+            for (const [title, items] of Object.entries(packageGroupByCity)) {
+                data.push({ title, items });
+                isFirstPackageGroup = false;
+            }
+
+            // packages grouped by Theme (like "Top Europamundo Packages")
+            for (const [title, items] of Object.entries(packageGroupByTheme)) {
+                data.push({ title, items });
+            }
+
+            // Z_NAME section fallback general packages
+            if (zNamePackages.length > 0) {
+                data.push({ title: "Packages", items: zNamePackages });
+            }
+
+            return data;
+        }
+
+        function viewAllClick(index) {
+            const section = suggestions.value[index];
+            const title = section.title || "";
+            const items = section.items || [];
+            if (items.length === 0) return;
+
+            let destination = "";
+            let searchType = "";
+            let countryCode = "";
+            let url = "holidays";
+
+            const firstItem = items[0];
+            const attrs = firstItem?.attrs || {};
+
+            if (title === "Themes") {
+                destination = sanitize(firstItem.text);
+                searchType = "THEME";
+                countryCode = attrs["data-country-code"];
+            } else if (title.startsWith("Top ") && title.endsWith("Packages")) {
+                destination = sanitize(
+                    title.replace("Top ", "").replace(" Holiday Packages", "").replace(" Packages", "")
+                );
+                searchType = attrs["data-type"];
+                countryCode = attrs["data-country-code"];
+            } else {
+                const destinationSection = suggestions.value.find(s => s.title === "Destination");
+                const firstDestItem = destinationSection?.items?.[0];
+                const destAttrs = firstDestItem?.attrs || {};
+
+                const destText = firstDestItem?.text || destAttrs["data-country-name"] || destAttrs["data-state-name"] || destAttrs["data-city-name"];
+                if (destText && destAttrs["data-type"] && destAttrs["data-country-code"]) {
+                    destination = sanitize(destText);
+                    searchType = destAttrs["data-type"];
+                    countryCode = destAttrs["data-country-code"];
+                } else {
+                    return;
+                }
+            }
+
+            if (searchType === "THEME") {
+                url += `/${destination}-tour-packages`;
+            } else if (["COUNTRY", "STATE", "CITY", "CONTINENT", "ZONE"].includes(searchType)) {
+                url += countryCode === "IN"
+                    ? `/india-tour-packages/${destination}-tour-packages`
+                    : `/international-tour-packages/${destination}-tour-packages`;
+            } else {
+                return;
+            }
+
+            window.location.href = `${window.location.origin}/${url}`;
+        }
+
+        function selectSuggestion(item) {
+            const attrs = item.attrs;
+            const searchType = attrs["data-type"];
+            //    const destination = sanitize(attrs["data-searchstring"] || attrs["data-city-name"] || attrs["data-country-name"] || "");
+            let destination = "";
+            switch (searchType) {
+                case "CITY":
+                    destination = attrs["data-city-name"] || attrs["data-searchstring"];
+                    break;
+                case "STATE":
+                    destination = attrs["data-state-name"] || attrs["data-searchstring"];
+                    break;
+                case "COUNTRY":
+                    destination = attrs["data-country-name"] || attrs["data-searchstring"];
+                    break;
+                case "CONTINENT":
+                    destination = attrs["data-continent-name"] || attrs["data-searchstring"];
+                    break;
+                case "ZONE":
+                    destination = attrs["data-searchstring"];
+                    break;
+                default:
+                    destination = attrs["data-searchstring"] || "";
+            }
+            if (!destination) {
+                console.warn("Missing destination for searchType:", searchType, attrs);
+            }
+            destination = sanitize(destination);
+
+            const pkgId = attrs["data-value"];
+            const pkgName = sanitize(attrs["data-name"] || "");
+            const pdpUrl = attrs["data-pdpurl"] || "";
+            const countryCode = attrs["data-country-code"];
+            let url = "holidays";
+
+            // PDP (with pkgId)
+            if (pkgId) {
+                if (searchType === "THEME") {
+                    url += `/${destination}-tour-packages/${pkgName}`;
+                    url += `?pkgId=${pkgId}&theme=${pkgId}_${attrs["data-searchstring"]}_1`;
+
+                } else if (searchType === "Z_NAME") {
+                    url += `/packages/${pkgName}`;
+                    url += `?pkgId=${pkgId}&destination=${pkgId}_${pkgName}_Z_NAME_1`;
+                } else {
+                    if (countryCode === "IN") {
+                        url += `/india-tour-packages/${destination}-tour-packages/${pkgName}`;
+                        url += `?pkgId=${pkgId}&theme=${pkgId}_${destination}_0&destTag=${destination}`;
+                    } else {
+                        url += `/international-tour-packages/${destination}-tour-packages/${pkgName}`;
+                        url += `?pkgId=${pkgId}&destination=${pkgId}_${destination}_${searchType}_1&destTag=${destination}`;
+                    }
+                }
+            } else {
+                // SRP (no pkgId)
+                if (searchType === "CONTINENT") {
+                    url += `/international-tour-packages/${destination}-tour-packages`;
+                } else if (searchType === "COUNTRY") {
+                    if (countryCode === "IN") {
+                        url += `/india-tour-packages`;
+                    } else {
+                        url += `/international-tour-packages/${destination}-tour-packages`;
+                    }
+                } else if (searchType === "STATE" || searchType === "CITY" || searchType === "ZONE") {
+                    if (countryCode === "IN") {
+                        url += `/india-tour-packages/${destination}-tour-packages`;
+                    } else {
+                        url += `/international-tour-packages/${destination}-tour-packages`;
+                    }
+                } else if (searchType === "THEME") {
+                    url += `/${destination}-tour-packages`;
+                } else {
+                    url += `/packages`;
+                }
+            }
+
+            // redirect to
+            window.location.href = `${window.location.origin}/${url}`;
+        }
+
+        function sanitize(str) {
+            return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+            // return str;
+        }
+
+
+        // MOST SEARCH DESTINATIONS STARTS//
+
+        async function fetchMostSearchedDestinations(pageType = "") {
+            try {
+                const url = pageType
+                    ? `/tcHolidayRS/autosuggest/get-most-search-destinations?pageType=${pageType}`
+                    : `/tcHolidayRS/autosuggest/get-most-search-destinations`;
+
+                const response = await doAxios({ method: "get", url });
+
+                if (pageType === "dom" || pageType === "int") {
+                    const data = response.data || [];
+                    const target = pageType === "dom" ? domesticDestinations : internationalDestinations;
+                    target.value = data.map(item => ({
+                        id: item.id,
+                        destinationName: item.destinationName,
+                        pageType: item.pageType,
+                        order: item.position,
+                        imagePath: item.imagePath,
+                        altTag: item.altTag,
+                        isActive: item.isActive,
+                    }));
+                } else {
+                    const internationalRes = response.data.international || [];
+                    const domesticRes = response.data.domestic || [];
+
+                    internationalDestinations.value = internationalRes.map(item => ({
+                        id: item.id,
+                        destinationName: item.destinationName,
+                        pageType: item.pageType,
+                        order: item.position,
+                        imagePath: item.imagePath,
+                        altTag: item.altTag,
+                        isActive: item.isActive,
+                    }));
+
+                    domesticDestinations.value = domesticRes.map(item => ({
+                        id: item.id,
+                        destinationName: item.destinationName,
+                        pageType: item.pageType,
+                        order: item.position,
+                        imagePath: item.imagePath,
+                        altTag: item.altTag,
+                        isActive: item.isActive,
+                    }));
+                }
+            } catch (error) {
+                console.error("Failed to fetch destinations:", error);
+            }
+        }
+
+        function fullImagePath(path) {
+            return `${baseImageURL}/holidays/mostSearchDest${path.startsWith('/') ? '' : '/'}${path}`;
+            //		return `${baseImageURL}/holidays/mostSearchDest/${path.startsWith('/') ? path.substring(1) : path}`;
+
+        }
+
+        function navigateToDestination(destination) {
+            const type = destination.pageType;
+            const sanitized = sanitize(destination.destinationName);
+
+            const path = type === "INT"
+                ? `/holidays/international-tour-packages/${sanitized}-tour-packages`
+                : `/holidays/india-tour-packages/${sanitized}-tour-packages`;
+
+            window.location.href = `${window.location.origin}${path}`;
+        }
+
+        const getSRPType = async (dest) => {
+            try {
+                const autoSuggestResp = await doAxios({
+                    method: "get",
+                    url: `tcHolidayRS/autosuggest?searchAutoSuggest=` + dest
+                });
+                var autoData = autoSuggestResp.data;
+                let searchType = autoData[0]?.searchType;
+                if (searchType == "THEME") {
+                    showMSD.value = false;
+                }
+                if (autoData.length == 0) {
+                    showMSD.value = false;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+        function temp() {
+            const pageType = document.querySelector(".hero_section")?.dataset?.pageType;
+            if (showMSD.value) {
+                if (pageType === "india") {
+                    fetchMostSearchedDestinations("dom");
+                } else if (pageType === "international") {
+                    fetchMostSearchedDestinations("int");
+                } else {
+                    fetchMostSearchedDestinations(); // holidays default
+                }
+            }
+        }
+
+        // MOST SEARCH DESTINATIONS ENDS//
+
+        // Banner Image Path
+		 const continentBannerPath = ``;  
+        const zoneBannerPath = ``;
+        const defaultBannerPath = `/images/tcHolidays/srp/defaltBannerImage/SRP_common_banner.jpg`;
+
+        const loadBannerImage = async (searchObj) => {
+            console.log("INSIDE Banner");
+
+            let bannerImageUrl = '/tcHolidayRS/srp/bannerImage/';
+            let useStaticPath = false;
+
+            const type = searchObj.searchType?.toUpperCase();
+
+            if (['CITY', 'STATE', 'COUNTRY', 'THEME'].includes(type)) {
+                if (type === 'CITY') {
+                    bannerImageUrl += encodeURIComponent(searchObj.searchString) + '/' + type;
+                } else if (type === 'STATE') {
+                    bannerImageUrl += encodeURIComponent(searchObj.stateName) + '/' + type;
+                } else if (type === 'COUNTRY') {
+                    bannerImageUrl += encodeURIComponent(searchObj.countryName) + '/' + type;
+                } else if (type === 'THEME') {
+                    bannerImageUrl += encodeURIComponent(searchObj.themeName?.[0] || 'default') + '/' + type;
+                }
+  
+                try {
+                    const bannerImgResponse = await doAxios({
+                        method: "get",
+                        url: bannerImageUrl
+                    });
+
+                    bannerImageResponse.value = bannerImgResponse.data;
+                    console.log("bannerImgResponse: ", bannerImgResponse);
+
+                    if (bannerImageResponse.value && bannerImageResponse.value !== '') {
+                        finalImagePath.value = `${baseImageURL}/holidays/${type.toLowerCase()}/${bannerImageResponse.value}`;
+                        console.log("Final Image Path: DYNAMIC ", finalImagePath.value);
+                    } else {
+                        // Condition 3: No image returned ? fallback
+                        finalImagePath.value = defaultBannerPath;
+                        console.log("Final Image Path: FALLBACK TO DEFAULT ", finalImagePath.value);
+                    }
+
+                } catch (error) {
+                    console.error("Error loading banner image:", error);
+                    finalImagePath.value = defaultBannerPath;
+                }
+
+            } else if (type === 'CONTINENT') {
+                const currentUrl = window.location.href.toLowerCase();
+
+                let continentBannerPath = `/images/tcHolidays/srp/continentBannerImage/default/SRP_common_banner.jpg`;
+
+                if (currentUrl.includes("asia")) {
+                    continentBannerPath = `/images/tcHolidays/srp/continentBannerImage/asia/manager-01.png`;
+                } else if (currentUrl.includes("europe")) {
+                    continentBannerPath = `/images/tcHolidays/srp/continentBannerImage/europe/manager-01.png`;
+                } else if (currentUrl.includes("africa")) {
+                    continentBannerPath = `/images/tcHolidays/srp/continentBannerImage/africa/manager-01.png`;
+                } else if (currentUrl.includes("australia")) {
+                    continentBannerPath = `/images/tcHolidays/srp/continentBannerImage/australia/manager-01.png`;
+                } else if (currentUrl.includes("antarctica")) {
+                    continentBannerPath = `/images/tcHolidays/srp/continentBannerImage/antarctica/manager-01.png`;
+                } else if (currentUrl.includes("south-america")) {
+                    continentBannerPath = `/images/tcHolidays/srp/continentBannerImage/south-america/manager-01.png`;
+                }
+
+                //  Call helper function
+                loadImageWithFallback(continentBannerPath, defaultBannerPath, (finalPath) => {
+                    finalImagePath.value = finalPath;
+                    console.log("Final Image Path for Continent:", finalImagePath.value);
+                });
+
+            } else if (type === 'ZONE_MASTER') {
+                const currentUrl = window.location.href.toLowerCase();
+
+                //  Build zone-specific path
+                let zoneBannerPath = `/images/tcHolidays/srp/zoneBannerImage/default/manager-01.png`;
+
+                if (currentUrl.includes("north")) {
+                    zoneBannerPath = `/images/tcHolidays/srp/zoneBannerImage/north/manager-01.png`;
+                } else if (currentUrl.includes("south")) {
+                    zoneBannerPath = `/images/tcHolidays/srp/zoneBannerImage/south/manager-01.png`;
+                } else if (currentUrl.includes("east")) {
+                    zoneBannerPath = `/images/tcHolidays/srp/zoneBannerImage/east/manager-01.png`;
+                } else if (currentUrl.includes("west")) {
+                    zoneBannerPath = `/images/tcHolidays/srp/zoneBannerImage/west/manager-01.png`;
+                } else if (currentUrl.includes("central")) {
+                    zoneBannerPath = `/images/tcHolidays/srp/zoneBannerImage/central/manager-01.png`;
+                }
+
+                //  Call helper function
+                loadImageWithFallback(zoneBannerPath, defaultBannerPath, (finalPath) => {
+                    finalImagePath.value = finalPath;
+                    console.log("Final Image Path for Zone:", finalImagePath.value);
+                });
+
+            } else {
+                finalImagePath.value = defaultBannerPath;
+            }
+        };
+
+        const loadImageWithFallback = (imagePath, fallbackPath, callback) => {
+            const img = new Image();
+            img.onload = () => callback(imagePath);   // Use image if it exists
+            img.onerror = () => callback(fallbackPath); // Fallback if not found
+            img.src = imagePath;
+        };
+
+
+
+        // END Banner Image Path
+
+        const getDestinationFromUrl = (url) => {
+            try {
+                const parts = new URL(url).pathname.split('/').filter(Boolean);
+                const lastPart = parts[parts.length - 1];
+
+                if (!lastPart.toLowerCase().endsWith('-tour-packages')) return null;
+
+                const locationSlug = lastPart.replace(/-tour-packages$/i, '');
+                const locationName = locationSlug.replace(/-/g, ' ');
+
+                return locationName; 
+            } catch (error) {
+                console.error('Invalid URL:', error);
+                return null;
+            }
+        };
+
+       onMounted(() => {
+            // let dest = getDestinationFromUrl(window.location.href);
+            // if (dest !== undefined && dest !== null) {
+            //     getSRPType(dest).then(() => {
+            //         temp();
+            //     });
+            // } else {
+            //     temp();
+            // }
+            const urlPath = window.location.pathname;
+            if (urlPath.includes("international-tour-packages")) {
+                fetchMostSearchedDestinations("int");
+            } else if (urlPath.includes("india-tour-packages")) {
+                fetchMostSearchedDestinations("dom");
+            } else {
+                let dest = getDestinationFromUrl(window.location.href);
+                if (dest !== undefined && dest !== null) {
+                    getSRPType(dest).then(() => {
+                        temp();
+                    });
+                } else {
+                    temp();
+                }
+            }
+
+            //  Listen for searchObjReady event (coming from holidaysrp.js)
+            window.addEventListener('searchObjReady', (event) => {
+                const receivedObj = event.detail;
+                console.log("searchObj received in banner.js:", receivedObj);
+
+                if (receivedObj && Object.keys(receivedObj).length > 0) {
+                    searchObj.value = receivedObj;
+                    loadBannerImage(searchObj.value); // <-- Call your function here
+                } else {
+                    console.warn("?? searchObj empty. Using default banner.");
+                    loadBannerImage({searchType: "DEFAULT"});
+                }
+            });
+
+            //  If holidaysrp.js already set globalSearchObj before this mounted
+            if (window.globalSearchObj) {
+                console.log("Using globalSearchObj (already set):", window.globalSearchObj);
+                searchObj.value = window.globalSearchObj;
+                loadBannerImage(searchObj.value);
+            }
+        });
+
+        return {
+            destination,
+            handleInput,
+            suggestions,
+            viewAllClick,
+            selectSuggestion,
+            internationalDestinations,
+            domesticDestinations,
+            fullImagePath,
+            navigateToDestination,
+            // Banner Image
+            bannerImageResponse,
+            finalImagePath,
+            continentBannerPath,
+            zoneBannerPath,
+            defaultBannerPath
+        };
+    },
+}).mount(".hero_section");
+
+
+
+createApp({
+    setup() {
+        function validateEmail(email) {
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailRegex.test(email);
+        }
+        function resetsubscribeEmail() {
+            $(".response_msg").hide();
+            $(".response_msg").text('');
+        }
+
+        async function subscribeEmail() {
+            try {
+                var emailId = $("#newsLetterEmail").val();
+                if (validateEmail(emailId)) {
+                    const response = await doAxios({
+                        method: "post",
+                        url: `/tcCommonRS/subscribe/email/` + $("#newsLetterEmail").val()
+                    });
+                    let data = response.data;
+                    $(".response_msg").show();
+                    if (data != null && data != undefined && data.text != null && data.text != undefined) {
+                        $(".response_msg").text(data.text);
+                        setTimeout(function () {
+                            $(".response_msg").text('');
+                            $(".response_msg").hide();
+                            $("#newsLetterEmail").val('');
+                        }, 2000);
+                    } else {
+                        $(".response_msg").text('Unable to subscribe.');
+                    }
+                } else {
+                    console.log("NOT A VALID EMAIL");
+                    $(".response_msg").show();
+                    $(".response_msg").text('Enter valid email');
+                }
+            } catch (err) {
+                $(".response_msg").show();
+                $(".response_msg").text('Something went wrong');
+                console.error("Something went wrong :", err);
+            }
+        }
+        return {
+            subscribeEmail,
+            resetsubscribeEmail
+        };
+    },
+}).mount(".newsletter_card");

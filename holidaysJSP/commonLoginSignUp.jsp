@@ -1,0 +1,359 @@
+<!--B2C Login Popup HTML Start from  -->
+<div id="tcLoginSignup">
+
+    <!-- Login Popup -->
+    <div class="modal fade show login_popup customerLoginModal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row gx-0">
+                        <div class="col-lg-6 col-md-6 d-none d-md-block">
+                            <div class="left_blc">
+                                <img src="../../images/tcHolidays/login-bg.png" alt="">
+                                <div class="lb_text">
+                                    <h3>Login Now & Create Your Dream Bucket list</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="right_blc">
+                                <div class="number_block comn_blc">
+                                    <div class="top_blc">
+                                        <div class="logo">
+                                            <img src="../../images/tcHolidays/logo.png" alt="">
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"><img src="../../images/tcHolidays/x-close_1.svg" alt="">
+                                            Close</button>
+                                    </div>
+
+                                    <div class="cntr_blc login_cntr customer-login login_section">
+                                        <div class="cb_top">
+                                            <h5>Log In</h5>
+                                            <p>Welcome back!</p>
+                                        </div>
+
+                                        <div class="input_inr">
+                                            <div class="input_blc phoneEmail_field">
+                                                <input type="text" placeholder=" " v-model="loginNumber"
+                                                    class="form-control customer_email">
+                                                <label class="input_label">Mobile No. or Email</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="cb_btm">
+                                            <button class="btn btn_primary" disabled="" @click='sendOtp'
+                                                id="sendOtp">Log In</button>
+                                            <span>New Here? <a data-bs-toggle="modal" data-bs-target="#registerModal">
+                                                    Sign Up</a> now & Explore the World with Thomas Cook</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="cntr_blc login_cntr customer-login otp_section">
+                                        <div class="cb_top">
+                                            <h5>OTP verification</h5>
+                                            <p>Enter OTP sent to <span>{{loginNumber}}</span>
+                                                <button @click="editNumber"><img src="../../images/tcHolidays/edit-02.svg" alt=""></button>
+                                            </p>
+                                        </div>
+
+                                        <div class="cb_center">
+                                            <div class="otp_fill">
+                                                <input v-for="(digit, index) in otpDigits" :key="index" type="tel"
+                                                    maxlength="1" class="form-control" pattern="\d"
+                                                    v-model="otpDigits[index]" />
+                                            </div>
+                                            <span v-if="!showResendOtp && !showOtpMaxAttemptCross ">
+                                                Resend OTP in {{
+                                                countdown > 0 && countdown < 10 ? countdown + ' second' : countdown
+                                                    + ' seconds' }} </span>
+                                                    <span v-if="showLoginErrorMsg"><img
+                                                            src="../../images/tcHolidays/alert-circle.svg"
+                                                            alt="">{{loginErrorMsg}}</span>
+                                                    <span v-if="showOtpMaxAttemptCross"><img
+                                                            src="../../images/tcHolidays/alert-circle.svg" alt="">You
+                                                        have reached maximum resend OTP attempts, please try after 15
+                                                        min</span>
+                                                    <span v-if="showResendOtp && !showOtpMaxAttemptCross"><a
+                                                            @click='sendOtp'>Resend OTP</a></span>
+                                        </div>
+
+                                        <div class="cb_btm">
+                                            <button class="btn btn_primary" disabled=""
+                                                @click="validateLogin('customer')">Verify</button>
+                                            <span>New Here? <a data-bs-toggle="modal" data-bs-target="#registerModal">
+                                                    Sign Up</a> now & Explore the World with Thomas Cook</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="cntr_blc submit_successfully" style="display: none;">
+                                        <div class="successfull_gif">
+                                            <img src="../../images/tcHolidays/successful.gif" alt="">
+                                        </div>
+                                        <div class="loggedIn_title">
+                                            <h6>You are logged in successfully.</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="bottm_blc">
+                                        <span>© Thomas Cook 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Popup -->
+    <div class="modal fade show login_popup" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row gx-0">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="left_blc">
+                                <img src="../../images/tcHolidays/login-bg.png" alt="">
+                                <div class="lb_text">
+                                    <h3>Login Now & Create Your Dream Bucket list</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="right_blc">
+                                <div class="number_block comn_blc">
+                                    <div class="top_blc">
+                                        <div class="logo">
+                                            <img src="../../images/tcHolidays/logo.png" alt="">
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"><img src="../../images/tcHolidays/x-close_1.svg" alt="">
+                                            Close</button>
+                                    </div>
+
+                                    <div class="cntr_blc">
+                                        <div class="cb_top">
+                                            <h5>Create Your Account</h5>
+                                            <p>Let’s get you started on your journey.</p>
+                                        </div>
+
+                                        <div class="input_inr">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <div class="input_blc select_wrapper">
+                                                        <select class="form-select select_dropdown" required="">
+                                                            <option value="" selected="" hidden=""></option>
+                                                            <option value="1">Mr.</option>
+                                                            <option value="2">Mrs.</option>
+                                                            <option value="3">Ms.</option>
+                                                            <option value="3">Dr.</option>
+                                                        </select>
+                                                        <label class="select_label">Title</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-8 col-md-8">
+                                                    <div class="input_blc">
+                                                        <input type="text" placeholder=" " class="form-control">
+                                                        <label>Enter First Name</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="input_blc">
+                                                        <input type="text" placeholder=" " class="form-control">
+                                                        <label>Enter Last Name</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="input_blc">
+                                                        <input type="text" placeholder=" "
+                                                            class="form-control phone_number">
+                                                        <label>Mobile No.</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="input_blc">
+                                                        <span class="icon">
+                                                            <img src="../../images/tcHolidays/email-icon.svg" alt="">
+                                                        </span>
+                                                        <input type="text" placeholder=" " class="form-control">
+                                                        <label>Enter Mail ID</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="cb_btm">
+                                            <button class="btn btn_primary" disabled="">Register</button>
+                                            <span>Already have an account? <a href="">Login</a></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bottm_blc">
+                                        <span>© Thomas Cook 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--b2c Login Popup HTML Start from  -->
+
+    <!--Agent Login Popup HTML Start from  -->
+    <div class="modal fade show login_popup agent_login" id="agentLoginModal" tabindex="-1"
+        aria-labelledby="agentLoginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row gx-0">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="left_blc">
+                                <picture>
+                                    <source srcset="../../images/tcHolidays/login-bg-mobile.png"
+                                        media="(max-width: 768px)">
+                                    <img src="../../images/tcHolidays/login-bg.png" alt="">
+                                </picture>
+                                <div class="lb_text">
+                                    <h3>Login Now & Create Your Dream Bucket list</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 order-first order-md-last">
+                            <div class="right_blc">
+                                <div class="number_block comn_blc">
+                                    <div class="top_blc">
+                                        <div class="logo">
+                                            <img src="../../images/tcHolidays/logo.png" alt="">
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"><img src="../../images/tcHolidays/x-close.svg" alt="">
+                                            Close</button>
+                                    </div>
+
+                                    <div class="cntr_blc agent_loginInfo">
+                                        <div class="cb_top">
+                                            <h5>Agent Log In</h5>
+                                            <p>Welcome back!</p>
+                                        </div>
+
+                                        <div class="input_grps global_form">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input_inr">
+                                                        <span class="icon">
+                                                            <img src="../../images/tcHolidays/email-icon.svg">
+                                                        </span>
+                                                        <input type="text" placeholder=" " @focusout="verifyUserRole"
+                                                            class="form-control agent_email" v-model="agentUserId">
+                                                        <label class="input_label">Enter mail ID or username</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="input_inr">
+                                                        <span class="icon">
+                                                            <img src="../../images/tcHolidays/lock.svg">
+                                                        </span>
+                                                        <input type="password" placeholder=" "
+                                                            class="form-control agent_password" v-model="agentPassword">
+                                                        <label class="input_label">Password</label>
+                                                        <button class="btn password_hideShow" disabled>
+                                                            <img src="../../images/tcHolidays/eye-off.svg" alt="">
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12" v-show="!isUserAgent">
+                                                    <div class="input_inr">
+                                                        <span class="icon">
+                                                            <img src="../../images/tcHolidays/keyboard.svg">
+                                                        </span>
+                                                        <input type="number" placeholder=" "
+                                                            class="form-control agent_pin" v-model="agentPin"
+                                                            maxlength="6">
+                                                        <label class="input_label">Enter Pin</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12" v-show="isUserAgent">
+                                                    <div class="input_inr">
+                                                        <span class="icon">
+                                                            <img src="../../images/tcHolidays/keyboard.svg">
+                                                        </span>
+                                                        <input type="number" placeholder=" "
+                                                            class="form-control agent_pin" v-model="agentOTP"
+                                                            maxlength="6">
+                                                        <label class="input_label">Enter OTP</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="cb_btm">
+                                            <button class="btn btn_primary btn_agentLogin"
+                                                @click="validateLogin('agent')" disabled>Log In</button>
+                                            <span><a href="https://www.tcilonline.com/twofa/" target="_blank">Click
+                                                    here</a> to register for 2F Authentication</span>
+                                            <span v-if="showLoginErrorMsg"><img
+                                                    src="../../images/tcHolidays/alert-circle.svg"
+                                                    alt="">{{loginErrorMsg}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="cntr_blc behalf_loginInfo" style="display: none;">
+                                        <div class="cb_top">
+                                            <h5>On Behalf</h5>
+                                            <p>Please enter On Behalf email ID.</p>
+                                        </div>
+
+                                        <div class="input_grps global_form">
+                                            <div class="input_inr">
+                                                <span class="icon">
+                                                    <img src="../../images/tcHolidays/email-icon.svg">
+                                                </span>
+                                                <input type="text" v-model="onbehalfEmailId" placeholder=" "
+                                                    class="form-control onbehalf_email">
+                                                <label class="input_label">Enter mail ID</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="cb_btm">
+                                            <button class="btn btn_primary btn_behalfLogin" disabled
+                                                @click="onBehalfContinue">Log In</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="cntr_blc submit_successfully" style="display: none;">
+                                        <div class="successfull_gif">
+                                            <img src="../../images/tcHolidays/successful.gif" alt="">
+                                        </div>
+                                        <div class="loggedIn_title">
+                                            <h6>You are logged in successfully.</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="bottm_blc">
+                                        <span>© Thomas Cook 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Agent Login Popup HTML End from  -->
+
+</div>
+<script src="/js/commonLibrary/loginLib.js"></script>
+<script src="/js/commonLibrary/AesUtil.js"></script>
+<script src="/js/commonLibrary/common.js"></script>

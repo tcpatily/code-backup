@@ -1,0 +1,982 @@
+setInterval(onloadtheCalender, 500);
+setInterval(travellerDetails_modal, 500);
+setInterval(onloadtheCalender, 500);
+
+// --------------------------------
+//This is a common CSS, if you have already used it then remove it. (Start)
+// --------------------------------
+// Run on page load
+function onloadtheCalender() {
+    // Initialize your calendars
+    initSingleDateCalendars();
+
+    // Click outside calendar to close it
+    $(document).on('mousedown', function (e) {
+        const $target = $(e.target);
+        if (
+            !$target.closest('.single-calender').length &&
+            !$target.closest('.singleDate-calendar').length
+        ) {
+            $('.singleDate-calendar').slideUp(300).each(function () {
+                const $cal = $(this);
+                const $backdrop = $cal.next('.custom-backdrop');
+                if ($backdrop.length) {
+                    $backdrop.removeClass('show');
+                    $('body').css('overflow', '');
+                    setTimeout(() => $backdrop.remove(), 150);
+                }
+            });
+        }
+    });
+
+    // Close button inside calendar
+    $(document).on('click', '.btn_closeCalander', function () {
+        const $calendar = $(this).closest('.singleDate-calendar');
+        $calendar.slideUp(300);
+        const $backdrop = $calendar.next('.custom-backdrop');
+        if ($backdrop.length) {
+            $backdrop.removeClass('show');
+            $('body').css('overflow', '');
+            setTimeout(() => $backdrop.remove(), 150);
+        }
+    });
+    jQuery(document).ready(function ($) {
+        const $formBlock = $('.center_block .traveller_details');
+        const $button = $('.bottom_block .add_traveller');
+
+        function checkFormValidity() {
+            let isValid = true;
+
+            // Check all visible text inputs
+            $formBlock.find('input[type="text"]:visible').each(function () {
+                if ($(this).val().trim() === '') {
+                    isValid = false;
+                    return false; // break each loop
+                }
+            });
+
+            // Check all visible selects
+            if (isValid) {
+                $formBlock.find('select:visible').each(function () {
+                    if ($(this).val() === '' || $(this).val() === null) {
+                        isValid = false;
+                        return false;
+                    }
+                });
+            }
+
+            // Enable/disable button
+            // $button.prop('disabled', !isValid);
+        }
+
+        // Trigger validation on input/select change
+        $formBlock.find('input[type="text"], select').on('input change', function () {
+            checkFormValidity();
+        });
+
+        // Initial check on load (in case form is pre-filled)
+        checkFormValidity();
+
+        // On add_traveller button click
+        $button.on('click', function () {
+            $('.btn_addTraveller').hide();
+            $('.traveller_container').show();
+            $('#travellerDetailsModal').modal('hide'); // Close the modal
+        });
+    });
+};
+jQuery(document).ready(function () {
+    // Hide GST sections initially
+    jQuery('.GSTnumber, .GSTdetails').hide();
+
+    // When checkbox is toggled
+    jQuery('#GSTforBooking').on('change', function () {
+        if (jQuery(this).is(':checked')) {
+            jQuery('.GSTnumber').slideDown();  // Show GST number input section
+            jQuery('.GSTdetails').hide();      // Keep GST details hidden
+        } else {
+            jQuery('.GSTnumber, .GSTdetails').slideUp();  // Hide both
+            jQuery('.GSTnumber .btn').text('Verify').prop('disabled', true);
+            jQuery('.GSTnumber input').val('');
+        }
+    });
+
+    // When Verify button is clicked
+    jQuery(document).on('click', '.GSTnumber .btn', function (e) {
+        e.preventDefault();
+
+        // Example: you can add GST validation here before showing details
+        // For now, just show GSTdetails
+        //  jQuery('.GSTdetails').slideDown();
+    });
+});
+
+
+
+// ---------------------------
+// Custom Select Dropdown
+// ---------------------------
+$(document).ready(function () {
+    $('.select_dropdown').each(function () {
+        var $this = $(this);
+        var $wrapper = $this.closest('.select_wrapper');
+        var $options = $this.find('option');
+
+        $this.addClass('hide-select');
+
+        // ✅ Conditionally add readonly
+        var isStateSelect = $this.hasClass('select_state');
+        var readonlyAttr = isStateSelect ? '' : 'readonly';
+        $this.after(`<input type="text" class="custom_select" autocomplete="off" ${readonlyAttr}>`);
+
+        var $customSelect = $this.next('.custom_select');
+        var $optionList = $('<ul class="select_options" />').insertAfter($customSelect);
+
+        $options.each(function () {
+            var $opt = $(this);
+            if (!$opt.prop('hidden')) {
+                var listItem = $('<li />', {
+                    'data-val': $opt.val(),
+                    class: $opt.prop('disabled') ? 'disabled' : ''
+                });
+
+                var optionHTML = $opt.html();
+                listItem.html(optionHTML);
+                $optionList.append(listItem);
+            }
+        });
+
+        // var $optionItems = $optionList.find('li');
+
+        // // ✅ Toggle dropdown on wrapper click
+        // $wrapper.on('click', function (e) {
+        //     e.stopPropagation();
+
+        //     var isActive = $customSelect.hasClass('active');
+
+        //     // Close all others
+        //     $('.custom_select').removeClass('active')
+        //         .next('.select_options').slideUp();
+        //     $('.select_wrapper').removeClass('active');
+
+        //     if (!isActive) {
+        //         // Open this one
+        //         $customSelect.addClass('active').next('.select_options').slideDown();
+        //         $wrapper.addClass('active');
+        //         $customSelect.trigger('focus');
+        //     }
+        // });
+
+        if (isStateSelect) {
+            $customSelect.on('keyup', function () {
+                var searchTerm = $(this).val().toLowerCase();
+                $optionItems.each(function () {
+                    $(this).toggle($(this).text().toLowerCase().includes(searchTerm));
+                });
+            });
+        }
+      
+        $optionItems.on('click', function (e) {
+            e.stopPropagation();
+            if ($(this).hasClass('disabled')) return;
+
+            var value = $(this).data('val');
+            var labelText = $(this).clone().children().remove().end().text().replace(/\s+/g, ' ').trim();
+
+            $customSelect.val(labelText);
+            $this.val(value).trigger('change');
+            $optionList.slideUp();
+
+            $wrapper.addClass('filled').removeClass('active');
+            $customSelect.removeClass('active');
+        });
+
+        $(document).on('mousedown', function (e) {
+            if (!$(e.target).closest('.select_wrapper').length || ($(e.target).is('input, select') && !$(e.target).hasClass('custom_select'))) {
+                $('.custom_select').removeClass('active');
+                $('.select_options').slideUp();
+                $('.select_wrapper').removeClass('active');
+            }
+        });
+
+        if ($this.val()) {
+            $wrapper.addClass('filled');
+            var selectedOption = $this.find('option:selected');
+            var selectedText = selectedOption.clone().children().remove().end().text().replace(/\s+/g, ' ').trim();
+            $customSelect.val(selectedText);
+        }
+    });
+});
+
+// ---------------------------
+// Country Code Selection Plugin (intlTelInput)
+// ---------------------------
+$(document).ready(function () {
+    $(".phone_number").intlTelInput({
+        initialCountry: "in",
+        separateDialCode: true,
+    });
+});
+
+// ---------------------------
+// Tooltip Js
+// ---------------------------
+$(document).ready(function () {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+});
+// --------------------------------
+//This is a common JS, if you have already used it then remove it. (End)
+// --------------------------------
+
+jQuery(document).ready(function ($) {
+    $('.login_travellerCard.card_login').each(function () {
+        const $cardLogin = $(this);
+        const $guestBtn = $cardLogin.find('.btn_primary_border').first(); // Continue as Guest
+        const $cancelBtn = $cardLogin.find('.btn_primary_border').last(); // Cancel (optional)
+        const $formBlock = $cardLogin.find('.form_block');
+        const $btnGrps = $cardLogin.find('.btn_grps').first(); // Button group with Guest/Login
+        const $submitBtn = $cardLogin.find('.btn_submit');
+        const $emailInput = $formBlock.find('input[type="text"]');
+        const $loginWrpr = $cardLogin.find('.login_wrpr');
+        const $afterLogin = $cardLogin.find('.after_login');
+
+        let hasLoginCardClosed = false;
+
+        // 1. Continue as Guest button click
+        $guestBtn.on('click', function () {
+            $btnGrps.hide();
+            $formBlock.slideDown(200);
+        });
+
+        // 2. Enable Submit button only if email is entered
+        $emailInput.on('input', function () {
+            const emailVal = $(this).val().trim();
+            $submitBtn.prop('disabled', emailVal === '');
+        });
+
+        // $submitBtn.on('click', function () {
+        //     $loginWrpr.hide();
+        //     $afterLogin.show();
+
+        //     setTimeout(() => {
+        //         $cardLogin.slideUp(() => {
+        //             hasLoginCardClosed = true;
+        //             $('body').css('overflow', '');
+        //         });
+        //         removeBackdrop();
+        //     }, 2000);
+        // });
+
+        // 4. Cancel click – return to Guest/Login buttons
+        $cancelBtn.on('click', function () {
+            $formBlock.hide();
+            $btnGrps.show();
+            $emailInput.val('');            // Clear input
+            $submitBtn.prop('disabled', true); // Disable Submit again
+        });
+    });
+});
+
+function formatDateDDMMYYYY(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0-indexed month
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+// ---------------------------
+// Reusable multi-instance date picker for .dob_input + .singleDate-calendar blocks with independent logic
+// ---------------------------
+function initSingleDateCalendars($scope = $(document)) {
+    const today = new Date();
+    const months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const shortMonths = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    function formatDate(date) {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = shortMonths[date.getMonth()];
+        const year = date.getFullYear();
+        return `${day} ${month}, ${year}`;
+    }
+
+    $scope.find('.single-calender').each(function () {
+        const $block = $(this);
+        if ($block.data("initialized")) return; // Prevent duplicate init
+        $block.data("initialized", true);
+
+        const calendarType = $block.find('.calender_input').data('calendartype');
+        let selectedDate = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+
+        const $calendar = $block.find('.singleDate-calendar');
+        const $input = $block.find('.calender_input');
+        const $monthSelect = $calendar.find('.month-select');
+        const $yearSelect = $calendar.find('.year-select');
+        const $datesContainer = $calendar.find('.calendar-dates');
+
+        function isDateDisabled(date) {
+            if (calendarType === 'dob' || calendarType === 'issue') {
+                return date > today; // disable future dates
+            } else if (calendarType === 'expiry' || calendarType === 'travel') {
+                return date < today; // disable past dates
+            }
+            return false;
+        }
+
+        function populateMonthYear() {
+            $monthSelect.empty();
+            months.forEach((m, i) => {
+                $monthSelect.append(`<option value="${i}" ${i === currentMonth ? 'selected' : ''}>${m}</option>`);
+            });
+
+            let startYear, endYear;
+            if (calendarType === 'dob' || calendarType === 'issue') {
+                startYear = today.getFullYear() - 100;
+                endYear = today.getFullYear();
+            } else if (calendarType === 'expiry' || calendarType === 'travel') {
+                startYear = today.getFullYear();
+                endYear = today.getFullYear() + 50;
+            } else {
+                startYear = today.getFullYear() - 100;
+                endYear = today.getFullYear() + 50;
+            }
+
+            $yearSelect.empty();
+            for (let y = endYear; y >= startYear; y--) {
+                $yearSelect.append(`<option value="${y}" ${y === currentYear ? 'selected' : ''}>${y}</option>`);
+            }
+        }
+
+        function renderCalendar(month, year) {
+            $datesContainer.empty();
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const start = (firstDay + 6) % 7;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+
+            for (let i = start - 1; i >= 0; i--) {
+                const day = prevMonthDays - i;
+                const prevDate = new Date(year, month - 1, day);
+                const disabled = isDateDisabled(prevDate);
+                $datesContainer.append(`<span class="other-month ${disabled ? 'disabled' : ''}" data-date="${prevDate}">${day}</span>`);
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const thisDate = new Date(year, month, d);
+                const disabled = isDateDisabled(thisDate);
+                const isSelected = selectedDate.toDateString() === thisDate.toDateString();
+                $datesContainer.append(`<span class="${disabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''}" data-date="${thisDate}">${d}</span>`);
+            }
+
+            const totalDisplayed = start + daysInMonth;
+            const remaining = 42 - totalDisplayed;
+            for (let i = 1; i <= remaining; i++) {
+                const nextDate = new Date(year, month + 1, i);
+                const disabled = isDateDisabled(nextDate);
+                $datesContainer.append(`<span class="other-month ${disabled ? 'disabled' : ''}" data-date="${nextDate}">${i}</span>`);
+            }
+        }
+
+        // Backdrop helpers
+        function addCalendarBackdrop($calendar) {
+            if (!$calendar.next('.custom-backdrop').length) {
+                const $backdrop = $('<div class="custom-backdrop fade"></div>');
+                $calendar.after($backdrop);
+                $('body').css('overflow', 'hidden');
+                setTimeout(() => $backdrop.addClass('show'), 10);
+            }
+        }
+
+        function removeCalendarBackdrop($calendar) {
+            const $backdrop = $calendar.next('.custom-backdrop');
+            if ($backdrop.length) {
+                $backdrop.removeClass('show');
+                $('body').css('overflow', '');
+                setTimeout(() => $backdrop.remove(), 150);
+            }
+        }
+
+        // Input click toggle
+        $input.on('click', function (e) {
+            e.stopPropagation();
+            if ($calendar.is(':visible')) {
+                $calendar.slideUp(300);
+                if (window.innerWidth < 768) {
+                    removeCalendarBackdrop($calendar);
+                }
+            } else {
+                $('.singleDate-calendar').not($calendar).slideUp(300).each(function () {
+                    removeCalendarBackdrop($(this));
+                });
+                $calendar.stop(true, true).slideDown(300);
+
+                if (window.innerWidth < 768) {
+                    addCalendarBackdrop($calendar);
+                }
+            }
+        });
+
+        // Month/Year change
+        $monthSelect.on('change', function () {
+            currentMonth = parseInt($(this).val());
+            renderCalendar(currentMonth, currentYear);
+        });
+        $yearSelect.on('change', function () {
+            currentYear = parseInt($(this).val());
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        // Date select
+        $datesContainer.on('click', 'span[data-date]:not(.disabled)', function () {
+            const clickedDate = new Date($(this).attr('data-date'));
+            selectedDate = clickedDate;
+
+            const formattedDate = formatDateDDMMYYYY(clickedDate); // "DD/MM/YYYY"
+            $input.val(formattedDate);       // Update input visually
+            $input.trigger('input');         // Sync with Vue v-model
+            // Ensure Vue v-model bound to the underlying input updates
+            if ($input.length) {
+                const el = $input[0];
+                el.dispatchEvent(new Event('input', { bubbles: true }));
+                el.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            $calendar.slideUp(200);
+            renderCalendar(currentMonth, currentYear);
+            removeCalendarBackdrop($calendar);
+        });
+
+
+
+
+        // Init
+        populateMonthYear();
+        renderCalendar(currentMonth, currentYear);
+    });
+}
+
+
+
+
+
+jQuery(function () {
+    let currentStep = 1;
+    const wrapper = jQuery(".calculate_price"); // 👈 Parent container
+    const totalSteps = wrapper.find(".step").length;
+
+    function updateStepper() {
+        wrapper.find(".step").each(function () {
+            const stepNum = parseInt(jQuery(this).data("step"));
+
+            if (stepNum < currentStep) {
+                jQuery(this).addClass("complete");
+            }
+
+            jQuery(this).toggleClass("active", stepNum === currentStep);
+        });
+
+        wrapper.find(".accordion-collapse").each(function () {
+            const stepNum = parseInt(jQuery(this).data("step"));
+            const collapseEl = this;
+            const buttonEl = jQuery(this).prev().find(".accordion-button");
+
+            const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl, {
+                toggle: false,
+            });
+
+            if (stepNum === currentStep) {
+                bsCollapse.show();
+                buttonEl.removeClass("collapsed");
+            } else {
+                bsCollapse.hide();
+                buttonEl.addClass("collapsed");
+            }
+        });
+    }
+
+    // ✅ Next button
+    wrapper.on("click", ".nextBtn", function () {
+        if (currentStep < totalSteps) {
+            currentStep++;
+            updateStepper();
+        }
+    });
+
+    // ✅ Accordion button click
+    wrapper.on("click", ".accordion-button", function (e) {
+        const stepNum = parseInt(jQuery(this).data("step"));
+        const stepEl = wrapper.find('.step[data-step="' + stepNum + '"]');
+
+        if (!stepEl.hasClass("complete") && stepNum !== currentStep) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+        }
+
+        currentStep = stepNum;
+        updateStepper();
+    });
+
+    // ✅ Edit button
+    wrapper.on("click", ".btn_edit", function (e) {
+        const stepNum = parseInt(jQuery(this).closest(".step").data("step"));
+        currentStep = stepNum;
+        updateStepper();
+    });
+
+    // ✅ Initial call
+    updateStepper();
+});
+
+
+$(document).ready(function () {
+    function isDesktop() {
+        return window.innerWidth >= 768;
+    }
+    $('.points_withTooltip, .viewTcs_block, .calculation_mobile').on('click', '.btn_tooltip', function (e) {
+        if (!isDesktop()) {
+            e.stopPropagation();
+            const $tooltip = $(this).closest('.points_withTooltip, .viewTcs_block, .calculation_mobile').find('.custom_tooltip');
+            $('.custom_tooltip').not($tooltip).removeClass('show');
+            $tooltip.toggleClass('show');
+        }
+    });
+    if (isDesktop()) {
+        $('.points_withTooltip .btn_tooltip, .viewTcs_block .btn_tooltip, .calculation_mobile .btn_tooltip').hover(
+            function () {
+                $(this).closest('.points_withTooltip, .viewTcs_block, calculation_mobile').find('.custom_tooltip').addClass('show');
+            },
+            function () {
+                $(this).closest('.points_withTooltip, .viewTcs_block, calculation_mobile').find('.custom_tooltip').removeClass('show');
+            }
+        );
+    }
+    $(document).on('click', function () {
+        if (!isDesktop()) {
+            $('.custom_tooltip').removeClass('show');
+        }
+    });
+});
+
+function travellerDetails_modal() {
+    $('.travellerDetails_modal').each(function () {
+        const $modal = $(this);
+
+        // 1. Toggle .payer_details on checkbox
+        $modal.find('.payerDetails').each(function () {
+            const $checkbox = $(this);
+            const $wrapper = $checkbox.closest('.cntct_forms');
+            const $details = $wrapper.find('.payer_details');
+
+            // Show/hide initially based on checkbox state
+            if ($checkbox.is(':checked')) {
+                $details.show(); // show on load if checked
+            } else {
+                $details.hide();
+            }
+
+            // Then attach change handler
+            $checkbox.on('change', function () {
+                if ($checkbox.is(':checked')) {
+                    $details.slideDown(200);
+                } else {
+                    $details.slideUp(200);
+                }
+            });
+        });
+
+        // 2. PAN number input show/hide .verified (multi-use)
+        // $modal.find('.section_payer').each(function () {
+        //     const $section = $(this);
+
+        //     // Hide on load
+        //     $section.find('.verified').hide();
+
+        //     // On input in PAN field (3rd input in this section)
+        //     $section.find('.input_grp input[type="text"]').eq(2).on('input', function () {
+        //         const inputVal = $(this).val().trim();
+        //         const $verified = $section.find('.verified');
+
+        //         if (inputVal.length > 0) {
+        //             $verified.stop(true, true).slideDown(200);
+        //         } else {
+        //             $verified.stop(true, true).slideUp(200);
+        //         }
+        //     });
+        // });
+    });
+}
+
+// Fare Details: Toggle Fare Wrapper Section
+// -------------------------------------------
+jQuery(document).ready(function () {
+    jQuery(".price_offers .btn_fareBreakup").on("click", function () {
+        var $btn = jQuery(this);
+
+        if ($btn.hasClass("active")) {
+            // Agar active hai to close karo
+            jQuery(".fare_container").slideUp(300);
+            $btn.removeClass("active");
+        } else {
+            // Agar active nahi hai to open karo
+            jQuery(".fare_container").slideDown(300);
+            $btn.addClass("active");
+        }
+    });
+});
+
+jQuery(document).ready(function ($) {
+    $('.travellerDetails_modal').each(function () {
+        const $modal = $(this);
+
+        // 1. Toggle .payer_details on checkbox
+        $modal.find('.payerDetails').on('change', function () {
+            const $wrapper = $(this).closest('.cntct_forms');
+            const $details = $wrapper.find('.payer_details');
+
+            if ($(this).is(':checked')) {
+                $details.slideDown(200);
+            } else {
+                $details.slideUp(200);
+            }
+        });
+
+        // 2. PAN number input show/hide .verified (multi-use)
+        $modal.find('.section_payer').each(function () {
+            const $section = $(this);
+
+            // Hide on load
+            $section.find('.verified').hide();
+
+            // On input in PAN field (3rd input in this section)
+            $section.find('.input_grp input[type="text"]').eq(2).on('input', function () {
+                const inputVal = $(this).val().trim();
+                const $verified = $section.find('.verified');
+
+                if (inputVal.length > 0) {
+                    $verified.stop(true, true).slideDown(200);
+                } else {
+                    $verified.stop(true, true).slideUp(200);
+                }
+            });
+        });
+    });
+});
+
+jQuery(document).ready(function ($) {
+    const $travellerDetails_modal = $('.travellerDetails_modal'),
+        isMobile = window.matchMedia("(max-width:767px)").matches;
+
+    const removeBackdrop = () => {
+        const $b = $travellerDetails_modal.find('.custom-backdrop[data-backdrop-for="traveller"]');
+        if ($b.length) {
+            $b.removeClass('show').fadeOut(150, function () {
+                $(this).remove();
+            });
+        }
+    };
+
+    // Toggle traveller list dropdown
+    $travellerDetails_modal.find('.btn_savedList').on('click', function (e) {
+        e.stopPropagation();
+        const $btn = $(this),
+            $list = $btn.siblings('.traveller_list');
+        $btn.toggleClass('open');
+        $list.slideToggle(200);
+
+        if (isMobile && $btn.hasClass('open') && !$list.next('.custom-backdrop[data-backdrop-for="traveller"]').length) {
+            const $backdrop = $('<div class="custom-backdrop fade" data-backdrop-for="traveller"></div>');
+            $list.after($backdrop);
+            $backdrop.addClass('show').fadeIn(300);
+        } else removeBackdrop();
+    });
+
+
+    if (!isMobile) {
+        // Desktop: select immediately on li click
+        $travellerDetails_modal.find('.list_options li').on('click', function (e) {
+            e.stopPropagation();
+            $(this).addClass('active').siblings().removeClass('active').find('.savedTraveller').prop('checked', false);
+            $(this).find('.savedTraveller').prop('checked', true);
+            $travellerDetails_modal.find('.traveller_list').slideUp(200);
+            $travellerDetails_modal.find('.btn_savedList').removeClass('open');
+            removeBackdrop();
+        });
+    } else {
+        // Mobile: single-selection logic
+        const $listItems = $travellerDetails_modal.find('.list_options li'),
+            $selectBtn = $travellerDetails_modal.find('.select_traveller');
+
+        // Initial state: enable only if a checkbox is already checked
+        $selectBtn.prop('disabled', $listItems.find('.savedTraveller:checked').length === 0);
+
+        $listItems.on('click', function (e) {
+            e.stopPropagation();
+            // Single-selection
+            $listItems.not(this).removeClass('active').find('.savedTraveller').prop('checked', false);
+            $(this).addClass('active').find('.savedTraveller').prop('checked', true);
+
+            // Enable/disable select button based on checked state
+            $selectBtn.prop('disabled', $listItems.find('.savedTraveller:checked').length === 0);
+        });
+
+        $selectBtn.on('click', function (e) {
+            e.stopPropagation();
+            $travellerDetails_modal.find('.traveller_list').slideUp(200);
+            $travellerDetails_modal.find('.btn_savedList').removeClass('open');
+            removeBackdrop();
+        });
+
+        // Close button
+        $travellerDetails_modal.find('.btn_close').on('click', function (e) {
+            e.stopPropagation();
+            $(this).closest('.traveller_list').slideUp(200);
+            $(this).closest('.traveller_list').siblings('.btn_savedList').removeClass('open');
+            removeBackdrop();
+        });
+    }
+
+    // Close on outside click
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest($travellerDetails_modal).length) {
+            $travellerDetails_modal.find('.traveller_list').slideUp(200);
+            $travellerDetails_modal.find('.btn_savedList').removeClass('open');
+            removeBackdrop();
+        }
+    });
+
+    // Close on backdrop click
+    $travellerDetails_modal.on('click', '.custom-backdrop[data-backdrop-for="traveller"]', function () {
+        $travellerDetails_modal.find('.traveller_list').slideUp(200);
+        $travellerDetails_modal.find('.btn_savedList').removeClass('open');
+        removeBackdrop();
+    });
+});
+
+jQuery(document).ready(function ($) {
+    $('.travellerDetails_modal').each(function () {
+        const $modal = $(this);
+
+        // 1. Toggle .payer_details on checkbox
+        $modal.find('.payerDetails').on('change', function () {
+            const $wrapper = $(this).closest('.cntct_forms');
+            const $details = $wrapper.find('.payer_details');
+
+            if ($(this).is(':checked')) {
+                $details.slideDown(200);
+            } else {
+                $details.slideUp(200);
+            }
+        });
+
+        // 2. PAN number input show/hide .verified (multi-use)
+        $modal.find('.section_payer').each(function () {
+            const $section = $(this);
+
+            // Hide on load
+            $section.find('.verified').hide();
+
+            // On input in PAN field (3rd input in this section)
+            $section.find('.input_grp input[type="text"]').eq(2).on('input', function () {
+                const inputVal = $(this).val().trim();
+                const $verified = $section.find('.verified');
+
+                if (inputVal.length > 0) {
+                    $verified.stop(true, true).slideDown(200);
+                } else {
+                    $verified.stop(true, true).slideUp(200);
+                }
+            });
+        });
+    });
+});
+
+jQuery(document).ready(function ($) {
+    // Function to format number in Indian style
+    function formatIndianNumber(num) {
+        num = num.replace(/,/g, ''); // Remove existing commas
+        if (isNaN(num) || num === '') return '';
+        return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",") // Standard commas
+            .replace(/(\d+)(?=(\d{2})+\d{3}\b)/g, "$1,"); // Indian style
+    }
+
+    // Loop through each .amount_utilized section
+    $('.amount_utilized').each(function () {
+        const $section = $(this);
+        const $amountInput = $section.find('input[type="text"]');
+        const $applyBtn = $section.find('.btn_amountApply');
+        const $checkedIcon = $section.find('.checked');
+        const $editBtn = $section.find('.btn_amountEdit');
+        const $tcsCalculator = $section.find('.tcs_calculator');
+
+        // Hide check icon & edit button initially
+        $checkedIcon.hide();
+        $editBtn.hide();
+        $tcsCalculator.hide();
+
+        // Format on input & enable/disable Apply button
+        $amountInput.on('input', function () {
+            let rawVal = $(this).val().replace(/,/g, '');
+            if (!isNaN(rawVal) && rawVal.length > 0) {
+                $(this).val(formatIndianNumber(rawVal));
+                $applyBtn.prop('disabled', false);
+            } else {
+                $applyBtn.prop('disabled', true);
+                $checkedIcon.hide();
+                $editBtn.hide();
+            }
+        });
+
+        // On Apply click → show check icon & edit button, disable Apply
+        $applyBtn.on('click', function (e) {
+            e.preventDefault();
+
+            $checkedIcon.stop(true, true).show();
+            $tcsCalculator.stop(true, true).show();
+
+            if ($(window).width() <= 768 && $(this).closest('.tcsDeclaration_wrpr').length) {
+                $editBtn.stop(true, true).show();
+                $applyBtn.hide();
+            } else {
+                $editBtn.stop(true, true).show();
+                $applyBtn.prop('disabled', true);
+            }
+        });
+
+
+        // On Edit click → focus input, enable Apply, hide check icon
+        $editBtn.on('click', function (e) {
+            e.preventDefault();
+            $amountInput.val('');
+            $editBtn.hide();
+            $amountInput.focus();
+            $applyBtn.prop('disabled', false).show();
+            $checkedIcon.hide();
+            $tcsCalculator.hide();
+        });
+
+    });
+});
+function renderCalendarDates($calendar, year, month, maxDate) {
+    const $datesContainer = $calendar.find('.calendar-dates');
+    $datesContainer.empty();
+
+    // Get first day of the month (0 = Sunday, 1 = Monday, ...)
+    const firstDay = new Date(year, month, 1).getDay();
+    // Adjust because your calendar weekdays start with Monday:
+    const offset = (firstDay + 6) % 7; // Convert Sunday=0 to Monday=0 system
+
+    // Get number of days in the month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Add empty spans for offset (to align first day correctly)
+    for (let i = 0; i < offset; i++) {
+        $datesContainer.append('<span class="empty"></span>');
+    }
+
+    // Add days with data-date attribute and disable if beyond maxDate
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const dateISO = date.toISOString().split('T')[0]; // YYYY-MM-DD
+
+        let classes = '';
+        if (date > maxDate) classes = 'disabled';
+
+        $datesContainer.append(`<span data-date="${dateISO}" class="${classes}">${day}</span>`);
+    }
+}
+
+function restrictAdultPaxDOBReviewPage() {
+    const maxYear = new Date().getFullYear() - 12;
+    const today = new Date();
+    const maxDate = new Date(maxYear, today.getMonth(), today.getDate());
+
+    $('input[data-calendartype="dob"]').filter(function() {
+        const $input = $(this);
+        if ($input.attr('name')?.toLowerCase().includes('pan')) return false;
+        if ($input.attr('id')?.toLowerCase().includes('pan')) return false;
+        if ($input.attr('class')?.toLowerCase().includes('pan')) return false;
+
+        if ($input.attr('v-model')?.includes('pax.dob')) return true;
+
+        if ($input.closest('.traveller_details, .travellerDetails_modal, .center_block').length > 0 &&
+            !$input.closest('.payer_details, .section_payer').length) return true;
+
+        return false;
+    }).each(function() {
+        const $input = $(this);
+        const $calendar = $input.closest('.single-calender');
+        const $yearSelect = $calendar.find('.year-select');
+        const $monthSelect = $calendar.find('.month-select');
+        const $datesContainer = $calendar.find('.calendar-dates');
+
+        if ($yearSelect.length && $monthSelect.length && $datesContainer.length) {
+            // Clean up year options above maxYear
+            $yearSelect.find('option').each(function() {
+                if (parseInt($(this).val()) > maxYear) $(this).remove();
+            });
+
+            // Set default selects if invalid
+            if (parseInt($yearSelect.val()) > maxYear || isNaN(parseInt($yearSelect.val()))) {
+                $yearSelect.val(maxYear);
+            }
+            if (isNaN(parseInt($monthSelect.val()))) {
+                $monthSelect.val(today.getMonth());
+            }
+
+            // Render calendar dates initially
+            renderCalendarDates($calendar, parseInt($yearSelect.val()), parseInt($monthSelect.val()), maxDate);
+
+            // Attach change event to re-render calendar on year/month change
+            $yearSelect.off('change.adultDOB').on('change.adultDOB', function() {
+                let y = parseInt($(this).val());
+                if (y > maxYear) $(this).val(maxYear);
+                renderCalendarDates($calendar, parseInt($(this).val()), parseInt($monthSelect.val()), maxDate);
+            });
+
+            $monthSelect.off('change.adultDOB').on('change.adultDOB', function() {
+                let m = parseInt($(this).val());
+                if (m < 0 || m > 11 || isNaN(m)) $(this).val(today.getMonth());
+                renderCalendarDates($calendar, parseInt($yearSelect.val()), parseInt($(this).val()), maxDate);
+            });
+
+            // Attach click once for date selection
+            $datesContainer.off('click.adultDOBReview').on('click.adultDOBReview', 'span[data-date]:not(.disabled)', function(e) {
+                const clickedDate = new Date($(this).attr('data-date'));
+                if (clickedDate <= maxDate) {
+                    const day = String(clickedDate.getDate()).padStart(2, '0');
+                    const month = String(clickedDate.getMonth() + 1).padStart(2, '0');
+                    const year = clickedDate.getFullYear();
+                    const formattedDate = `${day}-${month}-${year}`;
+
+                    $input.val(formattedDate);
+                    $yearSelect.val(year);
+                    $monthSelect.val(clickedDate.getMonth());
+
+                    $input.trigger('input').trigger('change');
+
+                    $calendar.find('.singleDate-calendar').slideUp(200);
+
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+    });
+}
+
+$(document).ready(function() {
+    restrictAdultPaxDOBReviewPage();
+    // It's better to use MutationObserver or event-driven reapply rather than setInterval
+    setInterval(restrictAdultPaxDOBReviewPage, 1000);
+});
+

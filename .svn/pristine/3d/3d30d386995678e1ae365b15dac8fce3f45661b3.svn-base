@@ -1,0 +1,1570 @@
+var holidayContextRoot = "/tcHolidayRS/";
+var commonRSContextRoot = "/tcCommonRS/";
+var myAccountContextRoot = "/TcilMyAccount/";
+var TcilDynamicPackagingContextRoot = "/TcilDynamicPackaging/";
+
+function dateConvert(dateStr) {
+    if (!dateStr) return "";
+    const [day, month, year] = dateStr.split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+    const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ];
+    return `${day} ${monthNames[date.getMonth()]}, ${year}`;
+}
+
+function getRoomAndAdultCounts(roomDetails) {
+    let totalRooms = 1;
+    let totalAdults = 1;
+    if (Array.isArray(roomDetails)) {
+        totalRooms = roomDetails.length;
+        totalAdults = roomDetails.reduce(
+            (sum, room) => sum + (room.noOfAdults || 0),
+            0
+        );
+    }
+    return { totalRooms, totalAdults };
+}
+
+function calculateAge(dobStr) {
+    if (!dobStr || typeof dobStr !== 'string') return null;
+
+    dobStr = dobStr.trim();
+
+    let d, m, y;
+
+    // 1) dd-MM-yyyy
+    let m1 = dobStr.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+    if (m1) {
+        d = parseInt(m1[1], 10);
+        m = parseInt(m1[2], 10);
+        y = parseInt(m1[3], 10);
+    } else {
+        // 2) yyyy-MM-dd
+        let m2 = dobStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+        if (m2) {
+            y = parseInt(m2[1], 10);
+            m = parseInt(m2[2], 10);
+            d = parseInt(m2[3], 10);
+        } else {
+            // 3) "03 Oct, 2025" or "3 Oct 2025" or "03 Oct 2025"
+            let cleaned = dobStr.replace(/,/g, '');
+            let parts = cleaned.split(/\s+/); // d Mon yyyy
+            if (parts.length === 3 && /^\d{1,2}$/.test(parts[0]) && /^\d{4}$/.test(parts[2])) {
+                const monMap = {
+                    jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
+                    jul: 7, aug: 8, sep: 9, sept: 9, oct: 10, nov: 11, dec: 12
+                };
+                d = parseInt(parts[0], 10);
+                y = parseInt(parts[2], 10);
+                const monKey = parts[1].toLowerCase();
+                m = monMap[monKey];
+            }
+        }
+    }
+
+    if (!(d && m && y)) return null;
+    if (m < 1 || m > 12 || d < 1 || d > 31) return null;
+
+    const dob = new Date(y, m - 1, d);
+    if (isNaN(dob.getTime())) return null;
+
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+    return age >= 0 && age < 130 ? age : null;
+}
+
+function getGenderText(gender, age) {
+    if (gender === "M" && age >= 18) return "Male";
+    if (gender === "F" && age >= 18) return "Female";
+    if (age < 18 && age > 1) return "Child";
+    return "Infant";
+}
+
+function getIconSrc(gender, age) {
+    if (age === null) return "";
+    if (age >= 18) {
+        if (gender === "M") return "/images/tcHolidays/common-img/user-icon-01.svg";
+        if (gender === "F") return "/images/tcHolidays/common-img/user-icon-02.svg";
+    } else if (age > 1 && age < 18) {
+        if (gender === "M") return "/images/tcHolidays/common-img/user-icon-03.svg";
+        if (gender === "F") return "/images/tcHolidays/common-img/user-icon-04.svg";
+    } else {
+        return "/images/tcHolidays/common-img/user-icon-05.svg";
+    }
+    return "";
+}
+
+function getLoggedInDetails() {
+    let userDetailsObj = {
+        user: "",
+        custId: "",
+        accountType: "",
+        userId: ""
+    };
+    const userDetailsFamilyTreeStr = localStorage.getItem(
+        "userDetailandFamilyTree"
+    );
+    if (
+        userDetailsFamilyTreeStr != undefined &&
+        userDetailsFamilyTreeStr != null &&
+        userDetailsFamilyTreeStr != ""
+    ) {
+        const userDetailsFamilyTree = JSON.parse(userDetailsFamilyTreeStr);
+        if (userDetailsFamilyTree != undefined && userDetailsFamilyTree != null) {
+            console.log("User Details:", userDetailsFamilyTree);
+            if (
+                userDetailsFamilyTree.userDetail != undefined &&
+                userDetailsFamilyTree.userDetail != null
+            ) {
+                const userDetails = userDetailsFamilyTree.userDetail;
+                if (
+                    userDetails.userTypeId != undefined &&
+                    userDetails.userTypeId != null
+                ) {
+                    console.log("User is Customer -- " + userDetails.userTypeId);
+                    if (userDetails.userTypeId == "Customer") {
+                        userDetailsObj.user = "Customer";
+                        userDetailsObj.custId = userDetails.custId;
+                    } else if (userDetails.userTypeId == "Staff") {
+                        userDetailsObj.user = "Staff";
+                        userDetailsObj.accountType = userDetails.accountType == "TC" ? "TCIL" : "SOTC";
+                        userDetailsObj.userId = userDetails.userId;
+                    } else {
+                        userDetailsObj.user = "";
+                        userDetailsObj.custId = "";
+                        console.log(
+                            "User Type is neither Customer nor Staff -- " +
+                            userDetails.userTypeId
+                        );
+                    }
+                }
+            }
+        }
+    }
+    return userDetailsObj;
+}
+
+
+
+function formatCurrency(amount) {
+    return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(amount);
+}
+
+// -----------------------------------------
+// Vue App
+// -----------------------------------------
+const gstError = ref(false);
+const isInternationalPackage = ref(false);
+const travellersList = ref([]);
+var savedTravellers = ref([]);
+var traveller = ref({
+    firstName: "",
+    lastName: "",
+    title: "",
+    roomNo: 0,
+    dob: "",
+    passportNo: "",
+    passportExpireDate: "",
+    nameOnPanCard: "",
+    dobOnPanCard: "",
+    isPayer: "N",
+    paymentPayer: "N",
+    hotelRoomType: 0,
+    panNumber: "",
+    osi: "",
+    travellerNo: 0,
+    paxType: 0,
+    gender: "",
+    mealPreference: "",
+    utilizedAmountByCust: 0,
+    usedForFutureBookings: false,
+    panMessage: "",
+    panStatus: "",
+    utilizedAmount: 0,
+    canvasUtilizedAmount: 0,
+    paxName: "",
+    paxLabel: "",
+    paxBedNote: "",
+    errors: getEmptyPaxErrors()
+});
+
+
+
+
+const custId = ref(0);
+
+
+// New Code Start 
+var travellers = [];
+var roomDetails = ref([]);
+const loggedInDetails = getLoggedInDetails();
+const selectedTraveller = ref(1);
+const selectedRoom = ref(1);
+const travellersListForDisplay = ref([]);
+let travellerNo = 1;
+let errors = ref(getEmptyPaxErrors());
+function getEmptyPaxErrors() {
+    return {
+        title: "",
+        firstName: "",
+        lastName: "",
+        dob: "",
+        mealPreference: "",
+        passportNo: "",
+        passportExpireDate: "",
+        nameOnPanCard: "",
+        dobOnPanCard: "",
+        panNumber: "",
+        utilizedAmount: "",
+        mobNumber: "",
+        emailId: "",
+        address: "",
+        pinCode: "",
+        city: "",
+        gstin: "",
+        panValidityDate: ""
+    };
+}
+function travellersForRoom(roomNo) {
+    console.log(roomNo);
+    console.log(travellersListForDisplay.value.filter(t => t.roomNo === roomNo));
+    return travellersListForDisplay.value.filter(t => t.roomNo === roomNo);
+}
+
+function syncTravellersListToDisplay() {
+    if (!travellersList.value || travellersList.value.length === 0) return;
+
+    travellersList.value.forEach(t => {
+        const idx = travellersListForDisplay.value.findIndex(td => td.travellerNo === t.travellerNo);
+        if (idx !== -1) {
+            // Update existing entry
+            Object.keys(t).forEach(key => {
+                travellersListForDisplay.value[idx][key] = t[key];
+            });
+        } else {
+            // Add new entry
+            travellersListForDisplay.value.push({ ...t });
+        }
+    });
+}
+
+function buildTravellersListForDisplay(roomDetails) {
+    const paxTypes = [
+        { key: 'noOfAdults', label: 'Adult', type: 'adult', bedNote: null, paxType: 0 },
+        { key: 'noOfCwb', label: 'Child', type: 'childWithBed', bedNote: 'With Bed', paxType: 1 },
+        { key: 'noOfCnbJunior', label: 'Child', type: 'childWithoutBed', bedNote: 'Without Bed', paxType: 2 },
+        { key: 'noOfCnbSenior', label: 'Child', type: 'childWithoutBed', bedNote: 'Without Bed', paxType: 4 },
+        { key: 'noOfInfant', label: 'Infant', type: 'infant', bedNote: null, paxType: 3 }
+    ];
+
+    for (const room of roomDetails.value) {
+        let childCounter = 1;
+        for (const paxType of paxTypes) {
+            for (let i = 0; i < room[paxType.key]; i++) {
+                traveller.value.roomNo = room.roomNo;
+                if (paxType.label === 'Child') {
+                    traveller.value.paxName = `${paxType.label} ${childCounter}`;
+                    traveller.value.paxLabel = `${paxType.label} ${childCounter}`;
+                    childCounter++;
+                } else {
+                    traveller.value.paxName = `${paxType.label} ${i + 1}`;
+                    traveller.value.paxLabel = `${paxType.label} ${i + 1}`;
+                }
+                traveller.value.paxType = paxType.paxType;
+                traveller.value.paxBedNote = paxType.bedNote;
+                traveller.value.travellerNo = travellerNo++;
+                travellersListForDisplay.value.push({ ...traveller.value });
+            }
+        }
+    }
+
+    travellersList.value.forEach(t => {
+        travellersListForDisplay.value.forEach(td => {
+            console.log("Comparing:", t.travellerNo, td.travellerNo);
+        });
+    });
+
+    syncTravellersListToDisplay();
+}
+
+
+const uniqueRoomNumbers = computed(() => {
+    const roomsSet = new Set(travellersListForDisplay.value.map(t => t.roomNo));
+    return Array.from(roomsSet);
+});
+
+function setActiveRoom(roomNo) {
+    selectedRoom.value = roomNo;
+    selectedTraveller.value = travellersListForDisplay.value.find(t => t.roomNo === roomNo).travellerNo;
+}
+
+function setActiveTraveller(travellerNo) {
+    selectedTraveller.value = travellerNo;
+    console.log("Active Traveller:", travellerNo);
+    const paxForDisplay = travellersListForDisplay.value.filter(t => t.travellerNo === travellerNo);
+    console.log("Selected Traveller:", paxForDisplay);
+}
+
+function uiDateToApi(uiStr) {
+    // Accepts: "03 Oct, 2025" / "3 Oct 2025" / "03-Oct-2025" / "2025-10-03"
+    if (!uiStr) return '';
+    const isoMatch = uiStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (isoMatch) {
+        return `${isoMatch[3]}-${isoMatch[2]}-${isoMatch[1]}`;
+    }
+    const cleaned = uiStr.replace(/,/g, '').replace(/-/g, ' ').trim();
+    const parts = cleaned.split(/\s+/);
+    if (parts.length !== 3) return '';
+    let [d, mon, y] = parts;
+    if (!/^\d{1,2}$/.test(d) || !/^\d{4}$/.test(y)) return '';
+    const map = {
+        jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
+        jul: '07', aug: '08', sep: '09', sept: '09', oct: '10', nov: '11', dec: '12'
+    };
+    const mm = map[mon.toLowerCase()];
+    if (!mm) return '';
+    d = d.padStart(2, '0');
+    return `${d}-${mm}-${y}`;
+}
+
+function apiDateToUi(apiStr) {
+    // Reuse existing dateConvert if format is dd-MM-yyyy
+    if (!apiStr) return '';
+    if (/^\d{2}-\d{2}-\d{4}$/.test(apiStr)) return dateConvert(apiStr);
+    // If already UI style keep as is
+    return apiStr;
+}
+
+function normalizeToApiDate(val) {
+    if (!val) return '';
+    // If already dd-MM-yyyy
+    if (/^\d{2}-\d{2}-\d{4}$/.test(val)) return val;
+    // Try YYYY-MM-DD
+    const iso = val.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (iso) return `${iso[3]}-${iso[2]}-${iso[1]}`;
+    // Fallback to existing parser
+    const converted = uiDateToApi(val);
+    return converted || val;
+}
+
+// New Code End 
+const tdpData = ref(null);
+const userAssignedBranch = ref([]);
+const canvasAgentQuery = ref("");
+const selectedAgent = ref("");
+const selectedUserAssignedBranch = ref("");
+const canvasAgentDetails = ref([]);
+let selectDropDown = false;
+createApp({
+
+    setup() {
+        // NEW: saved travellers decorated
+        savedTravellers = computed(() => {
+            const list = tdpData.value?.savedTravellersList || [];
+            return list.map(decorateTraveller);
+        });
+        // Decorate traveller (NEW)
+        function decorateTraveller(raw) {
+            const age = calculateAge(raw.dob);
+            return {
+                ...raw,
+                age,
+                genderText: getGenderText(raw.gender, age),
+                iconSrc: getIconSrc(raw.gender, age),
+                fullName: `${raw.firstName || ""} ${raw.lastName || ""}`.trim(),
+            };
+        }
+
+        const travellersWithAgeAndIcon = computed(() => savedTravellers.value);
+
+        function selectSavedTraveller(selectedSavedTraveller) {
+            console.log("Selected Traveller:", selectedSavedTraveller);
+            const skipKeys = ["roomNo", "travellerNo"];
+            travellersListForDisplay.value
+                .filter(t => t.travellerNo === selectedTraveller.value)
+                .forEach(t => {
+                    console.log("Before update:", t);
+                    Object.keys(t).forEach(key => {
+                        if (
+                            selectedSavedTraveller[key] !== undefined &&
+                            !skipKeys.includes(key)
+                        ) {
+                            t[key] = selectedSavedTraveller[key];
+                        }
+                    });
+                    console.log("After update:", t);
+                });
+        }
+
+
+        // Existing refs
+
+        const totalRooms = ref();
+        const totalAdults = ref();
+        const quoteId = ref("");
+        const gstStates = ref([]);
+        const selectedGstState = ref('');
+        const gstInData = ref({});
+        const gstNumber = ref('');
+        const summarySelectedRoom = ref(1);
+        const optionalActivityCount = ref();
+        const airlineDetails = ref([]);
+        const outboundFlights = computed(() =>
+            airlineDetails.value.filter(f => f.journeyTypeId === 0)
+        );
+
+        const returnFlights = computed(() =>
+            airlineDetails.value.filter(f => f.journeyTypeId === 1)
+        );
+        const optionalsTourCost = ref(0);
+        const ltDiscountAmount = ref(0);
+        const promocodeAmount = ref(0);
+        const gstAmount = ref(0);
+        const currencyBreakupList = ref([]);
+        const oppId = ref("");
+        const allCitiesForState = ref([]);             // cached full list for current state
+        const showCitySuggestions = ref(false);
+        const filteredCitySuggestions = ref([]);
+        let citySuggestHideTimer = null;
+
+        async function fetchCitiesForGstState(gstStateCode) {
+            if (!gstStateCode) return;
+            try {
+                const url = `tcCommonRS/profile.autosuggest/gstStateCities?state=${gstStateCode}`;
+                const res = await doAxios({ method: 'get', url });
+                const data = Array.isArray(res.data) ? res.data : [];
+                allCitiesForState.value = (String(gstStateCode) === '32'
+                    ? data.filter(c => c.cityName !== 'Cochin')
+                    : data
+                ).map(c => c.cityName);
+            } catch (e) {
+                console.error('City fetch failed', e);
+                allCitiesForState.value = [];
+            }
+        }
+
+
+        // Filter helper
+        function buildCitySuggestions(query) {
+            const q = query.trim().toLowerCase();
+            if (!q) {
+                filteredCitySuggestions.value = [];
+                showCitySuggestions.value = false;
+                return;
+            }
+            // Ensure list loaded (lazy)
+            if (!allCitiesForState.value.length && contactDetails.value.stateCode) {
+                // fire & continue (non-blocking)
+                fetchCitiesForGstState(contactDetails.value.stateCode).then(() => {
+                    filteredCitySuggestions.value = allCitiesForState.value
+                        .filter(c => c.toLowerCase().includes(q))
+                        .slice(0, 30);
+                    showCitySuggestions.value = filteredCitySuggestions.value.length > 0;
+                });
+                return;
+            }
+            filteredCitySuggestions.value = allCitiesForState.value
+                .filter(c => c.toLowerCase().includes(q))
+                .slice(0, 30);
+            showCitySuggestions.value = filteredCitySuggestions.value.length > 0;
+        }
+
+        function onCityInput() {
+            const val = contactDetails.value.city || '';
+            buildCitySuggestions(val);
+            validateField && validateField('city');
+        }
+
+        function onCityFocus() {
+            if (contactDetails.value.city && filteredCitySuggestions.value.length) {
+                showCitySuggestions.value = true;
+            }
+        }
+
+        function onCityBlur() {
+            citySuggestHideTimer = setTimeout(() => {
+                showCitySuggestions.value = false;
+            }, 120);
+        }
+
+        function selectCitySuggestion(c) {
+            if (citySuggestHideTimer) {
+                clearTimeout(citySuggestHideTimer);
+                citySuggestHideTimer = null;
+            }
+            contactDetails.value.city = c;
+            showCitySuggestions.value = false;
+            filteredCitySuggestions.value = [];
+            validateField && validateField('city');
+        }
+
+        // (Optional) close on Esc
+        function onCityKeydown(e) {
+            if (e.key === 'Escape') {
+                showCitySuggestions.value = false;
+            }
+        }
+
+
+
+        const contactDetails = ref({
+            title: '',
+            firstName: '',
+            lastName: '',
+            mobNumber: '',
+            emailId: '',
+            address: '',
+            pinCode: '',
+            city: '',
+            stateCode: '',
+            isSaved: '',
+            state: '',
+        });
+
+        const gstInDetails = ref({
+            customerGSTIN: '',
+            customerLegalName: '',
+            customerLocation: '',
+            customerPincode: '',
+            customerStateCode: '',
+            customerTradeName: '',
+            customerBuildingNumber: '',
+        });
+
+        watch(contactDetails, () => {
+            console.log(contactDetails.value)
+        })
+        watch(gstNumber, (newVal) => {
+            gstError.value = false; // Clear error immediately on change
+        });
+        // new code start 
+        // watch(() => pax.firstName, (newVal) => {
+        //     if (pax.errors && pax.errors.firstName) {
+        //         // Re-validate just this field
+        //         if (/^[A-Za-z ]+$/.test(newVal.trim())) {
+        //             pax.errors.firstName = "";
+        //         }
+        //     }
+        // });
+
+        // function onFieldInput(pax, field, value) {
+        //     pax[field] = value;
+        //     // Re-validate just this field
+        //     const fieldError = validateSingleField(field, value, pax);
+        //     pax.errors[field] = fieldError || "";
+        // }
+        // new code end 
+
+        watch(canvasAgentQuery, (val) => {
+            console.log("v -- ", val);
+            // Split by spaces, filter out empty strings
+            if (val.length >= 3) {
+                console.log("Fetching canvas agents for:", val);
+                canvasAgentDetails.value = [];
+                fetchCanvasAgent(val); // Call your API function here
+            } else {
+                canvasAgentDetails.value = [];
+            }
+        });
+
+        watch(
+            () => contactDetails.value.stateCode,
+            async (code) => {
+                contactDetails.value.city = '';
+                showCitySuggestions.value = false;
+                filteredCitySuggestions.value = [];
+                allCitiesForState.value = [];
+                if (code) {
+                    // Eager load (optional). Comment this line to make it purely lazy.
+                    await fetchCitiesForGstState(code);
+                    allCitiesForState.value = allCitiesForState.value.length ? allCitiesForState.value : gstStateCities?.value || allCitiesForState.value;
+                }
+            }
+        );
+        // PAN / TCS
+        var tcsResponse = ref();
+
+        // Legacy array placeholder
+        const travellersDetailsList = ref([]);
+
+        async function getState() {
+            try {
+                console.log("Inside getState()");
+                let url = commonRSContextRoot + 'tcilGstService/getGstStateCodes/4';
+                const response = await doAxios({ method: "get", url });
+                gstStates.value = response.data || [];
+
+            } catch (err) {
+                console.error("State fetch failed:", err);
+            }
+        }
+
+        async function getGstDetails(gstNumber) {
+            try {
+                console.log("Inside getGstDetails()", gstNumber);
+                let url = myAccountContextRoot + 'login/getGstInDetails/' + gstNumber;
+                const response = await doAxios({
+                    method: "get",
+                    url: url,
+                });
+                gstInData.value = response.data || {};
+                if (gstInData.value.status) {
+                    jQuery('.GSTdetails').slideDown();
+                    formatGstIn(gstInData.value);
+                } else {
+                    gstError.value = true;
+                    jQuery('.GSTdetails').hide();
+                }
+                console.log("GSTIn Details:", gstInData.value);
+            } catch (err) {
+                console.error("GSTIn verification failed:", err);
+            }
+        }
+
+        function formatGstIn(raw) {
+            // raw expected shape: { gSTINDetails: { ... }, status: true }
+            const src = raw && raw.gSTINDetails ? raw.gSTINDetails : null;
+            if (!src) {
+                clearGstInDetails();
+                return;
+            }
+            const mapped = {
+                customerGSTIN: src.customerGSTIN || '',
+                customerLegalName: src.customerLegalName || '',
+                customerLocation: src.customerLocation || '',
+                customerPincode: src.customerPincode || '',
+                customerStateCode: src.customerStateCode || '',
+                customerTradeName: src.customerTradeName || '',
+                customerBuildingNumber: src.customerBuildingNumber || '',
+            };
+            Object.assign(gstInDetails.value, mapped);
+        }
+
+        function clearGstInDetails() {
+            Object.keys(gstInDetails.value).forEach(k => gstInDetails.value[k] = '');
+        }
+
+        // Copy selected saved contact into editable form model
+        function onSelectSavedContact(contactDetailsObj) {
+            contactDetails.value.firstName = contactDetailsObj.firstName;
+            contactDetails.value.lastName = contactDetailsObj.lastName;
+            contactDetails.value.title = contactDetailsObj.title;
+            contactDetails.value.emailId = contactDetailsObj.emailId;
+            contactDetails.value.mobNumber = contactDetailsObj.mobNumber;
+            contactDetails.value.address = contactDetailsObj.address;
+            contactDetails.value.city = contactDetailsObj.city;
+            contactDetails.value.state = contactDetailsObj.state;
+            contactDetails.value.pinCode = contactDetailsObj.pinCode;
+            contactDetails.value.isSaved = contactDetailsObj.isSaved;
+            contactDetails.value.stateCode = contactDetailsObj.stateCode;
+        }
+
+        // Existing fetch with additions
+        async function getTdpData() {
+            try {
+                console.log("getTdpData()")
+                const holidayPlus = getQueryParam("isHolidayPlus");
+                let url =
+                    holidayContextRoot +
+                    `tdp?quotationId=${quoteId.value}&isHolidayPlus=${holidayPlus}&custId=${custId.value}`;
+                const response = await doAxios({ method: "get", url });
+                tdpData.value = response.data;
+                roomDetails.value = tdpData.value?.tdpDetails?.roomDetails || [];
+                travellersList.value = response.data?.travellersList || [];
+                const result = getRoomAndAdultCounts(roomDetails.value);
+                optionalActivityCount.value = tdpData.value?.tdpDetails?.optionalActivityCount || 0;
+                totalRooms.value = result.totalRooms;
+                totalAdults.value = result.totalAdults;
+                // Airline details extraction (robust if backend ever sends string)
+                let rawAir = tdpData.value?.tdpDetails?.airlineDetails;
+                if (typeof rawAir === 'string') {
+                    try { rawAir = JSON.parse(rawAir); } catch (e) { rawAir = []; }
+                }
+                isInternationalPackage.value = tdpData?.value?.tdpDetails?.pkgSubtypeId > 2;
+                airlineDetails.value = Array.isArray(rawAir) ? rawAir : [];
+                optionalsTourCost.value = tdpData.value?.tdpDetails?.optionalsTourCost || 0;
+                ltDiscountAmount.value = tdpData.value?.tdpDetails?.ltDiscountAmount || 0;
+                promocodeAmount.value = tdpData.value?.tdpDetails?.promocodeAmount || 0;
+                gstAmount.value = tdpData.value?.tdpDetails?.gst || 0;
+                oppId.value = tdpData.value?.tdpDetails?.opportunityId || 0;
+                let rawCurrency = tdpData.value?.tdpDetails?.currencyBreakup;
+                if (typeof rawCurrency === 'string') {
+                    try { rawCurrency = JSON.parse(rawCurrency); } catch (e) { rawCurrency = []; }
+                }
+                if (!Array.isArray(rawCurrency)) rawCurrency = [];
+                // Normalize numbers
+                currencyBreakupList.value = rawCurrency.map(c => ({
+                    amount: Number(c.amount) || 0,
+                    currencyRate: Number(c.currencyRate) || 0,
+                    currencycode: c.currencycode || ''
+                }));
+                travellersList.value.forEach(t => {
+                    if (t.dob) t.dob = apiDateToUi(t.dob);
+                    if (t.passportExpireDate) t.passportExpireDate = apiDateToUi(t.passportExpireDate);
+                });
+                travellersListForDisplay.value.forEach(t => {
+                    if (t.dob) t.dob = apiDateToUi(t.dob);
+                    if (t.passportExpireDate) t.passportExpireDate = apiDateToUi(t.passportExpireDate);
+                });
+                getState();
+                buildTravellersListForDisplay(roomDetails);
+
+
+
+                // Init indices
+            } catch (err) {
+                console.error("TDP fetch failed:", err);
+            }
+        }
+        async function addTraveller() {
+            let travellersRequestList = {};
+            travellersRequestList.custId = custId.value;
+            travellersRequestList.travellersDetailsList = travellersListForDisplay.value.filter(t => t.travellerNo <= selectedTraveller.value);
+
+            console.log("travellersRequestList", travellersRequestList);
+            travellersRequestList.travellersDetailsList = travellersRequestList.travellersDetailsList.map(t => ({
+                ...t,
+                dob: normalizeToApiDate(t.dob),
+                passportExpireDate: normalizeToApiDate(t.passportExpireDate)
+            }));
+            travellerPayload = {
+                custId: custId.value,
+                travellersDetailsList: travellersRequestList.travellersDetailsList,
+            };
+
+            console.log("Adding traveller with payload:", travellerPayload);
+            try {
+                let url =
+                    holidayContextRoot + `tdp/addPax?quotationId=${quoteId.value}`;
+                const response = await doAxios({
+                    method: "post",
+                    data: travellerPayload,
+                    url,
+                });
+                tdpData.value.travellersList = response.data;
+                console.log("Response after adding traveller:", response.data);
+
+            } catch (err) {
+                console.error("addTraveller failed", err);
+            }
+        }
+        //Code to toggle to next traveller starts
+        function goToNextTraveller() {
+            // Ordered list across all rooms
+            const ordered = [...travellersListForDisplay.value]
+                .sort((a, b) => a.roomNo - b.roomNo || a.travellerNo - b.travellerNo);
+
+            const idx = ordered.findIndex(t => t.travellerNo === selectedTraveller.value);
+            if (idx === -1) return;
+
+            // Has next traveller
+            if (idx < ordered.length - 1) {
+                const next = ordered[idx + 1];
+                // Switch room if needed then traveller
+                setActiveRoom(next.roomNo);
+                setActiveTraveller(next.travellerNo);
+            } else {
+                // Last traveller: show added list (attach class)
+                const btn = document.querySelector('.finalAdd');
+                if (btn) {
+                    btn.classList.add('add_traveller');
+                    console.log('Added class add_traveller to .finalAdd');
+                } else {
+                    console.warn('Final Add button not found (.finalAdd)');
+                }
+            }
+        }
+
+        async function onAddTravellerClick(pax) {
+            var pax = travellersListForDisplay.value.filter(t => t.roomNo === selectedRoom.value && t.travellerNo === selectedTraveller.value)[0];
+            console.log("Adding traveller:", pax);
+            errorObj = validatePaxFields(pax);
+            pax.errors = { ...errorObj };
+            console.log("Validation errors:", pax.errors);
+            var isValid = compareObjects(pax.errors, getEmptyPaxErrors());
+            console.log("Is valid:", isValid);
+            if (isValid) {
+                // Call existing addTraveller (ignores pax arg)
+                await addTraveller();
+                goToNextTraveller();
+            } else {
+                //  alert("Validation failed, not adding traveller.");
+            }
+        }
+        //Code to toggle to next traveller ends
+
+        function travellersByRoom(roomNo) {
+            return travellersListForDisplay.value
+                .filter(t => t.roomNo === roomNo)
+                .sort((a, b) => a.travellerNo - b.travellerNo);
+        }
+
+        function travellerAge(t) {
+            if (!t.dob) return null;
+            return calculateAge(t.dob);
+        }
+
+        function travellerIcon(t) {
+            const age = travellerAge(t);
+            if (age === null || age === undefined) return "";
+
+            // Fallback: infer gender from title if gender not set
+            let gender = t.gender;
+            if (!gender && t.title) {
+                const cleanTitle = t.title.replace(/\./g, '');
+                if (['Mr', 'Master'].includes(cleanTitle)) gender = 'M';
+                else if (['Mrs', 'Ms', 'Miss'].includes(cleanTitle)) gender = 'F';
+            }
+            return getIconSrc(gender, age);
+        }
+
+        function editTraveller(t) {
+            // open modal pre-select corresponding traveller
+            setActiveRoom(t.roomNo);
+            setActiveTraveller(t.travellerNo);
+        }
+
+        // Ensure after initial build we set summarySelectedRoom correctly
+        watch(uniqueRoomNumbers, (rooms) => {
+            if (rooms.length && !rooms.includes(summarySelectedRoom.value)) {
+                summarySelectedRoom.value = rooms[0];
+            }
+        });
+
+        // Existing PAN verify (trimmed logs)
+        async function verifyPanCard(traveller) {
+            console.log("Verifying PAN with:",
+                traveller.nameOnPanCard,
+                traveller.panNumber,
+                traveller.dobOnPanCard
+            );
+            var request = {
+                nameAsPerPan: traveller.nameOnPanCard,
+                panCard: traveller.panNumber,
+                dobAsPerPan: traveller.dobOnPanCard,
+            };
+            console.log("PAN Verification Request:", request);
+            try {
+                const response = await doAxios({
+                    method: "post",
+                    data: request,
+                    url: holidayContextRoot + `tdp/verifyPanCard`,
+                });
+                console.log("PAN Verification Response:", response.data);
+                if (response.data != null && response.data != undefined) {
+                    console.log("PAN Verification Data:", response.data.panResponse);
+                    if (
+                        response.data.panResponse != null &&
+                        response.data.panResponse != undefined
+                    ) {
+                        let verifyPanResponse = response.data.panResponse;
+                        console.log("PAN Verification Details:", verifyPanResponse);
+                        if (
+                            verifyPanResponse.statusCode == 1 &&
+                            verifyPanResponse.panStatus == "E" &&
+                            verifyPanResponse.nameFlg == "Y" &&
+                            verifyPanResponse.DOBFlg == "Y"
+                        ) {
+                            // PAN Verified Successfully
+                            console.log("iNSIDE VERIFIED");
+                            traveller.panMessage = "PAN Card Verified";
+                            traveller.panStatus = "verified";
+                        } else {
+                            console.log("iNSIDE NOT VERIFIED");
+                            if (verifyPanResponse.panStatus != "E") {
+                                traveller.panMessage = "Invalid Pan Card";
+                            } else if (verifyPanResponse.nameFlg != "Y") {
+                                traveller.panMessage =
+                                    "Name on PAN card mismatch, please correct and retry";
+                            } else if (verifyPanResponse.DOBFlg != "Y") {
+                                traveller.panMessage =
+                                    "Date of Birth mismatch, please correct and retry";
+                            } else {
+                                traveller.panMessage =
+                                    "PAN Verification Failed Contact US for more details ";
+                            }
+                            traveller.panStatus = "panError";
+                        }
+                    }
+                    if (
+                        response.data.utilizedAmountResponse != null &&
+                        response.data.utilizedAmountResponse != undefined
+                    ) {
+                        traveller.canvasUtilizedAmount =
+                            response.data.utilizedAmountResponse.utilAmtFinYearWise || 0;
+                        console.log(
+                            "canvasUtilized Amount Updated:",
+                            traveller.canvasUtilizedAmount
+                        );
+                    }
+                }
+            } catch (err) {
+                console.error("panResponse fetch failed:", err);
+            }
+        }
+
+        function getQueryParam(name) {
+            const query = window.location.search.substring(1);
+            const params = query.split('&');
+
+            for (const param of params) {
+                const [key, value] = param.split('=');
+                if (decodeURIComponent(key) === name) {
+                    return value;
+                }
+            }
+            return null;
+        }
+
+        async function calculateTcs(traveller) {
+            if (traveller.panStatus == "verified") {
+                console.log("utilizedAmount --- ", traveller.utilizedAmount);
+                console.log("utilizedAmount --- ", traveller.utilizedAmount);
+                console.log(
+                    "canvasUtilizedAmount --- ",
+                    traveller.canvasUtilizedAmount
+                );
+                const utilizedAmt = traveller.utilizedAmount;
+                console.log("utilizedAmount after replace --- ", utilizedAmt);
+                const tdpObj = tdpData.value.tdpDetails;
+                console.log("TDP Details --- ", tdpObj);
+                let jsonData = {
+                    qId: quoteId.value,
+                    utilizedAmount:
+                        parseInt(utilizedAmt) + parseInt(traveller.canvasUtilizedAmount),
+                    productId: tdpObj.productId,
+                    totalAmount: tdpObj.totalPrice,
+                    travellerDetailId: 1,
+                };
+                const res = await doAxios({
+                    method: "post",
+                    url: "tcHolidayRS/tdp/calculateTcs",
+                    data: jsonData,
+                });
+
+                tcsResponse.value = res.data?.tcsResponse;
+                console.log("TCS Response:", tcsResponse);
+
+
+            } else {
+                alert("Please verify PAN to calculate TCS");
+            }
+        }
+
+
+
+        // NEW: Build booking payload for final booking API
+        function buildBookingPayload() {
+            if (!tdpData.value?.tdpDetails) {
+                console.warn('TDP details not loaded');
+                return null;
+            }
+            const positionCounters = {}; // roomNo -> { paxTypeCode: count }
+            const travellersPayload = travellersListForDisplay.value
+                .filter(t => t.travellerNo)
+                .sort((a, b) => a.roomNo - b.roomNo || a.travellerNo - b.travellerNo)
+                .map(tr => {
+                    const roomNo = tr.roomNo;
+                    const paxTypeCode = Number(tr.paxType);
+                    if (!positionCounters[roomNo]) positionCounters[roomNo] = {};
+                    positionCounters[roomNo][paxTypeCode] = (positionCounters[roomNo][paxTypeCode] || 0) + 1;
+                    let gender = tr.gender;
+                    if (!gender) {
+                        if (["Mr", "Master"].includes(tr.title)) gender = 'M';
+                        else if (["Mrs", "Ms", "Miss"].includes(tr.title)) gender = 'F';
+                        else gender = 'M';
+                    }
+                    const base = {
+                        roomNo,
+                        position: positionCounters[roomNo][paxTypeCode],
+                        travellerNo: tr.travellerNo,
+                        title: tr.title || '',
+                        firstName: tr.firstName || '',
+                        lastName: tr.lastName || '',
+                        gender,
+                        dob: normalizeToApiDate(tr.dob),
+                        mealPreference: tr.mealPreference || '',
+                        paxType: paxTypeCode,
+                        aadhaarNumber: tr.aadhaarNumber || '',
+                        isPayer: tr.isPayer,
+                        paymentPayer: 'N'
+                    };
+                    if (tr.isPayer) {
+                        if (tr.panNumber) base.panNumber = tr.panNumber;
+                        if (tr.nameOnPanCard) base.nameOnPanCard = tr.nameOnPanCard;
+                        if (tr.dobOnPanCard) base.dobOnPanCard = tr.dobOnPanCard;
+                    }
+                    return base;
+                });
+            const firstPayer = travellersPayload.find(t => t.isPayer === 'Y');
+            if (firstPayer) firstPayer.paymentPayer = 'Y';
+
+            const cd = contactDetails.value;
+            const bookingAmount = tdpData.value.tdpDetails.paymentAmount || 0;
+            const bookingType = tdpData.value.tdpDetails.paymentAmountType;
+            const gstStateCode = cd.stateCode || ''; // can fallback to gstInDetails if needed
+            const stateObj = gstStates.value.find(s => String(s.gstStateCode) === String(gstStateCode));
+            let isUnionTerritory = stateObj?.isUnionTerritory || 'N';
+            if (stateObj && stateObj.isUnionTerritory) isUnionTerritory = stateObj.isUnionTerritory; // expects 'Y'/'N'
+            const payerWithPan = travellersPayload.find(t => t.panNumber);
+            const panNo = payerWithPan?.panNumber || '';
+
+            const payload = {
+                addressId: 0,
+                bookingAmount,
+                bookingType,
+                tcilHolidayBookingTravellerDetailCollection: travellersPayload,
+                quotationId: tdpData.value.holidayQuoteId || quoteId.value,
+                title: cd.title || '',
+                firstName: cd.firstName || '',
+                lastName: cd.lastName || '',
+                addressEmailId: cd.emailId || '',
+                addressPhoneNo: cd.mobNumber || '',
+                addressStreet: cd.address || '',
+                addressCity: cd.city || '',
+                addressState: cd.state || '',
+                addressPincode: cd.pinCode || '',
+                packageId: tdpData.value.tdpDetails.packageId,
+                preConfirmationPageUrl: window.location.href,
+                bookedForEmail: localStorage.getItem("onBehalfEmail") || '',
+                isOnBehalf: localStorage.getItem('onBehalf') || 'false',
+                bookingThrough: sessionStorage.getItem('deviceType') || 'Desktop',
+                gstStateCode,
+                isUnionTerritory,
+                gstinNo: gstInDetails.value.customerGSTIN || '',
+                gstinName: gstInDetails.value.customerLegalName || '',
+                panNo,
+                branchCode: '',
+                canvasAgentName: canvasAgentQuery.value || null,
+                canvasAgentId: selectedUserAssignedBranch.value || null,
+            };
+            console.log('Booking payload built:', payload);
+            return payload;
+        }
+
+        // NEW: Submit booking (POST)
+        async function submitBooking() {
+            const productId = Number(tdpData.value?.tdpDetails?.productId);
+            if (!productId) {
+                console.warn("submitBooking: productId missing");
+            }
+
+            const payload = buildBookingPayload();
+            if (!payload) return;
+
+            const url = (productId === 4)
+                ? (holidayContextRoot + 'holidayBooking')
+                : (TcilDynamicPackagingContextRoot + 'webresources/farereconfirmation');
+
+            console.log("Submitting booking. productId:", productId, "URL:", url);
+            try {
+                const res = await doAxios({
+                    method: 'post',
+                    url,
+                    data: payload
+                });
+                console.log('Booking success:', res.data);
+                window.location.href = "/paymentGateway.html?tid=" + res.data.tid;
+            } catch (e) {
+                console.error('Booking failed:', e);
+                alert('Booking failed');
+            }
+
+        }
+
+        async function fetchUserAssignedBranch() {
+            try {
+                const req = { "createdBy": loggedInDetails.userId, "ldapCompany": loggedInDetails.accountType };
+                const res = await doAxios({
+                    method: "post",
+                    url: holidayContextRoot + "preconfirmation/getUserAssignedBranch",
+                    data: req,
+                });
+                userAssignedBranch.value = res?.data?.assignBranch?.split(",");
+
+                console.log("User Assigned Branch:", userAssignedBranch.value);
+            } catch (error) {
+                console.log("Something went wrong while fetching user assigned branch");
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+        async function fetchCanvasAgent(searchStr) {
+            console.log("Fetching canvas agents for:", searchStr);
+            try {
+                const res = await doAxios({
+                    method: "get",
+                    url: holidayContextRoot + "preconfirmation/autoSuggestAgent/" + searchStr,
+                });
+                canvasAgentDetails.value = res?.data || [];
+
+            } catch (error) {
+                console.log("Something went wrong while fetching canvas agent");
+            }
+        }
+
+        function selectCanvasAgent(agent) {
+            canvasAgentQuery.value = agent.agentName;
+            canvasAgentDetails.value = [];
+        }
+
+        function onTitleChange(pax) {
+            if (pax.errors && pax.errors.title) {
+                // Re-validate just the title field
+                pax.errors.title = pax.title && pax.title.trim() ? "" : "Title required";
+            }
+        }
+        function onFirstNameInput(pax) {
+            if (pax.errors && pax.errors.firstName) {
+                const val = pax.firstName ? pax.firstName.trim() : "";
+                pax.errors.firstName = /^[A-Za-z ]+$/.test(val) && val ? "" : "Only alphabets & spaces";
+            }
+        }
+
+        function onLastNameInput(pax) {
+            if (pax.errors && pax.errors.lastName) {
+                const val = pax.lastName ? pax.lastName.trim() : "";
+                pax.errors.lastName = /^[A-Za-z ]+$/.test(val) && val ? "" : "Only alphabets & spaces";
+            }
+        }
+
+        function onDobInput(pax) {
+            if (pax.errors && pax.errors.dob) {
+                const val = pax.dob ? pax.dob.trim() : "";
+                const date = parseDate(val);
+                console.log("Parsed DOB:", (date && date < new Date()));
+                pax.errors.dob = (date && date < new Date()) ? "" : "DOB must be past date";
+            }
+        }
+
+        function onMealPreferenceChange(pax) {
+            if (pax.errors && pax.errors.mealPreference) {
+                pax.errors.mealPreference = pax.mealPreference && pax.mealPreference.trim() ? "" : "Meal preference required";
+            }
+        }
+
+        function onPassportNoInput(pax) {
+            if (pax.errors && pax.errors.passportNo) {
+                const val = pax.passportNo ? pax.passportNo.trim().toUpperCase() : "";
+                const passportRegex = /^[A-Z][1-9][0-9][1-9][0-9]{3}[1-9]$/;
+                pax.errors.passportNo = passportRegex.test(val) ? "" : "Invalid passport";
+            }
+        }
+
+        function onPassportExpiryInput(pax) {
+            if (pax.errors && pax.errors.passportExpireDate) {
+                const val = pax.passportExpireDate ? pax.passportExpireDate.trim() : "";
+                const date = parseDate(val);
+                pax.errors.passportExpireDate = (date && date > new Date()) ? "" : "Must be future date";
+            }
+        }
+
+        function onNameOnPanCardInput(pax) {
+            if (pax.errors && pax.errors.nameOnPanCard) {
+                const val = pax.nameOnPanCard ? pax.nameOnPanCard.trim() : "";
+                pax.errors.nameOnPanCard = /^[A-Za-z ]+$/.test(val) && val ? "" : "Only letters & spaces";
+            }
+        }
+
+        function onDobOnPanCardInput(pax) {
+            if (pax.errors && pax.errors.dobOnPanCard) {
+                const val = pax.dobOnPanCard ? pax.dobOnPanCard.trim() : "";
+                const date = parseDate(val);
+                pax.errors.dobOnPanCard = (date && date < new Date()) ? "" : "PAN DOB must be past date";
+            }
+        }
+
+        function onPanNumberInput(pax) {
+            if (pax.errors && pax.errors.panNumber) {
+                const val = pax.panNumber ? pax.panNumber.trim().toUpperCase() : "";
+                pax.errors.panNumber = /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(val) ? "" : "Invalid PAN";
+            }
+        }
+
+        function onUtilizedAmountInput(pax) {
+            if (pax.errors && pax.errors.utilizedAmount) {
+                const val = pax.utilizedAmount ? String(pax.utilizedAmount).replace(/,/g, '').trim() : "";
+                pax.errors.utilizedAmount = (val && !isNaN(Number(val)) && Number(val) > 0) ? "" : "Enter positive amount";
+            }
+        }
+
+        function compareObjects(a, b) {
+            return JSON.stringify(a) === JSON.stringify(b);
+        }
+
+        function parseDate(str) {
+            if (!str) return null;
+            str = str.trim();
+            // dd-MM-yyyy
+            let m = str.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+            if (m) return new Date(+m[3], m[2] - 1, +m[1]);
+            // yyyy-MM-dd
+            m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+            if (m) return new Date(+m[1], m[2] - 1, +m[3]);
+            // 03 Oct, 2025 or 3 Oct 2025
+            const cleaned = str.replace(/,/g, '');
+            const p = cleaned.split(/\s+/);
+            if (p.length === 3 && /^\d{1,2}$/.test(p[0]) && /^\d{4}$/.test(p[2])) {
+                const monMap = {
+                    jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+                    jul: 6, aug: 7, sep: 8, sept: 8, oct: 9, nov: 10, dec: 11
+                };
+                const mm = monMap[p[1].toLowerCase()];
+                if (mm !== undefined) return new Date(+p[2], mm, +p[0]);
+            }
+            return null;
+        }
+
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // ...existing code...
+        function validatePaxFields(pax) {
+            errors.value = getEmptyPaxErrors(); // reset
+            console.log("Validating pax:", pax);
+            // Helpers
+            const lettersRegex = /^[A-Za-z ]+$/;
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            const passportRegex = /^[A-Z][1-9][0-9]\d{4}[1-9]$/; // adjust if needed
+            const today = new Date();
+
+            function parseDate(str) {
+                if (!str) return null;
+                str = str.trim();
+                // dd-MM-yyyy
+                let m = str.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+                if (m) return new Date(+m[3], m[2] - 1, +m[1]);
+                // yyyy-MM-dd
+                m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+                if (m) return new Date(+m[1], m[2] - 1, +m[3]);
+                // 03 Oct, 2025 or 3 Oct 2025
+                const cleaned = str.replace(/,/g, '');
+                const p = cleaned.split(/\s+/);
+                if (p.length === 3 && /^\d{1,2}$/.test(p[0]) && /^\d{4}$/.test(p[2])) {
+                    const monMap = {
+                        jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+                        jul: 6, aug: 7, sep: 8, sept: 8, oct: 9, nov: 10, dec: 11
+                    };
+                    const mm = monMap[p[1].toLowerCase()];
+                    if (mm !== undefined) return new Date(+p[2], mm, +p[0]);
+                }
+                return null;
+            }
+
+            function isPast(date) {
+                return date && date.getTime() < today.getTime();
+            }
+            function isFuture(date) {
+                // Future = strictly greater than today (no same-day)
+                if (!date) return false;
+                const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                return d.getTime() > t.getTime();
+            }
+
+            // Title
+            if (!pax.title || !pax.title.trim()) {
+                errors.value.title = "Title required";
+            }
+
+            // First Name
+            if (!pax.firstName || !pax.firstName.trim()) {
+                errors.value.firstName = "First name required";
+            } else if (!lettersRegex.test(pax.firstName.trim())) {
+                errors.value.firstName = "Only letters & spaces";
+            }
+
+            // Last Name
+            if (!pax.lastName || !pax.lastName.trim()) {
+                errors.value.lastName = "Last name required";
+            } else if (!lettersRegex.test(pax.lastName.trim())) {
+                errors.value.lastName = "Only letters & spaces";
+            }
+
+            // DOB
+            if (!pax.dob || !pax.dob.trim()) {
+                errors.value.dob = "DOB required";
+            } else {
+                const dobDate = parseDate(pax.dob);
+                if (!dobDate || isNaN(dobDate.getTime())) {
+                    errors.value.dob = "Invalid DOB";
+                } else if (!isPast(dobDate)) {
+                    errors.value.dob = "DOB must be past date";
+                } else {
+                    // Optional: age sanity check (0–129)
+                    const age = today.getFullYear() - dobDate.getFullYear()
+                        - ((today.getMonth() < dobDate.getMonth() ||
+                            (today.getMonth() === dobDate.getMonth() && today.getDate() < dobDate.getDate())) ? 1 : 0);
+                    if (age < 0 || age > 129) errors.value.dob = "Unrealistic age";
+                }
+            }
+
+            // Meal Preference
+            if (!pax.mealPreference || !pax.mealPreference.trim()) {
+                errors.value.mealPreference = "Meal preference required";
+            }
+
+            // Passport (only validate if field exists in object)
+            if ('passportNo' in pax) {
+                if (isInternationalPackage.value) {
+                    if (!pax.passportNo || !pax.passportNo.trim()) {
+                        errors.value.passportNo = "Passport number required";
+                    } else if (!passportRegex.test(pax.passportNo.trim().toUpperCase())) {
+                        errors.value.passportNo = "Invalid passport";
+                    }
+                }
+            }
+
+            // Passport Expiry (required if passportNo present & non-empty)
+            if (pax.passportNo && pax.passportNo.trim()) {
+                if (isInternationalPackage.value) {
+                    if (!pax.passportExpireDate || !pax.passportExpireDate.trim()) {
+                        errors.value.valuepassportExpireDate = "Expiry date required";
+                    } else {
+                        const exp = parseDate(pax.passportExpireDate);
+                        if (!exp || isNaN(exp.getTime())) {
+                            errors.value.passportExpireDate = "Invalid expiry date";
+                        } else if (!isFuture(exp)) {
+                            errors.value.passportExpireDate = "Must be future date";
+                        }
+                    }
+                }
+            }
+
+            // Payer-specific validations
+            if (pax.isPayer === 'Y') {
+                // Name on PAN
+                if (!pax.nameOnPanCard || !pax.nameOnPanCard.trim()) {
+                    errors.value.nameOnPanCard = "Name on PAN required";
+                } else if (!lettersRegex.test(pax.nameOnPanCard.trim())) {
+                    errors.value.nameOnPanCard = "Only letters & spaces";
+                }
+
+                // DOB on PAN
+                if (!pax.dobOnPanCard || !pax.dobOnPanCard.trim()) {
+                    errors.value.dobOnPanCard = "PAN DOB required";
+                } else {
+                    const dobPan = parseDate(pax.dobOnPanCard);
+                    if (!dobPan || isNaN(dobPan.getTime())) {
+                        errors.value.dobOnPanCard = "Invalid PAN DOB";
+                    } else if (!isPast(dobPan)) {
+                        errors.value.dobOnPanCard = "PAN DOB must be past date";
+                    }
+                }
+
+                // PAN Number
+                if (!pax.panNumber || !pax.panNumber.trim()) {
+                    errors.value.panNumber = "PAN number required";
+                } else if (!panRegex.test(pax.panNumber.trim().toUpperCase())) {
+                    errors.value.panNumber = "Invalid PAN";
+                }
+
+                // Utilized Amount
+                if (pax.utilizedAmount === undefined || pax.utilizedAmount === null || String(pax.utilizedAmount).trim() === "") {
+                    errors.value.utilizedAmount = "Utilized amount required";
+                } else {
+                    const num = Number(String(pax.utilizedAmount).replace(/,/g, ''));
+                    if (isNaN(num) || num <= 0) {
+                        errors.value.utilizedAmount = "Enter positive amount";
+                    }
+                }
+            }
+            console.log("Pax validation errors:", errors);
+            return errors.value;
+        }
+        // ...existing code...
+
+        // Mount init
+        onMounted(() => {
+            quoteId.value = getUrlParameter("quotationId");
+
+            custId.value =
+                loggedInDetails?.custId != "" ? loggedInDetails?.custId : 0;
+            getTdpData();
+            if (loggedInDetails.user === "Staff") {
+                fetchUserAssignedBranch();
+            }
+        });
+
+        watch(
+            () => traveller.utilizedAmount,
+            (newVal, oldVal) => {
+                if (newVal === oldVal) return;
+                console.log("changed Utilized Amount", oldVal, "->", newVal);
+                tcsResponse.value = null; // reset (null clearer than {})
+            }
+        );
+
+        watch(
+            () => [
+                traveller.nameOnPanCard,
+                traveller.panNumber,
+                traveller.dobOnPanCard,
+            ],
+            (newVals, oldVals) => {
+                if (JSON.stringify(newVals) === JSON.stringify(oldVals)) return;
+                console.log("changed pan card details", oldVals, "->", newVals);
+                traveller.panStatus = "";
+                traveller.panMessage = "";
+                traveller.canvasUtilizedAmount = 0;
+                tcsResponse.value = null;
+            }
+        );
+
+        watch(
+            () => contactDetails.value.stateCode,
+            (code) => {
+                if (!code) {
+                    contactDetails.value.state = '';
+                    return;
+                }
+                const match = gstStates.value.find(
+                    s => String(s.gstStateCode) === String(code)
+                );
+                contactDetails.value.state = match ? match.gstState : '';
+            }
+        );
+
+        watch(
+            () => gstStates.value,
+            () => {
+                if (contactDetails.value.stateCode && !contactDetails.value.state) {
+                    const match = gstStates.value.find(
+                        s => String(s.gstStateCode) === String(contactDetails.value.stateCode)
+                    );
+                    if (match) contactDetails.value.state = match.gstState;
+                }
+            }
+        );
+
+
+
+        // Return (includes old + new)
+        return {
+            // Raw data
+            tdpData,
+            totalRooms,
+            totalAdults,
+            quoteId,
+            // Rooms & travellers (NEW)
+            selectedRoom,
+            selectedTraveller,
+
+            travellersDetailsList,
+
+            // Traveller form
+            traveller,
+            verifyPanCard,
+            calculateTcs,
+            tcsResponse,
+            addTraveller,
+            dateConvert,
+            formatCurrency,
+            contactDetails,
+            onSelectSavedContact,
+            travellersListForDisplay,
+            uniqueRoomNumbers,
+            setActiveRoom,
+            setActiveTraveller,
+            travellersForRoom,
+            travellersWithAgeAndIcon,
+            gstStates,
+            selectedGstState,
+            getState,
+            getGstDetails,
+            gstInData,
+            gstNumber,
+            gstInDetails,
+            loggedInDetails,
+            selectSavedTraveller,
+            savedTravellers,
+            submitBooking, // NEW
+            buildBookingPayload, // NEW
+            goToNextTraveller,
+            onAddTravellerClick,
+            summarySelectedRoom,
+            travellersByRoom,
+            travellerAge,
+            travellerIcon,
+            editTraveller,
+            fetchUserAssignedBranch,
+            userAssignedBranch,
+            selectedUserAssignedBranch,
+            fetchCanvasAgent,
+            canvasAgentQuery,
+            selectedAgent,
+            canvasAgentDetails,
+            selectCanvasAgent,
+            getQueryParam,
+            optionalActivityCount,
+            airlineDetails,
+            outboundFlights,
+            returnFlights,
+            optionalsTourCost,
+            ltDiscountAmount,
+            promocodeAmount,
+            gstAmount,
+            currencyBreakupList,
+            oppId,
+            uiDateToApi,
+            apiDateToUi,
+            showCitySuggestions,
+            filteredCitySuggestions,
+            onCityInput,
+            onCityFocus,
+            onCityBlur,
+            selectCitySuggestion,
+            onCityKeydown,
+            validatePaxFields,
+            errors,
+            onTitleChange,
+            onFirstNameInput,
+            onLastNameInput,
+            onDobInput,
+            onMealPreferenceChange,
+            onPassportNoInput,
+            onPassportExpiryInput,
+            onNameOnPanCardInput,
+            onDobOnPanCardInput,
+            onPanNumberInput,
+            onUtilizedAmountInput,
+            parseDate,
+            isInternationalPackage,
+            gstError,
+            goBack
+            // getEmptyPaxErrors,
+        };
+    },
+}).mount(".tdpMount");
