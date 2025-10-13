@@ -369,7 +369,7 @@ createApp({
                 if (a.position !== b.position) {
                     return a.position - b.position;
                 }
-                return a.position - b.position;
+                return a.day - b.day;
             });
         };
 
@@ -381,24 +381,6 @@ createApp({
             }
             return rows;
         });
-
-
-        const groupedAccommodationsByDay = computed(() => {
-    const data = tcilHolidayAccomodationDetailsCollection.value;
-    // Group by day
-    const grouped = {};
-    data.forEach(acc => {
-        if (!grouped[acc.day]) grouped[acc.day] = [];
-        grouped[acc.day].push(acc);
-    });
-    // Convert to sorted array of { day, hotels }
-    return Object.keys(grouped)
-        .map(day => ({
-            day: Number(day),
-            hotels: grouped[day].sort((a, b) => a.position - b.position)
-        }))
-        .sort((a, b) => a.day - b.day);
-});
 
 
         // Method to set data (if using ref instead of props)
@@ -586,6 +568,34 @@ const getHotelImage = (hotel) => {
             return packageDetailsResponse.value[0]?.packageDetail?.tcilHolidayAccomodationDetailsCollection
                 .filter(acc => acc.packageClassId === parseInt(selectedPackageClassId.value))
                 .sort((a, b) => a.position - b.position); // Sort by position
+        });
+
+        // Group accommodations by day for the selected package class
+        const groupedAccommodationsByDay = computed(() => {
+            const accommodations = packageDetailsResponse.value?.[0]?.packageDetail?.tcilHolidayAccomodationDetailsCollection || [];
+            const filtered = accommodations.filter(acc =>
+                acc.packageClassId === parseInt(selectedPackageClassId.value) && acc.isActive === 'Y'
+            );
+
+            const grouped = {};
+            filtered.forEach(acc => {
+                if (!grouped[acc.day]) {
+                    grouped[acc.day] = { day: acc.day, hotels: [] };
+                }
+                grouped[acc.day].hotels.push(acc);
+            });
+
+            return Object.values(grouped).sort((a, b) => a.day - b.day);
+        });
+
+        // Group itinerary items into rows of 2 for the summary grid
+        const groupedItineraryRows = computed(() => {
+            const itineraryArray = sortItineraryByDay();
+            const rows = [];
+            for (let i = 0; i < itineraryArray.length; i += 2) {
+                rows.push(itineraryArray.slice(i, i + 2));
+            }
+            return rows;
         });
 
 
@@ -1017,6 +1027,8 @@ const getHotelImage = (hotel) => {
             sortByPosition,
             filteredAccommodations,
             groupedRows,
+            groupedAccommodationsByDay,
+            groupedItineraryRows,
             getSightSeeingByDayAndPackage,
             hubCollection,
             hubCollectionHp,
@@ -1045,16 +1057,16 @@ const getHotelImage = (hotel) => {
             getTransfersByDayAndPackage,
             getMealByDayAndPackage,
             getHotelsByDayAndPackage,
-			getHotelImage,
-			setActiveTab,
-			activeTab,
+   getHotelImage,
+   setActiveTab,
+   activeTab,
             handleImagePath,
             getFlagByIndex,
             filteredMealCollection,
             mealSummary,
             mealSpecialTreats,
             mealNote,
-             filteredTransfers,
+              filteredTransfers,
             getTransfersByDayAndPackage,
             allTransfersDescription,
             getSightseeingImage,
@@ -1064,8 +1076,8 @@ const getHotelImage = (hotel) => {
             rewardPoints,
             rewardPointsByTier,
             getSightSeeingArrayByDay,
-           
-			
+
+
         };
     },
 }).mount(".holiday-pdp-page");

@@ -2402,49 +2402,51 @@
     <div class="card_top">
       <h6>Day wise summary</h6>
     </div>
-    <div class="dayWise_grid">
-        
-      <div v-for="(row, index) in groupedAccommodationsByDay" :key="index" class="grid_row">
-        <div v-for="item in row" :key="item.accomodationDetailId" class="grid_item">
-          <div class="days_blck">
-            <span>Day {{ item.day }}</span>
-            <p>{{ item.accomodationHotelId.city }}</p>
-          </div>
-          <div class="details_blck">
-           <div class="db_item">
-  <img src="/images/tcHolidays/tc-PDP/hotels.svg" alt="" />
-  <span>
-    <!-- Join all hotel names for the day, separated by " / " -->
-    {{ row.hotels.map(hotel => hotel.accomodationHotelId.hotelName).join(' / ') }}
-    in
-    {{ row.hotels[0].accomodationHotelId.city }},
-    {{ row.hotels[0].accomodationHotelId.country }}.
-  </span>
-</div>
-         <div class="db_item">
-  <img src="/images/tcHolidays/tc-PDP/camera-01.svg" alt="" />
-  <ul v-if="getSightSeeingArrayByDay(item.day, selectedPackageClassId).length > 0">
-    <li
-      v-for="sight in getSightSeeingArrayByDay(item.day, selectedPackageClassId)[0].items"
-      :key="sight.holidaySightseeingId"
-    >
-      {{ sight.sightseeingId?.name }}
-    </li>
-  </ul>
-  <span v-else>No sightseeing</span>
-</div>
-            <div class="db_item">
-              <img src="/images/tcHolidays/tc-PDP/meals-02.svg" alt="" />
-              <span>{{ getMealText(item.day, selectedPackageClassId) }}</span>
+        <div class="dayWise_grid">
+            <div v-for="(row, rowIndex) in groupedItineraryRows" :key="rowIndex" class="grid_row">
+                <div v-for="itinerary in row" :key="itinerary.itineraryDay" class="grid_item">
+                    <div class="days_blck">
+                        <span>Day {{ itinerary.itineraryDay }}</span>
+                        <p>{{ itinerary.cityCode.cityName }}</p>
+                    </div>
+                    <div class="details_blck">
+                        <div class="db_item">
+                            <img src="/images/tcHolidays/tc-PDP/hotels.svg" alt="" />
+                            <span>
+                                {{ getHotelsByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId).map(hotel => hotel.accomodationHotelId.hotelName).join(' / ') }}
+                                <template v-if="getHotelsByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId).length > 0">
+                                    in {{ getHotelsByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId)[0].accomodationHotelId.city }},
+                                    {{ getHotelsByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId)[0].accomodationHotelId.country }}.
+                                </template>
+                                <template v-else>
+                                    (No hotel)
+                                </template>
+                            </span>
+                        </div>
+                        <div class="db_item">
+                            <img src="/images/tcHolidays/tc-PDP/camera-01.svg" alt="" />
+                            <ul v-if="getSightSeeingArrayByDay(itinerary.itineraryDay, selectedPackageClassId).length > 0">
+                                <li
+                                    v-for="sight in getSightSeeingArrayByDay(itinerary.itineraryDay, selectedPackageClassId)[0].items"
+                                    :key="sight.holidaySightseeingId"
+                                >
+                                    {{ sight.sightseeingId?.name }}
+                                </li>
+                            </ul>
+                            <span v-else>No sightseeing</span>
+                        </div>
+                        <div class="db_item">
+                            <img src="/images/tcHolidays/tc-PDP/meals-02.svg" alt="" />
+                            <span>{{ getMealText(itinerary.itineraryDay, selectedPackageClassId) }}</span>
+                        </div>
+                        <div class="db_item">
+                            <img src="/images/tcHolidays/tc-PDP/car.svg" alt="" />
+                            <span>Shared transfers by a deluxe air-conditioned coach.</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="db_item">
-              <img src="/images/tcHolidays/tc-PDP/car.svg" alt="" />
-              <span>Shared transfers by a deluxe air-conditioned coach.</span>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
   </div>
 
 
