@@ -738,9 +738,26 @@ createApp({
             return false;
         };
 
+        // Currency Format Code 
+		function formatCurrency(amount) {
+		  return new Intl.NumberFormat('en-IN', {
+			style: 'decimal',
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 0
+		  }).format(amount);
+		}
+
         function getCurrentPrice(item) {
+            // When Joining Direct is active (explicit JD filter, or without-flight + JD availability),
+            // show JD price; respect the selected tour type if present.
             if (usingJDPrice(item)) {
-                return item.joiningDirectPrice || item.minimumStartingPrice;
+                const selectedType = getSelectedType(item);
+                switch (selectedType) {
+                    case 0: return item.joiningDirectPriceStandard ?? item.joiningDirectPrice ?? item.minimumStartingPrice;
+                    case 1: return item.joiningDirectPriceDelux ?? item.joiningDirectPrice ?? item.minimumStartingPrice;
+                    case 2: return item.joiningDirectPricePremium ?? item.joiningDirectPrice ?? item.minimumStartingPrice;
+                    default: return item.joiningDirectPrice ?? item.minimumStartingPrice;
+                }
             }
             const selectedType = getSelectedType(item);
             switch (selectedType) {
@@ -752,7 +769,16 @@ createApp({
         }
 
         function getStrikeoutPrice(item) {
-            if (usingJDPrice(item)) return '';
+            // For Joining Direct, show JD strikeout price; respect selected tour type.
+            if (usingJDPrice(item)) {
+                const selectedType = getSelectedType(item);
+                switch (selectedType) {
+                    case 0: return item.joiningDirectSOPriceStandard ?? item.joiningDirectSOPrice ?? '';
+                    case 1: return item.joiningDirectSOPriceDelux ?? item.joiningDirectSOPrice ?? '';
+                    case 2: return item.joiningDirectSOPricePremium ?? item.joiningDirectSOPrice ?? '';
+                    default: return item.joiningDirectSOPrice ?? '';
+                }
+            }
             const selectedType = getSelectedType(item);
             switch (selectedType) {
                 case 0: return item.strikeoutPriceStandard;
@@ -1988,6 +2014,7 @@ createApp({
             isVisaIncluded,
             isMealIncluded,
             getImages,
+            formatCurrency,
             getCurrentPrice,
             getStrikeoutPrice,
             getDiscount,

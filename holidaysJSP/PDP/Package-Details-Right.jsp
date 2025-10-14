@@ -135,13 +135,12 @@
 
     <div class="tbr_center">
         <div class="offer_coupon">
-            <div class="coupon_crd">
+            <div class="coupon_crd" v-if="packageDetailsResponse && packageDetailsResponse[0] && packageDetailsResponse[0].packageDetail && packageDetailsResponse[0].packageDetail.offers">
                 <div class="cc_top">
                     <img src="/images/tcHolidays/tc-PDP/sale-03.svg" alt="" />
                     Deal Available
                 </div>
-                <span>TC is offering 20% off your next visit when you join their Rewards
-                    Program!</span>
+                <span v-html="packageDetailsResponse[0].packageDetail.offers"></span>
             </div>
         </div>
     </div>

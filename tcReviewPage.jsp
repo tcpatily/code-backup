@@ -1438,7 +1438,7 @@
                                                                         v-model="pax.dob"
                                                                         @change="onDobInput(pax)"
                                                                         class="form-control calender_input"
-                                                                        data-calendartype="dob"  />
+                                                                        :data-calendartype="(pax && pax.paxType === 3) ? 'dob-infant' : (pax && (pax.paxType === 1 || pax.paxType === 2 || pax.paxType === 4) ? 'dob-child' : 'dob')"  />
                                                                     <span class="input_calendar">
                                                                         <img src="/images/tcHolidays/common-img/calendar.svg"
                                                                             alt="" />

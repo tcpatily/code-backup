@@ -660,8 +660,8 @@
                                                             />
                                                     </div>
                                                     <div class="display_value">
-                                                        <span class="activeValue" id="minDurationValueDisplay">{{mindurationDays}}</span>
-                                                        <span id="maxDurationValueDisplay" >{{ maxdurationDays }}</span>
+                                                        <span class="activeValue" id="minDurationValueDisplay">{{mindurationDays}}N</span>
+                                                        <span id="maxDurationValueDisplay" >{{ maxdurationDays }}N</span>
                                                     </div>
                                                 </div>
 
@@ -1030,15 +1030,6 @@
             <!------Tourism Board Partners Ends from here----->
 
 
-            <!------Our Travel Blogs Start from here------->
-            <div class="blog-section container">
-  <div id="blog-carousel" class="owl-carousel owl-theme"></div>
-</div>
-<div class="tcHolidaysTheamData travelBlogs">
-    <cms:include file="holidaysJSP/holidaysLPOurTravelBlogsSRP.jsp"/>
-</div>
-<div class="clearfix"></div>
-            <!------Our Travel Blogs Ends from here-------> 
 			
 			
 <!------Frequently Asked Questions start from here------->
@@ -1070,7 +1061,7 @@
                                     String headingId = "heading" + index;
                                     boolean isFirst = index == 1;
                         %>
-                       <div class="accordion-item <%= isFirst ? "active" : "" %>" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                        <div class="accordion-item <%= isFirst ? "active" : "" %>" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                             <h2 class="accordion-header" id="<%= headingId %>" itemprop="name">
                                 <button class="accordion-button <%= isFirst ? "" : "collapsed" %>" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#<%= collapseId %>"
@@ -1103,8 +1094,17 @@
 <div class="clearfix"></div>
 <!------Frequently Asked Questions Ends from here------->
 
+  <!------Our Travel Blogs Start from here------->
+            <div class="blog-section container">
+  <div id="blog-carousel" class="owl-carousel owl-theme"></div>
+</div>
+<div class="tcHolidaysTheamData travelBlogs">
+    <cms:include file="holidaysJSP/holidaysLPOurTravelBlogsSRP.jsp"/>
+</div>
+<div class="clearfix"></div>
+            <!------Our Travel Blogs Ends from here-------> 
+
 <!------SEO Interling Start from here------->
- 
 <div class="tcHolidaysTheamData vertical_tabs_section">	      
 	<div class="container agency_content">
 	<!-- this is for SEO Read More Text Start from Here -->
@@ -1119,7 +1119,7 @@
 	<!-- this is for SEO Tagging  Start from Here -->
 	<div class="taggingSEOData">						
          <% if ("userSet".equals(seoContent.getUserSet())) { %>
-			<h2><%= seoContent.getDestinationFromUrl().replace("-", " ").replace("tours", "") %> Holiday Packages </h2>
+			<h2> </h2>
 			<% } else { %>
 		<%= seoContent.getH2Tag() != null 
         ? seoContent.getH2Tag().replace("&gt;", ">").replace("&lt;", "<") 
@@ -1243,10 +1243,12 @@
         <cms:include file="holidaysJSP/vendorScript.jsp" />
     </div>
     <!------Vendors Script CTA Section Ends from here------->
-    <div class="wishList_message">
+	   <!------wishList_message CTA Section Start from here------->
+	<div class="wishList_message">
         <img src="/images/tcHolidays/srp/check.gif" alt="">
         <p>Added to Wishlist</p>
     </div>
+	 <!------wishList_message CTA Section Ends from here------->
     <!------Footer Section Start from here------->
     <div id="footer" class="tcHolidaysTheamData">
         <cms:container name="tcHolidaysFootercontainer" type="full" maxElements="1" />
@@ -1296,8 +1298,30 @@ $(document).ready(function () {
         }
     });
 });
-</script>
 
+var windowWidth = $(window).width();
+
+$(document).ready(function () {
+	
+	$(".srpcountry_tab h3, .srpcountry_tab h4").click(function(){
+			if(windowWidth > 767){
+				$(".srpcountry_tab").removeClass("active");
+				$(this).parent().addClass("active");	
+			}else{
+				setTimeout(function(){
+					$(this).parent().addClass("active");	
+				},100)
+			}
+			$(".tabs_content a").remove();
+			$(this).parent().find("a").clone().appendTo(".tabs_content");
+		})
+	$('<div class="interlinks_tabs"><div class="tabs_nav"></div><div class="tabs_content d-none d-lg-block"></div></div>').appendTo(".taggingSEOData");
+	$(".srpcountry_tab").appendTo(".tabs_nav");
+	$(".vertical_tabs_section .tabs_nav > .srpcountry_tab:nth-child(1) h3").trigger("click");
+	$(".vertical_tabs_section .tabs_nav > .srpcountry_tab:nth-child(1) a").clone().appendTo(".tabs_content");
+});
+</script>
+<script src="/js/common/custom.js"></script>
 <script src="/js/tcHolidays/holidays-srp.js"></script>
 <script src="/js/tcHolidays/srpUi.js" type="module"></script>
 <script src="/js/tcHolidays/owlcarousel2-filter.min.js" type="module"></script>

@@ -285,6 +285,35 @@ function formatDateDDMMYYYY(date) {
     return `${day}-${month}-${year}`;
 }
 
+function formatISODate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`; // YYYY-MM-DD (local)
+}
+
+// Helper: determine age in full years at reference date
+function getAgeYears(birthDate, referenceDate = new Date()) {
+    let age = referenceDate.getFullYear() - birthDate.getFullYear();
+    const m = referenceDate.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && referenceDate.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+// Return min/max age bounds (in years) for calendar types
+function getAgeBoundsByCalendarType(calendarType) {
+    // Defaults: adult (>=12 up to 100)
+    const DEFAULT = { minAge: 12, maxAge: 100 };
+    if (!calendarType) return DEFAULT;
+    const t = calendarType.toLowerCase();
+    if (t === 'dob-infant' || t === 'infant') return { minAge: 0, maxAge: 2 };
+    if (t === 'dob-child' || t === 'child') return { minAge: 2, maxAge: 11 }; // child from 2 up to 11 (below 12)
+    if (t === 'dob-adult' || t === 'adult' || t === 'dob') return DEFAULT;
+    return DEFAULT;
+}
+
 // ---------------------------
 // Reusable multi-instance date picker for .dob_input + .singleDate-calendar blocks with independent logic
 // ---------------------------
@@ -316,6 +345,21 @@ function initSingleDateCalendars($scope = $(document)) {
         let currentMonth = today.getMonth();
         let currentYear = today.getFullYear();
 
+        // Determine min/max allowed dates based on calendarType (age groups)
+        const ageBounds = getAgeBoundsByCalendarType(calendarType);
+        // maxDate is "latest allowed birthdate" (for dob types) and minDate is earliest allowed birthdate
+        let maxDate = null;
+        let minDate = null;
+        if (calendarType && calendarType.toLowerCase().includes('dob')) {
+            // For DOB: latest allowed birthdate = today minus minAge years
+            const latestYear = today.getFullYear() - ageBounds.minAge;
+            maxDate = new Date(latestYear, today.getMonth(), today.getDate());
+
+            // Earliest allowed birthdate = today minus (maxAge) years
+            const earliestYear = today.getFullYear() - ageBounds.maxAge;
+            minDate = new Date(earliestYear, today.getMonth(), today.getDate());
+        }
+
         const $calendar = $block.find('.singleDate-calendar');
         const $input = $block.find('.calender_input');
         const $monthSelect = $calendar.find('.month-select');
@@ -336,11 +380,11 @@ function initSingleDateCalendars($scope = $(document)) {
             months.forEach((m, i) => {
                 $monthSelect.append(`<option value="${i}" ${i === currentMonth ? 'selected' : ''}>${m}</option>`);
             });
-
+            // Populate years using minDate/maxDate when available, otherwise fall back to wide range
             let startYear, endYear;
-            if (calendarType === 'dob' || calendarType === 'issue') {
-                startYear = today.getFullYear() - 100;
-                endYear = today.getFullYear();
+            if (minDate && maxDate) {
+                startYear = minDate.getFullYear();
+                endYear = maxDate.getFullYear();
             } else if (calendarType === 'expiry' || calendarType === 'travel') {
                 startYear = today.getFullYear();
                 endYear = today.getFullYear() + 50;
@@ -356,34 +400,8 @@ function initSingleDateCalendars($scope = $(document)) {
         }
 
         function renderCalendar(month, year) {
-            $datesContainer.empty();
-
-            const firstDay = new Date(year, month, 1).getDay();
-            const start = (firstDay + 6) % 7;
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const prevMonthDays = new Date(year, month, 0).getDate();
-
-            for (let i = start - 1; i >= 0; i--) {
-                const day = prevMonthDays - i;
-                const prevDate = new Date(year, month - 1, day);
-                const disabled = isDateDisabled(prevDate);
-                $datesContainer.append(`<span class="other-month ${disabled ? 'disabled' : ''}" data-date="${prevDate}">${day}</span>`);
-            }
-
-            for (let d = 1; d <= daysInMonth; d++) {
-                const thisDate = new Date(year, month, d);
-                const disabled = isDateDisabled(thisDate);
-                const isSelected = selectedDate.toDateString() === thisDate.toDateString();
-                $datesContainer.append(`<span class="${disabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''}" data-date="${thisDate}">${d}</span>`);
-            }
-
-            const totalDisplayed = start + daysInMonth;
-            const remaining = 42 - totalDisplayed;
-            for (let i = 1; i <= remaining; i++) {
-                const nextDate = new Date(year, month + 1, i);
-                const disabled = isDateDisabled(nextDate);
-                $datesContainer.append(`<span class="other-month ${disabled ? 'disabled' : ''}" data-date="${nextDate}">${i}</span>`);
-            }
+            // Use minDate/maxDate computed earlier when rendering
+            renderCalendarDates($calendar, year, month, maxDate, minDate);
         }
 
         // Backdrop helpers
@@ -435,12 +453,19 @@ function initSingleDateCalendars($scope = $(document)) {
             renderCalendar(currentMonth, currentYear);
         });
 
-        // Date select
+        // Date select — parse YYYY-MM-DD manually to avoid timezone shifts
         $datesContainer.on('click', 'span[data-date]:not(.disabled)', function () {
-            const clickedDate = new Date($(this).attr('data-date'));
+            const raw = $(this).attr('data-date');
+            let clickedDate;
+            if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+                const parts = raw.split('-').map(Number);
+                clickedDate = new Date(parts[0], parts[1] - 1, parts[2]); // local
+            } else {
+                clickedDate = new Date(raw);
+            }
             selectedDate = clickedDate;
 
-            const formattedDate = formatDateDDMMYYYY(clickedDate); // "DD/MM/YYYY"
+            const formattedDate = formatDateDDMMYYYY(clickedDate); // "DD-MM-YYYY"
             $input.val(formattedDate);       // Update input visually
             $input.trigger('input');         // Sync with Vue v-model
             // Ensure Vue v-model bound to the underlying input updates
@@ -865,7 +890,7 @@ jQuery(document).ready(function ($) {
 
     });
 });
-function renderCalendarDates($calendar, year, month, maxDate) {
+function renderCalendarDates($calendar, year, month, maxDate, minDate) {
     const $datesContainer = $calendar.find('.calendar-dates');
     $datesContainer.empty();
 
@@ -882,101 +907,185 @@ function renderCalendarDates($calendar, year, month, maxDate) {
         $datesContainer.append('<span class="empty"></span>');
     }
 
-    // Add days with data-date attribute and disable if beyond maxDate
+    // Add days with data-date attribute and disable if beyond maxDate or before minDate
     for (let day = 1; day <= daysInMonth; day++) {
         const date = new Date(year, month, day);
-        const dateISO = date.toISOString().split('T')[0]; // YYYY-MM-DD
+        const dateISO = formatISODate(date); // YYYY-MM-DD (local)
 
         let classes = '';
-        if (date > maxDate) classes = 'disabled';
+        if ((maxDate && date > maxDate) || (minDate && date < minDate)) classes = 'disabled';
 
         $datesContainer.append(`<span data-date="${dateISO}" class="${classes}">${day}</span>`);
     }
 }
 
 function restrictAdultPaxDOBReviewPage() {
-    const maxYear = new Date().getFullYear() - 12;
+  const maxYear = new Date().getFullYear() - 12;
+  const today = new Date();
+  const maxDate = new Date(maxYear, today.getMonth(), today.getDate());
+
+  $('input[data-calendartype="dob"]').filter(function () {
+    const $input = $(this);
+    if ($input.attr('name')?.toLowerCase().includes('pan')) return false;
+    if ($input.attr('id')?.toLowerCase().includes('pan')) return false;
+    if ($input.attr('class')?.toLowerCase().includes('pan')) return false;
+    if ($input.attr('v-model')?.includes('pax.dob')) return true;
+
+    if (
+      $input.closest('.traveller_details, .travellerDetails_modal, .center_block').length > 0 &&
+      !$input.closest('.payer_details, .section_payer').length
+    )
+      return true;
+
+    return false;
+  }).each(function () {
+    const $input = $(this);
+    const $calendar = $input.closest('.single-calender');
+    const $yearSelect = $calendar.find('.year-select');
+    const $monthSelect = $calendar.find('.month-select');
+    const $datesContainer = $calendar.find('.calendar-dates');
+
+    if ($yearSelect.length && $monthSelect.length && $datesContainer.length) {
+      // Remove years above maxYear
+      $yearSelect.find('option').each(function () {
+        if (parseInt($(this).val()) > maxYear) $(this).remove();
+      });
+
+      // Default select correction
+      if (parseInt($yearSelect.val()) > maxYear || isNaN(parseInt($yearSelect.val()))) {
+        $yearSelect.val(maxYear);
+      }
+      if (isNaN(parseInt($monthSelect.val()))) {
+        $monthSelect.val(today.getMonth());
+      }
+
+      renderCalendarDates($calendar, parseInt($yearSelect.val()), parseInt($monthSelect.val()), maxDate);
+
+      $yearSelect.off('change.adultDOB').on('change.adultDOB', function () {
+        let y = parseInt($(this).val());
+        if (y > maxYear) $(this).val(maxYear);
+        renderCalendarDates($calendar, parseInt($(this).val()), parseInt($monthSelect.val()), maxDate);
+      });
+
+      $monthSelect.off('change.adultDOB').on('change.adultDOB', function () {
+        let m = parseInt($(this).val());
+        if (m < 0 || m > 11 || isNaN(m)) $(this).val(today.getMonth());
+        renderCalendarDates($calendar, parseInt($yearSelect.val()), parseInt($(this).val()), maxDate);
+      });
+
+      // ✅ FIX: Parse date manually without timezone conversion
+$datesContainer.off('click.adultDOBReview').on(
+  'click.adultDOBReview',
+  'span[data-date]:not(.disabled)',
+  function (e) {
+    const rawDateStr = $(this).attr('data-date'); // e.g. "2013-10-04"
+
+    // ✅ Parse manually to ensure local date
+    const [year, month, day] = rawDateStr.split('-').map(Number);
+    const clickedDate = new Date(year, month - 1, day); // local time, no shift
+
+    const dayStr = String(clickedDate.getDate()).padStart(2, '0');
+    const monthStr = String(clickedDate.getMonth() + 1).padStart(2, '0');
+    const yearStr = clickedDate.getFullYear();
+    const formattedDate = `${dayStr}-${monthStr}-${yearStr}`;
+
+    const $input = $(this)
+      .closest('.single-calender')
+      .find('input[data-calendartype="dob"]');
+    const $calendar = $input.closest('.single-calender');
+    const $yearSelect = $calendar.find('.year-select');
+    const $monthSelect = $calendar.find('.month-select');
+
+    $input.val(formattedDate);
+    $yearSelect.val(yearStr);
+    $monthSelect.val(clickedDate.getMonth());
+
+    $input.trigger('input').trigger('change');
+    $calendar.find('.singleDate-calendar').slideUp(200);
+
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+);
+
+    }
+  });
+}
+
+$(document).ready(function () {
+  restrictAdultPaxDOBReviewPage();
+  setInterval(restrictAdultPaxDOBReviewPage, 1000);
+});
+
+// Generic: restrict DOB calendars by age group types: supports 'dob', 'dob-adult', 'dob-child', 'dob-infant'
+function restrictDOBByAgeGroup() {
     const today = new Date();
-    const maxDate = new Date(maxYear, today.getMonth(), today.getDate());
 
-    $('input[data-calendartype="dob"]').filter(function() {
+    $('input[data-calendartype]').each(function () {
         const $input = $(this);
-        if ($input.attr('name')?.toLowerCase().includes('pan')) return false;
-        if ($input.attr('id')?.toLowerCase().includes('pan')) return false;
-        if ($input.attr('class')?.toLowerCase().includes('pan')) return false;
+        const ctype = ($input.data('calendartype') || '').toString().toLowerCase();
+        if (!ctype.includes('dob') && !ctype.includes('issue')) return; // only DOB/issue types
 
-        if ($input.attr('v-model')?.includes('pax.dob')) return true;
+        // Determine bounds
+        const bounds = getAgeBoundsByCalendarType(ctype);
+        const maxYear = today.getFullYear() - bounds.minAge;
+        const minYear = today.getFullYear() - bounds.maxAge;
 
-        if ($input.closest('.traveller_details, .travellerDetails_modal, .center_block').length > 0 &&
-            !$input.closest('.payer_details, .section_payer').length) return true;
-
-        return false;
-    }).each(function() {
-        const $input = $(this);
         const $calendar = $input.closest('.single-calender');
         const $yearSelect = $calendar.find('.year-select');
         const $monthSelect = $calendar.find('.month-select');
         const $datesContainer = $calendar.find('.calendar-dates');
 
-        if ($yearSelect.length && $monthSelect.length && $datesContainer.length) {
-            // Clean up year options above maxYear
-            $yearSelect.find('option').each(function() {
-                if (parseInt($(this).val()) > maxYear) $(this).remove();
-            });
+        if (!$yearSelect.length || !$monthSelect.length || !$datesContainer.length) return;
 
-            // Set default selects if invalid
-            if (parseInt($yearSelect.val()) > maxYear || isNaN(parseInt($yearSelect.val()))) {
-                $yearSelect.val(maxYear);
-            }
-            if (isNaN(parseInt($monthSelect.val()))) {
-                $monthSelect.val(today.getMonth());
-            }
+        // Prune years outside allowed range
+        $yearSelect.find('option').each(function () {
+            const y = parseInt($(this).val());
+            if (!isNaN(y) && (y < minYear || y > maxYear)) $(this).remove();
+        });
 
-            // Render calendar dates initially
-            renderCalendarDates($calendar, parseInt($yearSelect.val()), parseInt($monthSelect.val()), maxDate);
-
-            // Attach change event to re-render calendar on year/month change
-            $yearSelect.off('change.adultDOB').on('change.adultDOB', function() {
-                let y = parseInt($(this).val());
-                if (y > maxYear) $(this).val(maxYear);
-                renderCalendarDates($calendar, parseInt($(this).val()), parseInt($monthSelect.val()), maxDate);
-            });
-
-            $monthSelect.off('change.adultDOB').on('change.adultDOB', function() {
-                let m = parseInt($(this).val());
-                if (m < 0 || m > 11 || isNaN(m)) $(this).val(today.getMonth());
-                renderCalendarDates($calendar, parseInt($yearSelect.val()), parseInt($(this).val()), maxDate);
-            });
-
-            // Attach click once for date selection
-            $datesContainer.off('click.adultDOBReview').on('click.adultDOBReview', 'span[data-date]:not(.disabled)', function(e) {
-                const clickedDate = new Date($(this).attr('data-date'));
-                if (clickedDate <= maxDate) {
-                    const day = String(clickedDate.getDate()).padStart(2, '0');
-                    const month = String(clickedDate.getMonth() + 1).padStart(2, '0');
-                    const year = clickedDate.getFullYear();
-                    const formattedDate = `${day}-${month}-${year}`;
-
-                    $input.val(formattedDate);
-                    $yearSelect.val(year);
-                    $monthSelect.val(clickedDate.getMonth());
-
-                    $input.trigger('input').trigger('change');
-
-                    $calendar.find('.singleDate-calendar').slideUp(200);
-
-                    e.stopPropagation();
-                    e.preventDefault();
-                    return false;
-                }
-            });
+        // Ensure selected values within range
+        if (isNaN(parseInt($yearSelect.val())) || parseInt($yearSelect.val()) > maxYear) {
+            $yearSelect.val(maxYear);
         }
+        if (isNaN(parseInt($monthSelect.val()))) {
+            $monthSelect.val(today.getMonth());
+        }
+
+        // Compute min/max dates (local)
+        const maxDate = new Date(maxYear, today.getMonth(), today.getDate());
+        const minDate = new Date(minYear, today.getMonth(), today.getDate());
+
+        // Render with bounds
+        renderCalendarDates($calendar, parseInt($yearSelect.val()), parseInt($monthSelect.val()), maxDate, minDate);
+
+        // Setup click handler (if not already bound) - parse manually to local Date
+        $datesContainer.off('click.ageGroup').on('click.ageGroup', 'span[data-date]:not(.disabled)', function (e) {
+            const raw = $(this).attr('data-date');
+            const [y, m, d] = raw.split('-').map(Number);
+            const clickedDate = new Date(y, m - 1, d);
+
+            const dayStr = String(clickedDate.getDate()).padStart(2, '0');
+            const monthStr = String(clickedDate.getMonth() + 1).padStart(2, '0');
+            const yearStr = clickedDate.getFullYear();
+            const formattedDate = `${dayStr}-${monthStr}-${yearStr}`;
+
+            $input.val(formattedDate);
+            $calendar.find('.singleDate-calendar').slideUp(200);
+            $input.trigger('input').trigger('change');
+
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        });
     });
 }
 
-$(document).ready(function() {
-    restrictAdultPaxDOBReviewPage();
-    // It's better to use MutationObserver or event-driven reapply rather than setInterval
-    setInterval(restrictAdultPaxDOBReviewPage, 1000);
+// Run generic restrictor periodically (keeps dynamically rendered calendars in sync)
+$(document).ready(function () {
+    restrictDOBByAgeGroup();
+    setInterval(restrictDOBByAgeGroup, 1000);
 });
+
 
