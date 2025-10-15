@@ -45,9 +45,9 @@
         <div class="left_blc">
           <h6 class="accordion-header">
             <span class="day_chip">Day {{ item.itineraryDay }}</span>
-            {{ item.cityCode.cityName }}
-            <span class="wlcm_text" v-if="item.itineraryDay === 1">
-              (Welcome to {{ item.cityCode.cityName }}!)
+        
+            <span class="wlcm_text" v-if="getCombinedNotesByDay(item.itineraryDay)">
+            {{  getCombinedNotesByDay(item.itineraryDay)  }}
             </span>
           </h6>
         </div>
@@ -59,19 +59,12 @@
       <div class="accordion-body">
         <div class="content_box">
           
-          <!-- Arrival Card -->
-          <div class="card_blc">
-            <div class="card_top">
-              <div class="icon">
-                <img src="/images/tcHolidays/tc-PDP/plane.svg" alt="Arrival" />
-              </div>
-              <span>Arrival in {{ item.cityCode.cityName }}</span>
-            </div>
-            <span class="sub_title" v-html="item.itineraryDescription"></span>
-          </div>
+         
+    
+            
 
           <!-- Transfer Card -->
-          <div class="card_blc">
+          <div class="card_blc" v-if="getTransfersByDayAndPackage(item.itineraryDay, selectedPackageClassId)?.description">
             <div class="card_top">
               <div class="icon">
                 <img src="/images/tcHolidays/tc-PDP/car.svg" alt="Transfer" />
@@ -84,32 +77,7 @@
               Later, we proceed to the hotel and check–in.
             </span> -->
           </div>
-
-       <div class="card_blc" v-if="getSightSeeingByDayAndPackage(item.itineraryDay, selectedPackageClassId).length > 0">
-    <div class="card_top">
-        <div class="icon">
-            <img src="/images/tcHolidays/tc-PDP/camera-01.svg" alt="" />
-        </div>
-        <p>Sightseeing</p>
-    </div>
-    <div class="sight_blc">
-        <!-- Loop through all sightseeing items for this day -->
-        <div class="sight_item" v-for="sightseeing in getSightSeeingByDayAndPackage(item.itineraryDay, selectedPackageClassId)" :key="sightseeing.holidaySightseeingId">
-            <div class="sight_left">
-                <img 
-                    :src="handleImagePath(sightseeing.sightseeingId?.tcilMstSightseeingImagesCollection?.[0]?.imagePath)" 
-                    :alt="sightseeing.sightseeingId?.tcilMstSightseeingImagesCollection?.[0]?.imageName || sightseeing.sightseeingId?.name || 'Sightseeing'" />
-            </div>
-            <div class="sight_right">
-                <p v-html="sightseeing.sightseeingId?.name || ''"></p>
-                <span v-html="sightseeing.sightseeingId?.description || 'No description available'"></span>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-           <div class="card_blc" v-if="getHotelsByDayAndPackage(item.itineraryDay, selectedPackageClassId)">
+           <div class="card_blc" v-if="getHotelsByDayAndPackage(item.itineraryDay, selectedPackageClassId).filter(hotel => hotel.accomodationHotelId?.hotelName)">
     <div class="card_top">
       <div class="icon">
         <img src="/images/tcHolidays/tc-PDP/hotels.svg" alt="Hotels Icon" />
@@ -118,7 +86,7 @@
     </div>
 
     <div class="hotelCard_slide owl-carousel">
-      <div class="card_item" v-for="(hotel, index) in getHotelsByDayAndPackage(item.itineraryDay, selectedPackageClassId)" :key="index">
+      <div class="card_item" v-for="(hotel, index) in getHotelsByDayAndPackage(item.itineraryDay, selectedPackageClassId).filter(hotel => hotel.accomodationHotelId?.hotelName)" :key="index">
         <div class="crb_lft">
           <img :src="getHotelImage(hotel)" :alt="hotel.accomodationHotelId.hotelName" />
         </div>
@@ -126,22 +94,55 @@
           <span class="sub_title">
             {{ hotel.accomodationHotelId.hotelName }}
           </span>
-          <div class="rating">
+          <!-- <div class="rating">
             <span class="stars">
               <img src="/images/tcHolidays/star.svg" alt="star" />
             </span>
-            <span>
+            <span v-if="hotel.accomodationHotelId.starRating">
               <b>{{ hotel.accomodationHotelId.starRating }}</b>(1.5K)
             </span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
-
     <div class="short_note">
       <span>Note:</span> The above mentioned hotels will be same or similar
     </div>
-  </div>
+
+
+          </div>
+
+       <div class="card_blc" v-if="Object.keys(getSightSeeingGroupedByCityForDay(item.itineraryDay, selectedPackageClassId)).length > 0">
+   <div class="card_top">
+       <div class="icon">
+           <img src="/images/tcHolidays/tc-PDP/camera-01.svg" alt="" />
+       </div>
+       <p>Sightseeing</p>
+   </div>
+   <div class="sight_blc">
+       <!-- Group sightseeing by city -->
+       <template v-for="(cityData, cityName, index) in getSightSeeingGroupedByCityForDay(item.itineraryDay, selectedPackageClassId)" :key="cityName">
+           <!-- City header if multiple cities -->
+           <div v-if="Object.keys(getSightSeeingGroupedByCityForDay(item.itineraryDay, selectedPackageClassId)).length > 1" class="city_header">
+               <h6>{{ cityName.toUpperCase() }}</h6>
+           </div>
+           <!-- Loop through sightseeing items for this city -->
+           <div class="sight_item" v-for="sightseeing in cityData.items" :key="sightseeing.holidaySightseeingId">
+               <div class="sight_left">
+                   <img
+                       :src="handleImagePath(sightseeing.sightseeingId?.tcilMstSightseeingImagesCollection?.[0]?.imagePath)"
+                       :alt="sightseeing.sightseeingId?.tcilMstSightseeingImagesCollection?.[0]?.imageName || sightseeing.sightseeingId?.name || 'Sightseeing'" />
+               </div>
+               <div class="sight_right">
+                   <p v-html="sightseeing.sightseeingId?.name || ''"></p>
+                   <div v-if="sightseeing.sightseeingId?.description" class="description" v-html="sightseeing.sightseeingId?.description"></div>
+               </div>
+           </div>
+       </template>
+   </div>
+</div>
+
+
 
 
           <!-- Hotels Card -->
@@ -1638,12 +1639,12 @@
                         <span class="sub_title">
                             {{ accommodation.accomodationHotelId.hotelName }} in {{ accommodation.accomodationHotelId.location }}
                         </span>
-                        <div class="rating">
+                        <!-- <div class="rating">
                             <span class="stars">
                                 <img src="/images/tcHolidays/star.svg" alt="" />
                             </span>
                             <span>{{ accommodation.accomodationHotelId.starRating }}</span><span>(1.5K)</span></span>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="seperator" v-if="index < filteredAccommodations.length - 1"></div>
                 </template>
@@ -2096,7 +2097,7 @@
                                                 </div> -->
                                                 
                                                <div id="transfer" class="tab-details" v-if="getFlagByIndex(packageDetailsResponse?.[0]?.packageDetail?.isTransferDetailsIncluded,selectedPackageClassId) === 'Y'">
-    <div class="tab_card">
+    <div class="tab_card" v-if="packageDetailsResponse[0]?.packageDetail?.isTransferDefaultMsg === 'Y' ? filteredTransfers.length > 0 : true">
         <div class="card_top">
             <img src="/images/tcHolidays/tc-PDP/car-01.svg" alt="" />
             <h6>Transfer</h6>
@@ -2108,7 +2109,7 @@
                     <span class="sub_title" v-if="allTransfersDescription" v-html="allTransfersDescription"></span>
                     
                     <!-- Or show no data message -->
-                    <span class="sub_title" v-else>No transfer details available</span>
+                    <span class="sub_title" v-else>{{packageDetailsResponse[0]?.packageDetail?.isTransferDefaultMsg}}</span>
                 </div>
             </div>
         </div>
@@ -2409,7 +2410,7 @@
                         <span>Day {{ itinerary.itineraryDay }}</span>
                         <p>{{ itinerary.cityCode.cityName }}</p>
                     </div>
-                    <div class="details_blck">
+                    <div class="details_blck" v-if="getHotelsByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId)">
                         <div class="db_item">
                             <img src="/images/tcHolidays/tc-PDP/hotels.svg" alt="" />
                             <span>
@@ -2418,14 +2419,12 @@
                                     in {{ getHotelsByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId)[0].accomodationHotelId.city }},
                                     {{ getHotelsByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId)[0].accomodationHotelId.country }}.
                                 </template>
-                                <template v-else>
-                                    (No hotel)
-                                </template>
+                               
                             </span>
                         </div>
                         <div class="db_item">
                             <img src="/images/tcHolidays/tc-PDP/camera-01.svg" alt="" />
-                            <ul v-if="getSightSeeingArrayByDay(itinerary.itineraryDay, selectedPackageClassId).length > 0">
+                            <ul v-if="getSightSeeingArrayByDay(itinerary.itineraryDay, selectedPackageClassId)[0]?.items?.length > 0">
                                 <li
                                     v-for="sight in getSightSeeingArrayByDay(itinerary.itineraryDay, selectedPackageClassId)[0].items"
                                     :key="sight.holidaySightseeingId"
@@ -2433,15 +2432,16 @@
                                     {{ sight.sightseeingId?.name }}
                                 </li>
                             </ul>
-                            <span v-else>No sightseeing</span>
+                            
                         </div>
                         <div class="db_item">
                             <img src="/images/tcHolidays/tc-PDP/meals-02.svg" alt="" />
                             <span>{{ getMealText(itinerary.itineraryDay, selectedPackageClassId) }}</span>
                         </div>
-                        <div class="db_item">
+                        <div class="db_item"  v-if="getTransfersByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId)">
                             <img src="/images/tcHolidays/tc-PDP/car.svg" alt="" />
-                            <span>Shared transfers by a deluxe air-conditioned coach.</span>
+                            <span class="sub_title" v-html="getTransfersByDayAndPackage(itinerary.itineraryDay, selectedPackageClassId)?.description"></span>
+
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-<div class="package_gallery">
+<div class="package_gallery" >
         <div class="container">
             <div class="row gx-0 justify-content-center">
                 <div class="col-xxxl-9 col-xxl-12">
@@ -67,38 +67,38 @@
                                <!--- <h4>European Express With 3 Nights Mediterranean Cruise (Civitavecchia – Barcelona) -
                                     Summer 2025</h4>--->
                                <div class="pblc_btm" v-if="packageDetailsResponse?.[0]?.packageDetail?.tcilHolidayTimelineCollection">
-  <div class="pblc_btm" v-if="packageDetailsResponse?.[0]?.packageDetail?.tcilHolidayTimelineCollection">
-  <div class="d-inline-flex align-items-center" v-for="(item, index) in packageDetailsResponse[0].packageDetail.tcilHolidayTimelineCollection" :key="item.holidayTimelineId">
+  <div class="d-inline-flex align-items-center" 
+  v-for="(item, index) in sortedTimeLineCollection()" :key="item.holidayTimelineId">
     <span>{{ item.noOfNights }}N {{ item.cityCode.cityName }}</span>
-    <span v-if="index !== packageDetailsResponse[0].packageDetail.tcilHolidayTimelineCollection.length - 1" class="dot mx-2"></span>
+    <span v-if="index !== sortedTimeLineCollection().length - 1" class="dot mx-2"></span>
   </div>
-</div>
+
 </div>
 
                             </div>
-                            <div class="pbl_btm">
-                                <span class="text_xs">
+                            <div class="pbl_btm" >
+                                <span class="text_xs" v-if="getFlagByIndex(packageDetailsResponse?.[0]?.packageDetail?.isFlightIncluded,selectedPackageClassId) === 'Y'">
                                     <img src="/images/tcHolidays/tc-PDP/flights.svg" alt="" />
                                     Flights
                                 </span>
-                                <span class="text_xs">
+                                <span class="text_xs" v-if="getFlagByIndex(packageDetailsResponse?.[0]?.packageDetail?.isHotelDetailsIncluded,selectedPackageClassId) === 'Y'" >
                                     <img src="/images/tcHolidays/tc-PDP/hotel.svg" alt="" />
                                     Hotels
                                 </span>
-                                <span class="text_xs">
+                                <span class="text_xs" v-if="getFlagByIndex(packageDetailsResponse?.[0]?.packageDetail?.isSightseeingDetailsIncluded,selectedPackageClassId) === 'Y'">
                                     <img src="/images/tcHolidays/tc-PDP/camera.svg" alt="" />
                                     Sightseeing
                                 </span>
-                                <span class="text_xs">
+                                <span class="text_xs" v-if="packageDetailsResponse?.[0]?.packageDetail?.isVisaIncluded === 'Y'">
                                     <img src="/images/tcHolidays/tc-PDP/visa.svg" alt="" />
                                     Visa
                                 </span>
-                                <span class="text_xs">
+                                <span class="text_xs" v-if="getFlagByIndex(packageDetailsResponse?.[0]?.packageDetail?.isMealDetailsIncluded,selectedPackageClassId) === 'Y'">
                                     <img src="/images/tcHolidays/tc-PDP/meal-02.svg" alt="" />
                                     Meal
                                 </span>
-                                <span class="text_xs">
-                                    <img src="/images/tcHolidays/tc-PDP/tourist.svg" alt="" />
+                                <span class="text_xs" v-if="packageDetailsResponse?.[0]?.packageDetail?.isTourManagerIncluded === 'Y'">
+                                    <img src="/images/tcHolidays/tc-PDP/tourist.svg" alt=""  />
                                     Tour Manager
                                 </span>
                             </div>
@@ -106,7 +106,7 @@
                         <div class="pib_rigt">
                             <button class="btn btn_wishlist"><img src="/images/tcHolidays/tc-PDP/heart-outline-01.svg" alt="" />
                                 Add to Wishlist</button>
-                            <div class="pibr_btm">
+                            <div class="pibr_btm" v-if="packageDetailsResponse?.[0]?.packageDetail?.isTcilRecomended==='Most Booked'">
                                 <div class="pibr_lft">
                                     <div class="pibr_top">
                                         <span><img src="/images/tcHolidays/tc-PDP/leaf-01.svg" alt="" /></span>
@@ -115,9 +115,9 @@
                                     </div>
                                     <span>package of this holiday season</span>
                                 </div>
-                                <div class="pibr_right">
+                                <div class="pibr_right" v-if="packageDetailsResponse[0]?.packageDetail?.rating">
                                     <div class="pibr_top">
-                                        <span>4.7</span>
+                                        <span>{{packageDetailsResponse[0]?.packageDetail?.rating}}</span>
                                         <div class="stars">
                                             <img src="assets/images/common-img/star.svg" alt="" />
                                             <img src="assets/images/common-img/star.svg" alt="" />
@@ -128,7 +128,12 @@
                                     </div>
                                     <div class="seperator"></div>
                                     <div class="pibr_bottom">
-                                        <span>1.5k</span>
+                                        <span> {{
+      packageDetailsResponse[0]?.packageDetail?.noOfCustomers >= 1000
+        ? (packageDetailsResponse[0].packageDetail.noOfCustomers / 1000).toFixed(1).replace(/\.0$/, '') + 'k'
+        : packageDetailsResponse[0]?.packageDetail?.noOfCustomers
+    }}</span>
+                                        <!-- <span>1.5k</span> -->
                                         <span><span>Reviews</span></span>
                                     </div>
                                 </div>
